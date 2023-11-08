@@ -14,6 +14,8 @@ export default function NoteBot() {
     },
   });
 
+  console.log(user)
+
   useEffect(() => {
     let elasUser = JSON.parse(sessionStorage.getItem("elas-user"));
     async function getUserInfoFunction(userId) {
