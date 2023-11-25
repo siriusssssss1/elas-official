@@ -21,8 +21,6 @@ const getWidgetsBySectionId = async (req, res, next) => {
     }
 };
 
-
-
 //Add a widget to a section, POST request to add widget to specific section, extracts section ID and widget details from request body
 const addWidgetToSection = async (req, res, next) => {
     const { section_id } = req.params;
@@ -84,7 +82,32 @@ const createWidget = async (req, res, next) => {
     //update widget
     //const updateWidget = async (req, res, next) => { ... }
 
-    //change widget
+//change widget
+const changeWidget = async (req, res, next) => {
+  const { widget_id } = req.params;
+  const { newType } = req.body;
+
+  try {
+      // Find the widget by ID
+      const widget = await widgetModel.findById(widget_id);
+
+      if (!widget) {
+          return res.status(404).json({ message: "Widget not found." });
+      }
+
+      // Update the type property with the new type
+      widget.type = newType;
+
+      // Save the updated widget
+      await widget.save();
+
+      res.json({ message: "Widget type changed successfully.", widget: widget.toObject({ getters: true }) });
+  } catch (err) {
+      const error = new HttpError("An error occurred while changing the widget type.", 500);
+      return next(error);
+  }
+};
+     
 
     //export functions to make them available for use in other parts of application
     exports.getWidgetsBySectionId = getWidgetsBySectionId; 
