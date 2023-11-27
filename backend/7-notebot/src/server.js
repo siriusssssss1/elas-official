@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 app.use("/", express.static(path.join(__dirname, "public")));
 
 // Get port from environment and store in Express
-const port = normalizePort(process.env.PORT || "8007");
+const port = normalizePort(process.env.PORT || "8761");
 app.set("port", port);
 
 // Create connection to MongoDB
