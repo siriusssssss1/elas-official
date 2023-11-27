@@ -80,10 +80,10 @@ const client = new Eureka({
     hostName: "localhost",
     ipAddr: "127.0.0.1",
     port: {
-      $: port,
+      $: 8761,
       "@enabled": "true",
     },
-    statusPageUrl: `http://localhost:${port}`,
+    statusPageUrl: `http://localhost:8761`,
     vipAddress: "ELAS-NOTEBOT",
     dataCenterInfo: {
       "@class": "com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo",
