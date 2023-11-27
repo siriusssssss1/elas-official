@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 app.use("/", express.static(path.join(__dirname, "public")));
 
 // Get port from environment and store in Express
-const port = normalizePort(process.env.PORT || "8761");
+const port = normalizePort(process.env.PORT || "8007");
 app.set("port", port);
 
 // Create connection to MongoDB
@@ -80,10 +80,10 @@ const client = new Eureka({
     hostName: "localhost",
     ipAddr: "127.0.0.1",
     port: {
-      $: 8761,
+      $: port,
       "@enabled": "true",
     },
-    statusPageUrl: `http://localhost:8761`,
+    statusPageUrl: `http://localhost:${port}`,
     vipAddress: "ELAS-NOTEBOT",
     dataCenterInfo: {
       "@class": "com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo",
