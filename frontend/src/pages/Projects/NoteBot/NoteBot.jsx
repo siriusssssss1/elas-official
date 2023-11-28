@@ -2,6 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Grid, Typography } from "@mui/material";
 import { getUserInfo } from "./utils/api.js";
 
+import chatbot from "./components/chatbot.jsx";
+import courses from "./components/courses.jsx";
+import home from "./components/home.jsxjsx";
+import notes from "./components/notes.jsx";
+
 import noteBotLogo from "../../../assets/images/noteBot-logo.png";
 
 export default function NoteBot() {
@@ -65,6 +70,7 @@ export default function NoteBot() {
                   Message from server <i>{user.message} </i>
                 </Typography>
               )}
+
             </Grid>
           </Grid>
         </Grid>
