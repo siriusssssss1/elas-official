@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import debugLib from "debug";
 import bodyParser from "body-parser";
 import path from "path";
+import mongoose from "mongoose";
 import { Eureka } from "eureka-js-client";
 
 dotenv.config();
@@ -25,7 +26,7 @@ const port = normalizePort(process.env.PORT || "8007");
 app.set("port", port);
 
 // Create connection to MongoDB
-db.mongoose
+mongoose
   .connect(process.env.MONGO_DB, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -54,7 +55,10 @@ let apiURL = "/api/notebot";
  */
 
 const userRoutes = require("./routes/user.routes");
+const coursesRoutes = require("./routes/courses");
+
 app.use(apiURL, userRoutes);
+app.use(apiURL + '/courses', coursesRoutes);
 // Add more routes here
 
 /***************** END: IMPORT ROUTES *****************/

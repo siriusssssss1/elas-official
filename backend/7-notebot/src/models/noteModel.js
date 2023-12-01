@@ -1,4 +1,4 @@
-const mongoose = require("./index.js");
+const mongoose = require("mongoose");
 // Initialize parameters
 const collectionName_notes = 'notes';
 
