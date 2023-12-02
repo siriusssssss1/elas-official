@@ -10,5 +10,8 @@ router.patch('/section/:section_id', widgetController.addWidgetToSection);
 //router.delete('/:section_id/:widget_id', widgetController.deleteWidget);
 
 router.post('/', widgetController.createWidget);
+
+//test 
+router.get('/widget/test', widgetController.getWidget);
 //export the router
 module.exports = router;

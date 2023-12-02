@@ -77,6 +77,20 @@ const createWidget = async (req, res, next) => {
   }
 };
 
+//test
+const getWidget = async (req, res, next) => {
+  try {
+    const widgets = await widgetModel.find();
+    res.json({ widgets: widgets.map((note) => widget.toObject({ getters: true })) });
+  } catch (err) {
+    const error = new HttpError(
+      "An error occurred while fetching notes. ",
+      500
+    );
+    return next(error);
+  }
+};
+
     //delete widget from section
     //const deleteWidget = async (req, res, next) => { ... }
 
@@ -86,3 +100,4 @@ const createWidget = async (req, res, next) => {
     exports.getWidgetsBySectionId = getWidgetsBySectionId;
     exports.addWidgetToSection = addWidgetToSection;
     exports.createWidget = createWidget;
+    exports.getWidget = getWidget;
