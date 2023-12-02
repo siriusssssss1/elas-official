@@ -58,11 +58,13 @@ const userRoutes = require("./routes/user.routes");
 const coursesRoutes = require("./routes/courses");
 const noteRoutes = require("./routes/notes");
 const sectionRoutes = require("./routes/sections");
+const widgetRoutes = require("./routes/widgets")
 
 app.use(apiURL, userRoutes);
 app.use(apiURL + '/courses', coursesRoutes);
 app.use(apiURL, noteRoutes);
 app.use(apiURL, sectionRoutes);
+app.use(apiURL, widgetRoutes);
 
 // Add more routes here
 
