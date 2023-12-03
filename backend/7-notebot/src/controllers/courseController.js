@@ -65,12 +65,17 @@ const getCoursesByUserId = async (req, res, next) => {
 
 //Create a new course
 const createCourse = async (req, res, next) => {
+  console.log("a")
   const { title } = req.body;
+  console.log("b")
+  console.log(req.userData)
   const user_id = req.userData.userId;
+  console.log("c")
 
   let session; // Declare the session variable
 
   try {
+    console.log("try")
     // Start a Mongoose session
     session = await mongoose.startSession();
     session.startTransaction();
@@ -92,6 +97,8 @@ const createCourse = async (req, res, next) => {
 
     res.status(201).json({ course: createdCourse[0] });
   } catch (error) {
+    console.log("error")
+  
     // Abort the transaction and roll back changes
     if (session) {
       await session.abortTransaction();
@@ -103,6 +110,8 @@ const createCourse = async (req, res, next) => {
     );
     return next(httpError);
   } finally {
+
+    console.log("finally")
     // End the session
     if (session) {
       session.endSession();

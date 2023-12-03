@@ -16,10 +16,21 @@ const db = require("./models");
 global.__basedir = __dirname;
 
 // Middlewares
+
+
+// Dummy middleware, remove later
+app.use((req, res, next) => {
+  console.log("hoi")
+  req.userData = {userId: "a5eef233-281b-4378-b8f2-bdb5e54d6203"}
+  next()
+});
+
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use("/", express.static(path.join(__dirname, "public")));
+
 
 // Get port from environment and store in Express
 const port = normalizePort(process.env.PORT || "8007");
@@ -65,7 +76,6 @@ app.use(apiURL + '/courses', coursesRoutes);
 app.use(apiURL, noteRoutes);
 app.use(apiURL, sectionRoutes);
 app.use(apiURL, widgetRoutes);
-
 // Add more routes here
 
 /***************** END: IMPORT ROUTES *****************/

@@ -14,7 +14,7 @@ const courseSchema = new mongoose.Schema({
     ref:'notes'
   }],
   user_id: {
-    type: mongoose.Types.ObjectId,
+    type: String,
     required: true,
     ref:'users'
   },
