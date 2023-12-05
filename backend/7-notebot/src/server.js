@@ -20,7 +20,7 @@ global.__basedir = __dirname;
 
 // Dummy middleware, remove later
 app.use((req, res, next) => {
-  console.log("hoi")
+  console.log("dummyMiddleware")
   req.userData = {userId: "a5eef233-281b-4378-b8f2-bdb5e54d6203"}
   next()
 });
