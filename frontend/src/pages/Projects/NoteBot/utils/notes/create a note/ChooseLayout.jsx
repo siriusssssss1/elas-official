@@ -3,7 +3,7 @@ import Grid from "@mui/material/Unstable_Grid2";
 import { LayoutItem } from "../../../components/Layouts/LayoutItem";
 import { useTheme } from "@mui/material/styles";
 
-export function ChooseLayout({ onLayoutSelect }) {
+export function LayoutSelector({ onLayoutSelect }) {
   const theme = useTheme();
   return (
     <Box

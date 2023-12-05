@@ -18,7 +18,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export const EditNote = ({}) => {
+export const NoteEdit = ({}) => {
   const {
     sections,
     widgets,
@@ -106,7 +106,7 @@ export const EditNote = ({}) => {
         });
 
       res.note && setNote(res.note);
-      setTitle(res.note.title);
+      setTitle(res.note.title)
 
       res.sections &&
         replaceWidgets(
@@ -128,14 +128,19 @@ export const EditNote = ({}) => {
       return;
     }
 
-    console.log("update === ", title, note._id);
+
+    console.log(      'update === ',
+      title,
+      note._id,
+      )
     const res = await updateNote(
       token,
       title,
       sections,
       widgets,
       note._id,
-      course
+      course,
+      
     );
     if (!res.ok) {
       handleClick();
@@ -147,7 +152,7 @@ export const EditNote = ({}) => {
   return (
     <Container sx={{ flexGrow: 1, padding: 4 }}>
       <PageHeader
-        title={title}
+      title={title}
         onChange={(title) => setTitle(title)}
         isEditable={true}
         disabled={!note}
