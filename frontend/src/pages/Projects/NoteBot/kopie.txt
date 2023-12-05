@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import React, { useState, useEffect } from "react";
 import { Grid, Typography, Button, Paper } from "@mui/material";
 //import { useHistory } from "react-router-dom";
@@ -65,3 +66,37 @@ export default function NoteList() {
     </>
   );
 }
+=======
+import * as React from "react";
+import Box from "@mui/material/Box";
+import AddIcon from "@mui/icons-material/Add";
+import { CircularProgress, Divider, useTheme } from "@mui/material";
+import { useState, useEffect } from "react";
+import { getFavNotes } from "./api";
+import { useAuth } from "../../../contexts/AuthProvider.js";
+
+import { Container } from "@mui/material";
+
+import { PageHeader } from "../../../components/PageHeader";
+import { useNavigate } from "react-router-dom";
+
+import { makeStyles } from "@mui/styles";
+import { deleteCourseWithNotes } from "../../courses/list/course.api";
+import { NotesList } from "../../../components/NotestList";
+
+
+
+import React, { useState, useEffect } from "react";
+import { Grid, Typography, Button } from "@mui/material";
+import { purple } from "@mui/material/colors";
+
+export default function NoteList() {
+  return (
+    <Grid container alignItems="center" justifyContent="space-between">
+      <Typography> NoteList </Typography>
+      <Button variant="contained"> ADD NOTE </Button>
+    </Grid>
+  );
+  
+}
+>>>>>>> Stashed changes
