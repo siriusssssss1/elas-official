@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Typography } from "@mui/material";
-import { getUserInfo } from "./utils/api.js";
+import { getUserInfo } from "./utils/notes/create a note/api.js";
 
 //import chatbot from "./components/chatbot.jsx";
 //import courses from "./components/courses.jsx";

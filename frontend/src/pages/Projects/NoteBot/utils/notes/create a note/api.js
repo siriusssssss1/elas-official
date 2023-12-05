@@ -1,4 +1,4 @@
-import { Backend } from "../../../../utils/apiConfig";
+import { Backend } from "../../../../../../utils/apiConfig";
 
 export const getUserInfo = async (userId) => {
   try {
