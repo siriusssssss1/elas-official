@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Typography } from "@mui/material";
-import { getUserInfo } from "./utils/notes/create a note/api.js";
+import { getUserInfo } from "./utils/api.js";
 
 //import chatbot from "./components/chatbot.jsx";
 //import courses from "./components/courses.jsx";
@@ -9,6 +9,13 @@ import { getUserInfo } from "./utils/notes/create a note/api.js";
 
 import noteBotLogo from "../../../assets/images/noteBot-logo.png";
 import NoteList from "./NoteList.jsx";
+//import NoteHome from "./NoteHome.jsx";
+import ChooseLayout from "./ChooseLayout.jsx";
+import CreateNote from "./CreateNote.jsx";
+import EditNote from "./EditNote";
+import Section from "./Section";
+import Routes from "./Routes";
+import NoteView from "./NoteView";
 
 export default function NoteBot() {
   const [user, setUser] = useState({
@@ -20,7 +27,7 @@ export default function NoteBot() {
     },
   });
 
-  console.log(user)
+  console.log(user);
 
   useEffect(() => {
     let elasUser = JSON.parse(sessionStorage.getItem("elas-user"));
@@ -58,8 +65,13 @@ export default function NoteBot() {
 
           <Grid container justifyContent="center" spacing={2}>
             <Grid item xs>
-              <NoteList/>
-
+              <NoteList />
+              <ChooseLayout />
+              <CreateNote />
+              <EditNote />
+              <Section />
+              <Routes />
+              <NoteView />
             </Grid>
           </Grid>
         </Grid>
