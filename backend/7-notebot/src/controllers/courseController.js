@@ -69,7 +69,7 @@ const createCourse = async (req, res, next) => {
   const { title } = req.body;
   console.log("b")
   console.log(req.userData)
-  const user_id = req.userData.userId;
+  const user_id = req.body.userId;
   console.log("c")
 
   let session; // Declare the session variable
@@ -77,45 +77,51 @@ const createCourse = async (req, res, next) => {
   try {
     console.log("try")
     // Start a Mongoose session
-    session = await mongoose.startSession();
-    session.startTransaction();
-
-    // Create the course
-    const createdCourse = await courseModel.create([{ user_id, title }], {
-      session,
+    //session = await mongoose.startSession();
+    //session.startTransaction();
+    let course = new courseModel({
+      user_id: req.body.userId,
+      title: req.body.title,
     });
-    console.log("createdCourse", createdCourse);
-    // Assign the course to the user
-    await userModel.findByIdAndUpdate(
-      user_id,
-      { $push: { courses: createdCourse[0]._id } },
-      { session }
-    );
+    await course.save();
+    // Create the course
+    // const createdCourse = await courseModel.create([{ user_id, title }], {
+    //   session,
+    // });
+    // console.log("createdCourse", createdCourse);
+    // // Assign the course to the user
+    // await userModel.findByIdAndUpdate(
+    //   user_id,
+    //   { $push: { courses: createdCourse[0]._id } },
+    //   { session }
+    // );
 
     // Commit the transaction
-    await session.commitTransaction();
+    //await session.commitTransaction();
 
-    res.status(201).json({ course: createdCourse[0] });
+    res.status(201).json({ course: course });
+    return;
   } catch (error) {
-    console.log("error")
+    res.status(500).send({ message: `Error saving course to DB` });
+    return;
   
     // Abort the transaction and roll back changes
-    if (session) {
-      await session.abortTransaction();
-    }
+    // if (session) {
+    //   await session.abortTransaction();
+    // }
 
-    const httpError = new HttpError(
-      `An error occurred while creating the course: ${error.message}`,
-      500
-    );
-    return next(httpError);
-  } finally {
+  //   const httpError = new HttpError(
+  //     `An error occurred while creating the course: ${error.message}`,
+  //     500
+  //   );
+  //   return next(httpError);
+  // } finally {
 
-    console.log("finally")
-    // End the session
-    if (session) {
-      session.endSession();
-    }
+  //   console.log("finally")
+  //   // End the session
+  //   if (session) {
+  //     session.endSession();
+  //   }
   }
 };
 

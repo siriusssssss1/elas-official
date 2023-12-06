@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
+//use admin;
 
 const db = {};
 
@@ -10,5 +11,11 @@ const db = {};
  */
 db.user = require("./user.model");
 /***************** END: EXPORT SCHEMA AS MODULE *****************/
+// db.adminCommand(
+//     {
+//        shutdown: 1,
+//        comment: "Convert to cluster"
+//     }
+//  )
 
 module.exports = db;
