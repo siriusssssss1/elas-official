@@ -129,9 +129,9 @@ const createCourse = async (req, res, next) => {
 const deleteCourseWithNotes = async (req, res, next) => {
   const { course_id } = req.params;
 
-  try {
-    const session = await mongoose.startSession();
-    session.startTransaction();
+  // try {
+  //   const session = await mongoose.startSession();
+  //   session.startTransaction();
 
     try {
       const course = await courseModel.findById(course_id);
@@ -145,12 +145,12 @@ const deleteCourseWithNotes = async (req, res, next) => {
       const noteIds = course.notes;
       console.log(noteIds);
       // Delete the course and its associated notes
-      await Promise.all([
-        courseModel.findByIdAndDelete(course_id, { session }),
-        noteModel.deleteMany({ course_id: course_id }, { session }),
-      ]);
+      // await Promise.all([
+      //   courseModel.findByIdAndDelete(course_id, { session }),
+      //   noteModel.deleteMany({ course_id: course_id }, { session }),
+      // ]);
 
-      await session.commitTransaction();
+      //await session.commitTransaction();
 
       res.status(200).json({ message: "Course and associated notes deleted." });
     } catch (error) {
@@ -161,17 +161,17 @@ const deleteCourseWithNotes = async (req, res, next) => {
         500
       );
       return next(httpError);
-    } finally {
-      session.endSession();
+     } //finally {
+    //   session.endSession();
     }
-  } catch (err) {
-    const error = new HttpError(
-      "Deleting course failed, please try again later.",
-      500
-    );
-    return next(error);
-  }
-};
+  //   catch (err) {
+  //   const error = new HttpError(
+  //     "Deleting course failed, please try again later.",
+  //     500
+  //   );
+  //   return next(error);
+  // }
+//};
 
 exports.getAllCourses = getAllCourses;
 exports.getCoursesByUserId = getCoursesByUserId;
