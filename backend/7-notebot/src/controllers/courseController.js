@@ -24,7 +24,7 @@ const getAllCourses = async (req, res, next) => {
 
 //Get courses by user_id
 const getCoursesByUserId = async (req, res, next) => {
-  const user_id = req.userData.userId;
+  const user_id = req.body.userId;
 
   try {
     const user = await userModel.findById(user_id).populate("courses");
@@ -39,17 +39,17 @@ const getCoursesByUserId = async (req, res, next) => {
       course.toObject({ getters: true })
     );
 
-    await Promise.all(
-      courses.map((course) => {
-        return noteModel
-          .find({
-            course_id: course._id,
-          })
-          .then((list) => {
-            course.notes_count = list.length;
-          });
-      })
-    );
+    // await Promise.all(
+    //   courses.map((course) => {
+    //     return noteModel
+    //       .find({
+    //         course_id: course._id,
+    //       })
+    //       .then((list) => {
+    //         course.notes_count = list.length;
+    //       });
+    //   })
+    // );
 
     res.json({
       courses,
@@ -72,7 +72,7 @@ const createCourse = async (req, res, next) => {
   const user_id = req.body.userId;
   console.log("c")
 
-  let session; // Declare the session variable
+  //let session; // Declare the session variable
 
   try {
     console.log("try")
@@ -104,6 +104,7 @@ const createCourse = async (req, res, next) => {
   } catch (error) {
     res.status(500).send({ message: `Error saving course to DB` });
     return;
+    
   
     // Abort the transaction and roll back changes
     // if (session) {
