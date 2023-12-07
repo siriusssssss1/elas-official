@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 // Initialize parameters
 const collectionName_courses = 'courses';
-
+//2
 //define structure of the documents in a collection
 const courseSchema = new mongoose.Schema({
 
