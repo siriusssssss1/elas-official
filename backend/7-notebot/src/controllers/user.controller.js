@@ -72,3 +72,34 @@ export const updateUser = async (req, res) => {
     return;
   }
 };
+
+// widget: upload pdf file
+export const uploadFile = async (req, res, next) => {
+ 
+  try {
+     
+    if (!req.file) {
+      return res.status(400).json({ error: "No file uploaded" });
+    }
+
+    const file = new File({
+      filename: req.file.originalname,
+      url: `/uploads/${req.file.filename}`,
+      size: req.file.size,
+    });
+
+    console.log(req.file)
+
+    await file.save();
+
+    res.json({ message: "PDF file uploaded successfully", pdf: file });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+//export functions -> not needed when already: export const getUserById
+//exports.getUserById = getUserById;
+//exports.createNewUser = createNewUser;
+//exports.updateUser = updateUser;
+//exports.uploadFile = uploadFile;

@@ -5,6 +5,10 @@
  */
 
 const controller = require("../controllers/user.controller");
+var express = require("express");
+var router = express.Router();
+const multer = require("multer");
+const uuid = require("uuid");
 
 /***************** START: INITIALIZE ROUTER MODULE *****************
  * @documentation
@@ -22,6 +26,20 @@ userRouter.use(function (req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, Content-Type, Accept");
   next();
 });
+
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, "public/uploads/");
+    },
+    filename: function (req, file, cb) {
+      let extArray = file.mimetype.split("/");
+      let extension = extArray[extArray.length - 1];
+      cb(null, uuid.v4() + "-" + Date.now() + "." + extension);
+    },
+  }),
+});
+const usersController = require("../controllers/usersController");
 /***************** END: INITIALIZE ROUTER MODULE *****************/
 
 /***************** START: CREATE ROUTES **************************
@@ -40,7 +58,12 @@ userRouter.use(function (req, res, next) {
 userRouter.get("/users/:userId", controller.getUserById);
 userRouter.post("/users", controller.createNewUser);
 userRouter.put("/users/:userId", controller.updateUser);
+userRouter.post("/upload", upload.single("file"), usersController.uploadFile);
+//userRouter.get("/", usersController.getUsers);
 
 /***************** END: CREATE ROUTES ****************************/
 
 module.exports = userRouter;
+
+
+
