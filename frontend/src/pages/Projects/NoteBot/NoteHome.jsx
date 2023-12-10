@@ -24,7 +24,8 @@ import { useNavigate } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 import { deleteCourseWithNotes } from "../../courses/list/course.api";
 
-export default function NoteHome() 
+export default function NoteHome() {
+
 
 const useStyles = makeStyles({
   underline: {
@@ -39,6 +40,7 @@ const useStyles = makeStyles({
     },
   },
 });
+}
 
 export const NotesList = () => {
   const theme = useTheme();
