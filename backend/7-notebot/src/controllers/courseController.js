@@ -69,7 +69,8 @@ const createCourse = async (req, res, next) => {
   const { title } = req.body;
   console.log("b")
   console.log(req.userData)
-  const user_id = req.body.userId;
+  const user_id = req.body.user_id;
+  console.log(req.body);
   console.log("c")
 
   //let session; // Declare the session variable
@@ -80,10 +81,12 @@ const createCourse = async (req, res, next) => {
     //session = await mongoose.startSession();
     //session.startTransaction();
     let course = new courseModel({
-      user_id: req.body.userId,
+      user_id: req.body.user_id,
       title: req.body.title,
     });
+    console.log("new");
     await course.save();
+    console.log("save");
     // Create the course
     // const createdCourse = await courseModel.create([{ user_id, title }], {
     //   session,
@@ -102,6 +105,7 @@ const createCourse = async (req, res, next) => {
     res.status(201).json({ course: course });
     return;
   } catch (error) {
+    console.log(error);
     res.status(500).send({ message: `Error saving course to DB` });
     return;
     
