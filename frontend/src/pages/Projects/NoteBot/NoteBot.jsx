@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Typography } from "@mui/material";
 import { getUserInfo } from "./utils/api.js";
+import Home from "./components/home";
+import SavedNotesList from "./components/saved-list";
 
 import noteBotLogo from "../../../assets/images/noteBot-logo.png";
 
@@ -14,7 +16,7 @@ export default function NoteBot() {
     },
   });
 
-  console.log(user)
+  console.log(user);
 
   useEffect(() => {
     let elasUser = JSON.parse(sessionStorage.getItem("elas-user"));
@@ -49,7 +51,6 @@ export default function NoteBot() {
               sx={{ width: "100%", pb: 2 }}
             />
           </Grid>
-
           <Grid container justifyContent="center" spacing={2}>
             <Grid item xs>
               <Typography variant="h5" align="center" gutterBottom>
@@ -67,6 +68,8 @@ export default function NoteBot() {
               )}
             </Grid>
           </Grid>
+          <Home />
+          <SavedNotesList />
         </Grid>
       </Grid>
     </Grid>
