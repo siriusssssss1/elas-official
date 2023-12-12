@@ -1,21 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Typography } from "@mui/material";
-import { getUserInfo } from "./utils/api.js";
+//import { getUserInfo } from ".routes//users/:userId";
+//import { getUserInfo } from "./routes/users/:userId";
+//import { getUserInfo } "./Users/vicky/Documents/elas-official/frontend/src/pages/Projects/NoteBot/utils";
+import { getUserInfo } from "./utils/notes/utils/api.js";
 
-//import chatbot from "./components/chatbot.jsx";
-//import courses from "./components/courses.jsx";
-//import home from "./components/home.jsxjsx";
-//import notes from "./components/notes.jsx";
 
-import noteBotLogo from "../../../assets/images/noteBot-logo.png";
-import NoteList from "./NoteList.jsx";
-//import NoteHome from "./NoteHome.jsx";
-import ChooseLayout from "./ChooseLayout.jsx";
-import CreateNote from "./CreateNote.jsx";
-import EditNote from "./EditNote";
-import Section from "./Section";
-import Routes from "./Routes";
-import NoteView from "./NoteView";
+
+import { Home } from "./GetStarted.jsx";
+
+//import GetStarted from "./GetStarted.jsx";
+
+
+//import noteBotLogo from "../../../assets/images/noteBot-logo.png";
+// import NoteList from "./NoteList.jsx";
+// //import NoteHome from "./NoteHome.jsx";
+// import ChooseLayout from "./ChooseLayout.jsx";
+// import CreateNote from "./CreateNote.jsx";
+// import EditNote from "./EditNote";
+// import Section from "./Section";
+// import Routes from "./Routes";
+// import NoteView from "./NoteView";
 
 export default function NoteBot() {
   const [user, setUser] = useState({
@@ -65,13 +70,15 @@ export default function NoteBot() {
 
           <Grid container justifyContent="center" spacing={2}>
             <Grid item xs>
-              <NoteList />
+              
+              <Home />
+              {/* <NoteList />
               <ChooseLayout />
               <CreateNote />
               <EditNote />
               <Section />
               <Routes />
-              <NoteView />
+              <NoteView /> */}
             </Grid>
           </Grid>
         </Grid>
