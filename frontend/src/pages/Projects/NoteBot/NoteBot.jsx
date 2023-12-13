@@ -1,10 +1,48 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Typography } from "@mui/material";
 import { getUserInfo } from "./utils/api.js";
-import Home from "./components/home";
-import SavedNotesList from "./components/saved-list";
+//import Home from "./components/home";
+//import SavedNotesList from "./components/saved-list";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Box from "@mui/material/Box";
+import MyNotes from "./components/MyNotes.jsx";
+import MyCourses from "./components/MyCourses.jsx";
 
 import noteBotLogo from "../../../assets/images/noteBot-logo.png";
+
+function CustomTabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+// CustomTabPanel.propTypes = {
+//   children: PropTypes.node,
+//   index: PropTypes.number.isRequired,
+//   value: PropTypes.number.isRequired,
+// };
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
 
 export default function NoteBot() {
   const [user, setUser] = useState({
@@ -15,6 +53,12 @@ export default function NoteBot() {
       username: "",
     },
   });
+
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   console.log(user);
 
@@ -53,23 +97,32 @@ export default function NoteBot() {
           </Grid>
           <Grid container justifyContent="center" spacing={2}>
             <Grid item xs>
-              <Typography variant="h5" align="center" gutterBottom>
-                NoteBot is a learnsourcing application.
-              </Typography>
-
-              {user.user.username ? (
-                <Typography variant="h5" align="center">
-                  Welcome <i>{user.user.name} </i>
-                </Typography>
-              ) : (
-                <Typography variant="h5" align="center">
-                  Message from server <i>{user.message} </i>
-                </Typography>
-              )}
+              <Box sx={{ width: "100%" }}>
+                <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                  <Tabs
+                    value={value}
+                    onChange={handleChange}
+                    aria-label="basic tabs example"
+                  >
+                    <Tab label="My Notes" {...a11yProps(0)} />
+                    <Tab label="My Courses" {...a11yProps(1)} />
+                    <Tab label="Item Three" {...a11yProps(2)} />
+                  </Tabs>
+                </Box>
+                <CustomTabPanel value={value} index={0}>
+                  <MyNotes />
+                </CustomTabPanel>
+                <CustomTabPanel value={value} index={1}>
+                  <MyCourses />
+                </CustomTabPanel>
+                <CustomTabPanel value={value} index={2}>
+                  Item Three
+                </CustomTabPanel>
+              </Box>
             </Grid>
           </Grid>
-          <Home />
-          <SavedNotesList />
+          {/* <Home />
+          <SavedNotesList /> */}
         </Grid>
       </Grid>
     </Grid>
