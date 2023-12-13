@@ -4,7 +4,7 @@
  * in the server.js file.
  */
 
-const controller = require("../controllers/user.controller");
+const controller = require("../controllers/userController");
 
 /***************** START: INITIALIZE ROUTER MODULE *****************
  * @documentation
