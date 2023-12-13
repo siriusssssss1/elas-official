@@ -36,23 +36,22 @@ export const getUserById = async (req, res) => {
 };
 /***************** END: GET USER INFO USING A CONTROLLER ******************/
 
-// createNewUser not needed?!
-// export const createNewUser = async (req, res) => {
-//   try {
-//     let user = new User({
-//       uid: req.body.uid,
-//       name: req.body.name,
-//       username: req.body.username,
-//     });
-//     await user.save();
-//     res.status(200).send({
-//       message: `User ${user.username} created successfully!`,
-//     });
-//   } catch (err) {
-//     res.status(500).send({ message: `Error saving user to DB` });
-//     return;
-//   }
-// };
+export const createNewUser = async (req, res) => {
+  try {
+    let user = new User({
+      uid: req.body.uid,
+      name: req.body.name,
+      username: req.body.username,
+    });
+    await user.save();
+    res.status(200).send({
+      message: `User ${user.username} created successfully!`,
+    });
+  } catch (err) {
+    res.status(500).send({ message: `Error saving user to DB` });
+    return;
+  }
+};
 
 export const updateUser = async (req, res) => {
   try {

@@ -9,7 +9,7 @@ const db = {};
  * Export the schema as a module. This will allow you to import the
  * schema in other files.
  */
-db.user = require("./userModel");
+db.user = require("./user.model");
 /***************** END: EXPORT SCHEMA AS MODULE *****************/
 // db.adminCommand(
 //     {

@@ -1,5 +1,5 @@
 const noteModel = require("../models/noteModel");
-const userModel = require("../models/userModel");
+const userModel = require("../models/user.model");
 const sectionModel = require("../models/sectionModel");
 const courseModel = require("../models/courseModel");
 const widgetModel = require("../models/widgetModel");

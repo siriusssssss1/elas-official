@@ -1,6 +1,6 @@
 const courseModel = require("../models/courseModel");
 const noteModel = require("../models/noteModel");
-const userModel = require("../models/userModel");
+const userModel = require("../models/user.model");
 const HttpError = require("../models/http-error");
 const mongoose = require("mongoose");
 const { json } = require("body-parser");
