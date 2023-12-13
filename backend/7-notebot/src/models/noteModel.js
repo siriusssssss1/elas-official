@@ -9,7 +9,7 @@ const noteSchema = new mongoose.Schema({
     type: String,
   },
   user_id: {
-    type: mongoose.Types.ObjectId,
+    type: String,
     required: true,
     ref:'users'
   },
@@ -26,7 +26,7 @@ const noteSchema = new mongoose.Schema({
     required: true,
   },
   course_id: {
-    type: mongoose.Types.ObjectId,
+    type: String,
     required: true,
     ref:'courses'
   },

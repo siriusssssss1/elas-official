@@ -7,7 +7,7 @@ const favController = require("../controllers/favoriteController");
 router.get("/:note_id/widgets", noteController.getNoteWidgets); // Grid view SavedNotes page
 // the rest of the path , pointer to the function from noteController
 router.get("/user/:user_id", noteController.getNoteByUserId); //Grid view of the Dashboard page
-router.post("/", noteController.createNote); // AddNote button in the Dashboard page
+router.post("/ac", noteController.createNote); // AddNote button in the Dashboard page
 router.put("/:note_id", noteController.updateNote); // Clicking on a note in the Dashboard page
 
 router.delete("/:note_id", noteController.deleteNote); // Clicking on the delete button in the NoteDetails page

@@ -241,22 +241,29 @@ const pushSectionsToNote = async (req, res, next) => {
 };
 
 const createNote = async (req, res, next) => {
-  const session = await mongoose.startSession();
-  session.startTransaction();
-  const user_id = req.userData.userId;
+  
+
+  console.log("111");
+  // const session = await mongoose.startSession();
+  // session.startTransaction();
+  const user_id = req.body.user_id;
+  console.log(user_id);
 
   const { title, isPublic, course_id, sections, widgets } = req.body;
+  console.log("test1");
 
   try {
     // Input validation
     if (!user_id || !title || !course_id || !sections || !widgets) {
       return res.status(400).json({ message: "Missing required fields." });
+      
     }
+    console.log("test2");
 
     const [user, course] = await Promise.all([
-      userModel.findById(user_id),
-      courseModel.findById(course_id),
-    ]);
+       userModel.findOne({uid:user_id}),
+       courseModel.findById(course_id),
+     ]);
 
     if (!user.notes) {
       user.notes = [];
@@ -272,6 +279,7 @@ const createNote = async (req, res, next) => {
         .status(404)
         .json({ message: "Could not find course for the provided id." });
     }
+    console.log("3");
 
     const createdNote = new noteModel({
       title: title,
@@ -280,17 +288,20 @@ const createNote = async (req, res, next) => {
       course_id: course_id,
       user_id: user_id,
     });
-    await createdNote.save({ session });
+    console.log("4");
+    //await createdNote.save({ session });
+    await createdNote.save();
+    console.log("5");
 
     for (const section of sections) {
       const sectionObject = new sectionModel({
         layout_field: section.layout_field,
         note_id: createdNote._id,
       });
-      await sectionObject.save({ session });
+      await sectionObject.save();
 
       createdNote.sections.push(sectionObject._id);
-      await createdNote.save({ session });
+      await createdNote.save();
 
       if (widgets[section.id]) {
         for (let widgetIndex in widgets[section.id]) {
@@ -303,19 +314,19 @@ const createNote = async (req, res, next) => {
             section_id: sectionObject._id,
           });
 
-          await widgetObject.save({ session });
+          await widgetObject.save();
 
           sectionObject.widgets.push(widgetObject._id);
         }
-        await sectionObject.save({ session });
+        await sectionObject.save();
       }
     }
 
     user.notes.push(createdNote._id);
 
-    await user.save({ session });
-    await session.commitTransaction();
-    await session.endSession();
+    await user.save();
+    // await session.commitTransaction();
+    // await session.endSession();
 
     res.status(201).json({
       message: "Note , Sections , Widgets created successfully !",
@@ -323,12 +334,13 @@ const createNote = async (req, res, next) => {
     });
   } catch (err) {
     console.log(err);
+    
     const error = new HttpError(
       "Adding Note , Sections , Widgets failed! please try again later.",
       500
     );
-    await session.abortTransaction();
-    await session.endSession();
+    // await session.abortTransaction();
+    // await session.endSession();
 
     return next(error);
   }

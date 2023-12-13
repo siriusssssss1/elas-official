@@ -18,12 +18,12 @@ global.__basedir = __dirname;
 // Middlewares
 
 
-// Dummy middleware, remove later
-app.use((req, res, next) => {
-  console.log("dummyMiddleware")
-  req.userData = {userId: "a5eef233-281b-4378-b8f2-bdb5e54d6203"}
-  next()
-});
+// // Dummy middleware, remove later
+// app.use((req, res, next) => {
+//   console.log("dummyMiddleware")
+//   req.userData = {userId: "a5eef233-281b-4378-b8f2-bdb5e54d6203"}
+//   next()
+// });
 
 
 app.use(express.json());
@@ -75,7 +75,7 @@ const widgetRoutes = require("./routes/widgets")
 
 app.use(apiURL, userRoutes);
 app.use(apiURL + '/courses', coursesRoutes);
-app.use(apiURL, noteRoutes);
+app.use(apiURL + '/notes', noteRoutes);
 app.use(apiURL, sectionRoutes);
 app.use(apiURL, widgetRoutes);
 // Add more routes here
