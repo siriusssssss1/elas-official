@@ -28,7 +28,8 @@ const getCoursesByUserId = async (req, res, next) => {
   console.log(user_id);
 
   try {
-    const user = await userModel.findOne({uid: user_id}).populate("courses");
+    const user = await userModel.findOne({uid: user_id});
+    const courses = await courseModel.find({user_id});
     console.log(user);
     if (!user) {
       return res
@@ -36,9 +37,9 @@ const getCoursesByUserId = async (req, res, next) => {
         .json({ message: "Could not find user for the provided user id." });
     }
 
-    const courses = user.courses.map((course) =>
-      course.toObject({ getters: true })
-    );
+    // const courses1 = courses.map((course) =>
+    //   course.toObject({ getters: true })
+    // );
 
     // await Promise.all(
     //   courses.map((course) => {
