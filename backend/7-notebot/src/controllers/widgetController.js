@@ -63,7 +63,7 @@ const addWidgetToSection = async (req, res, next) => {
 
 // create widget
 const createWidget = async (req, res, next) => {
-  const { type, data, section_id } = req.body;
+  const { type, data, layout_index, section_id } = req.body;
 
   try {
     // Input validation and error handling...
@@ -71,6 +71,7 @@ const createWidget = async (req, res, next) => {
     const createdWidget = new widgetModel({
       type,
       data,
+      layout_index,
       section_id,
     });
 
@@ -78,6 +79,7 @@ const createWidget = async (req, res, next) => {
 
     res.status(201).json({ message: "Widget created!", widget: createdWidget });
   } catch (err) {
+    console.log(err);
     const error = new HttpError("An error occurred while creating the widget.", 500);
     return next(error);
   }
