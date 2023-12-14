@@ -89,12 +89,13 @@ const createWidget = async (req, res, next) => {
 const getWidget = async (req, res, next) => {
   try {
     const widgets = await widgetModel.find();
-    res.json({ widgets: widgets.map((note) => widget.toObject({ getters: true })) });
+    res.json({ widgets: widgets.map((widget) => widget.toObject({ getters: true })) });
   } catch (err) {
     const error = new HttpError(
       "An error occurred while fetching notes. ",
       500
     );
+    console.log(err);
     return next(error);
   }
 };
