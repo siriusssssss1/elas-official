@@ -653,7 +653,8 @@ const updateNote = async (req, res, next) => {
 
 // Update Note Rating
 const updateRating = async (req, res, next) => {
-  const { noteId, userId, rating } = req.body;
+  const userId = req.body.user_id; 
+  const { noteId, rating } = req.body;
   console.log("Received parameters: noteId =", noteId, "userId =", userId, "rating =", rating);
   try {
     let updatedNote;
