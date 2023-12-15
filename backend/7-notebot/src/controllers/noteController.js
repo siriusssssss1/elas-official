@@ -71,15 +71,28 @@ const getNotesByUserIdAndCourseId = async (req, res, next) => {
 
 // Get user notes by user_id
 const getNoteByUserId = async (req, res, next) => {
-  const { user_id } = req.params;
+  const user_id = req.params.user_id;
+  
 
   try {
-    const user = await userModel.findById(user_id).populate("notes");
+    const user = await userModel.findOne({uid: user_id});
+    const notes = await noteModel.find({user_id});
 
-    if (!user.notes || user.notes.length === 0) {
+    if (!user) {
+      return res
+        .status(404)
+        .json({ message: "Could not find user for the provided user id." });
+    }
+    console.log(user.notes); //UNDEFINED
+    
+    if (!user.notes || !Array.isArray(user.notes)) {
       res.json({ notes: [] });
       return;
     }
+    // if (!user.notes || user.notes.length === 0) {
+    //   res.json({ notes: [] });
+    //   return;
+    // }
 
     //res.json({ notes: user.notes.map(note => note.toObject({ getters: true })) });
     // Group notes by course ID
@@ -97,12 +110,14 @@ const getNoteByUserId = async (req, res, next) => {
       };
     }, {});
 
+
     for (let note of user.notes) {
       const courseId = note.course_id._id.toString();
 
       let course;
       if (courseId) {
-        course = await courseModel.findById(courseId);
+        //course = await courseModel.findById(courseId);
+        course = await courseModel.findOne({courseId});
       }
 
       if (!course) {
