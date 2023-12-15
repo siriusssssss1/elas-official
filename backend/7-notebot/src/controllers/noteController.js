@@ -241,8 +241,10 @@ const pushSectionsToNote = async (req, res, next) => {
       return res.status(404).json({ message: "Note not found." });
     }
 
+    
     note.sections.push(...section_ids);
     await note.save();
+    
 
     res.status(200).json({ message: "Sections added to note.", note });
   } catch (err) {
@@ -428,7 +430,7 @@ const saveNote = async (req, res, next) => {
 
   try {
     // Find the user by user_id
-    const user = await userModel.findById(user_id);
+    const user = await userModel.findOne({uid:user_id});
 
     if (!user) {
       return res
@@ -467,6 +469,7 @@ const saveNote = async (req, res, next) => {
 
     res.json({ message: "Note saved successfully." });
   } catch (err) {
+    console.log(err);
     const error = new HttpError(
       "An error occurred while saving the note.",
       500

@@ -4,9 +4,9 @@ const HttpError = require("../models/http-error");
 const noteModel = require("../models/noteModel");
 
 const toggetFavoriteNote = async (req, res, next) => {
-  const session = await mongoose.startSession();
-  session.startTransaction();
-  const user_id = req.userData.userId;
+  // const session = await mongoose.startSession();
+  // session.startTransaction();
+  const user_id = req.body.user_id;
   const { note_id } = req.params;
   const payload = {
     note_id: note_id,
@@ -19,20 +19,20 @@ const toggetFavoriteNote = async (req, res, next) => {
       await favoriteModel.deleteOne(payload);
     } else {
       const favorite = new favoriteModel(payload);
-      await favorite.save({ session });
+      await favorite.save();
     }
 
-    await session.commitTransaction();
-    await session.endSession();
+    // await session.commitTransaction();
+    // await session.endSession();
 
     res.status(201).json({
       message: "Updated successfully !",
     });
   } catch (err) {
     console.log(err);
-    const error = new HttpError(" please try again later.", 500);
-    await session.abortTransaction();
-    await session.endSession();
+    const error = new HttpError(" Please try again later.", 500);
+    // await session.abortTransaction();
+    // await session.endSession();
 
     return next(error);
   }
@@ -40,7 +40,7 @@ const toggetFavoriteNote = async (req, res, next) => {
 
 // Get user notes by user_id
 const getFavNoteByUserId = async (req, res, next) => {
-  const { user_id } = req.params;
+  const user_id = req.params.user_id;
 
   console.log("user_id", user_id);
 
