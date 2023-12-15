@@ -573,10 +573,10 @@ const getNoteWidgets = async (req, res, next) => {
 
 const updateNote = async (req, res, next) => {
   try {
-    const session = await mongoose.startSession();
-    session.startTransaction();
-    const user_id = req.userData.userId;
-
+    // const session = await mongoose.startSession();
+    // session.startTransaction();
+    const user_id = req.body.user_id;
+   
     const { title, sections, widgets, course } = req.body;
 
     const note = await noteModel.findById(req.params.note_id);
@@ -590,7 +590,7 @@ const updateNote = async (req, res, next) => {
     note.title = title;
     note.course_id = course;
 
-    await note.save({ session });
+    await note.save();
     note.sections = [];
 
     for (const section of sections) {
@@ -604,7 +604,7 @@ const updateNote = async (req, res, next) => {
       sectionObject.layout_field = section.layout_field || undefined;
       sectionObject.note_id = note._id;
 
-      await sectionObject.save({ session });
+      await sectionObject.save();
 
       if (!note.sections.find((_id) => _id === sectionObject._id)) {
         note.sections.push(sectionObject._id);
@@ -627,18 +627,18 @@ const updateNote = async (req, res, next) => {
           widgetObject.layout_index = parseInt(widgetIndex);
           widgetObject.section_id = sectionObject._id;
 
-          await widgetObject.save({ session });
+          await widgetObject.save();
 
           sectionObject.widgets.push(widgetObject._id);
         }
-        await sectionObject.save({ session });
+        await sectionObject.save();
       }
     }
 
-    await note.save({ session });
+    await note.save();
 
-    await session.commitTransaction();
-    await session.endSession();
+    // await session.commitTransaction();
+    // await session.endSession();
 
     res.json({ note, sections, widgets });
   } catch (err) {
