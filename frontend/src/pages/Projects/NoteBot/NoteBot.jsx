@@ -113,6 +113,11 @@ export default function NoteBot() {
                       {" "}
                       ADD NOTE{" "}
                     </Button>
+
+                    {/* label: "Add Note",
+            startIcon: <AddIcon />,
+            onClick: () => navigate("/notes/create"),
+            color: "primary", */}
                   </Tabs>
                 </Box>
                 <CustomTabPanel value={value} index={0}>
