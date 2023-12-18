@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Typography } from "@mui/material";
 import { getUserInfo } from "./utils/api.js";
+import Button from "@mui/material/Button";
 //import Home from "./components/home";
 //import SavedNotesList from "./components/saved-list";
 import Tabs from "@mui/material/Tabs";
@@ -8,7 +9,7 @@ import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import MyNotes from "./components/MyNotes.jsx";
 import MyFavorites from "./components/MyFavorites.jsx";
-import Drafts from "./components/Drafts.jsx"
+import Drafts from "./components/Drafts.jsx";
 
 import noteBotLogo from "../../../assets/images/noteBot-logo.png";
 
@@ -106,18 +107,22 @@ export default function NoteBot() {
                     aria-label="basic tabs example"
                   >
                     <Tab label="My Notes" {...a11yProps(0)} />
-                    <Tab label="My My Favorites" {...a11yProps(1)} />
+                    <Tab label="My  Favorites" {...a11yProps(1)} />
                     <Tab label="Drafts" {...a11yProps(2)} />
+                    <Button variant="outlined" {...a11yProps(3)}>
+                      {" "}
+                      ADD NOTE{" "}
+                    </Button>
                   </Tabs>
                 </Box>
                 <CustomTabPanel value={value} index={0}>
-                  <MyNotes/>
+                  <MyNotes />
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={1}>
-                  <MyFavorites/>
+                  <MyFavorites />
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={2}>
-                  <Drafts/>
+                  <Drafts />
                 </CustomTabPanel>
               </Box>
             </Grid>
