@@ -106,7 +106,7 @@ export default function NoteBot() {
                     aria-label="basic tabs example"
                   >
                     <Tab label="My Notes" {...a11yProps(0)} />
-                    <Tab label="My My Favorites" {...a11yProps(1)} />
+                    <Tab label="My Favorites" {...a11yProps(1)} />
                     <Tab label="Drafts" {...a11yProps(2)} />
                   </Tabs>
                 </Box>
