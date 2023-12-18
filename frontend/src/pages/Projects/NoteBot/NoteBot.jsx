@@ -111,10 +111,10 @@ export default function NoteBot() {
                   </Tabs>
                 </Box>
                 <CustomTabPanel value={value} index={0}>
-                  <MyNotes />
+                  <MyNotes/>
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={1}>
-                  <MyFavorites />
+                  <MyFavorites/>
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={2}>
                   <Drafts/>
