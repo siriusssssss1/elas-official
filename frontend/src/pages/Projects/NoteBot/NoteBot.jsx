@@ -9,6 +9,8 @@ import Box from "@mui/material/Box";
 import MyNotes from "./components/MyNotes.jsx";
 import MyFavorites from "./components/MyFavorites.jsx";
 import Drafts from "./components/Drafts.jsx"
+import AddNoteButton from "./components/AddNoteButton.jsx";
+
 
 import noteBotLogo from "../../../assets/images/noteBot-logo.png";
 
@@ -108,6 +110,7 @@ export default function NoteBot() {
                     <Tab label="My Notes" {...a11yProps(0)} />
                     <Tab label="My Favorites" {...a11yProps(1)} />
                     <Tab label="Drafts" {...a11yProps(2)} />
+                    <Tab label="Add Note" {...a11yProps(3)} />
                   </Tabs>
                 </Box>
                 <CustomTabPanel value={value} index={0}>
@@ -118,6 +121,9 @@ export default function NoteBot() {
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={2}>
                   <Drafts/>
+                </CustomTabPanel>
+                <CustomTabPanel value={value} index={3}>
+                  <AddNote/>
                 </CustomTabPanel>
               </Box>
             </Grid>
