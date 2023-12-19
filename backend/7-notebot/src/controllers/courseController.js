@@ -145,10 +145,10 @@ const deleteCourseWithNotes = async (req, res, next) => {
       const noteIds = course.notes;
       console.log(noteIds);
       // Delete the course and its associated notes
-      // await Promise.all([
-      //   courseModel.findByIdAndDelete(course_id, { session }),
-      //   noteModel.deleteMany({ course_id: course_id }, { session }),
-      // ]);
+      await Promise.all([
+         courseModel.findByIdAndDelete(course_id),
+         noteModel.deleteMany({ course_id: course_id }),
+       ]);
 
       //await session.commitTransaction();
 
