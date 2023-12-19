@@ -35,7 +35,7 @@ const noteSchema = new mongoose.Schema({
     ref:'sections'
   }],
   saved_by: [{
-    type: mongoose.Types.ObjectId,
+    type: String, //mongoose.Types.ObjectId
     ref: 'users'
   }],
   ratings: [

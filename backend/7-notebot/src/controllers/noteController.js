@@ -173,7 +173,7 @@ const getNotesByCourseTitle = async (req, res, next) => {
       .populate("user_id", "user_name")
       .select("note_id title");
 
-    const user_id = req.userData.userId;
+    const user_id = req.headers.user_id;
 
     let favorites = await favoriteModel.find({
       user_id,
@@ -195,6 +195,7 @@ const getNotesByCourseTitle = async (req, res, next) => {
       }))
     );
   } catch (err) {
+    console.log(err);
     const error = new HttpError(
       "An error occurred while fetching notes. ",
       500
@@ -480,7 +481,7 @@ const saveNote = async (req, res, next) => {
 
 //get saved notes of a user
 const getSavedNotesByUserId = async (req, res, next) => {
-  const { user_id } = req.params;
+  const user_id = req.params.user_id;
 
   try {
     const notes = await noteModel
@@ -488,9 +489,12 @@ const getSavedNotesByUserId = async (req, res, next) => {
       .populate("course_id", "title")
       .populate("user_id", "user_name")
       .select("note_id title");
+    
+    console.log(notes);
 
     res.json(notes);
   } catch (err) {
+    console.log(err);
     const error = new HttpError("An error occurred while fetching notes.", 500);
     return next(error);
   }
