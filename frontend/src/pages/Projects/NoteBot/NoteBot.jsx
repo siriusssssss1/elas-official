@@ -81,20 +81,21 @@ export default function NoteBot() {
     getUserInfoFunction(elasUser.id);
   }, []);
 
+  
   return (
-    <Grid container justifyContent="center" sx={{ py: 4, px: 2 }}>
+    <Grid container justifyContent="flex-start" sx={{ py: 4, px: 2 }}>
       <Grid container sx={{ maxWidth: 1500, width: "100%" }} spacing={2}>
         <Grid item xs={12}>
-          <Grid container justifyContent={"center"}>
+          <Grid container>
             <Grid
               item
               component="img"
               src={noteBotLogo}
               alt="NoteBot Logo"
-              xs={12}
-              sm={7}
-              md={4}
-              sx={{ width: "100%", pb: 2 }}
+              xs={6}
+              sm={3}
+              md={2}
+              sx={{ width: "100%", pb: 10 }}
             />
           </Grid>
           <Grid container justifyContent="center" spacing={2}>
