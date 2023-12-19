@@ -376,14 +376,14 @@ const deleteNote = async (req, res, next) => {
         .json({ message: "Could not find note for the provided id." });
     }
 
-    if (note.user_id.toString() !== req.userData.userId) {
+    if (note.user_id.toString() !== req.headers.user_id) {
       return res
         .status(401)
         .json({ message: "You don't have permissions to delete this note." });
     }
 
-    const user = await userModel.findById(note.user_id);
-    const course = await courseModel.findById(note.course_id);
+    const user = await userModel.findOne({uid:note.user_id}); 
+    const course = await courseModel.findOne({courseId:note.course_id});
 
     await noteModel.deleteOne({
       _id: note_id,
@@ -395,23 +395,23 @@ const deleteNote = async (req, res, next) => {
 
     const widgetIds = widgets.map((widget) => widget._id);
 
-    user.notes.pull(note._id);
-    course.notes.pull(note._id);
+    // user.notes.pull(note._id);
+    // course.notes.pull(note._id);
 
-    await Promise.all([
-      user.save(),
-      course.save(),
-      sectionModel.deleteMany({
-        _id: {
-          $in: note.sections,
-        },
-      }),
-      widgetModel.deleteMany({
-        _id: {
-          $in: widgetIds,
-        },
-      }),
-    ]);
+    // await Promise.all([
+    //   user.save(),
+    //   course.save(),
+    //   sectionModel.deleteMany({
+    //     _id: {
+    //       $in: note.sections,
+    //     },
+    //   }),
+    //   widgetModel.deleteMany({
+    //     _id: {
+    //       $in: widgetIds,
+    //     },
+    //   }),
+    // ]);
 
     res.json({ message: "Note deleted!", note });
   } catch (err) {
