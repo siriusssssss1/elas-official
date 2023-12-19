@@ -10,6 +10,7 @@ import Box from "@mui/material/Box";
 import MyNotes from "./components/MyNotes.jsx";
 import MyFavorites from "./components/MyFavorites.jsx";
 import Drafts from "./components/Drafts.jsx";
+import AddNote from "./components/AddNote.jsx";
 
 import noteBotLogo from "../../../assets/images/noteBot-logo.png";
 
@@ -107,7 +108,7 @@ export default function NoteBot() {
                     aria-label="basic tabs example"
                   >
                     <Tab label="My Notes" {...a11yProps(0)} />
-                    <Tab label="My  Favorites" {...a11yProps(1)} />
+                    <Tab label="My Favorites" {...a11yProps(1)} />
                     <Tab label="Drafts" {...a11yProps(2)} />
                     <Button variant="outlined" {...a11yProps(3)}>
                       {" "}
@@ -128,6 +129,9 @@ export default function NoteBot() {
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={2}>
                   <Drafts />
+                </CustomTabPanel>
+                <CustomTabPanel value={value} index={3}>
+                  <AddNote />
                 </CustomTabPanel>
               </Box>
             </Grid>
