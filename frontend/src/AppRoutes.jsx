@@ -61,6 +61,7 @@ import Intogen from "./pages/Projects/Intogen/Intogen";
 import NoteBot from "./pages/Projects/NoteBot/NoteBot";
 import CourseDetail from "./pages/Projects/StudyCompassCopy/components/CoueseDetail";
 import StudyCompassNew from "./pages/Projects/StudyCompassCopy/StudyCompassNew";
+import AddNote from "./pages/Projects/NoteBot/components/AddNote.jsx";
 
 export default function AppRoutes() {
   const isAuthenticated = !!sessionStorage.getItem("elas-token");
@@ -104,6 +105,7 @@ export default function AppRoutes() {
       <Route path="projects">
         <Route path="notebot">
           <Route index element={<NoteBot />} />
+          <Route path="notes/create" element={<AddNote />} /> //Route erstellen
         </Route>
       </Route>
       <Route path="settings" element={<Settings />} />

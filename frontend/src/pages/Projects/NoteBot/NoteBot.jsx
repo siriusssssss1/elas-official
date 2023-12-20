@@ -14,6 +14,14 @@ import AddNote from "./components/AddNote.jsx";
 
 import noteBotLogo from "../../../assets/images/noteBot-logo.png";
 
+import {
+  Routes,
+  Route,
+  Navigate,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
+
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -48,6 +56,7 @@ function a11yProps(index) {
 }
 
 export default function NoteBot() {
+  const navigate = useNavigate();
   const [user, setUser] = useState({
     message: "Server not connected",
     user: {
@@ -82,7 +91,6 @@ export default function NoteBot() {
     getUserInfoFunction(elasUser.id);
   }, []);
 
-  
   return (
     <Grid container justifyContent="flex-start" sx={{ py: 4, px: 2 }}>
       <Grid container sx={{ maxWidth: 1500, width: "100%" }} spacing={2}>
@@ -111,7 +119,11 @@ export default function NoteBot() {
                     <Tab label="My Notes" {...a11yProps(0)} />
                     <Tab label="My Favorites" {...a11yProps(1)} />
                     <Tab label="Drafts" {...a11yProps(2)} />
-                    <Button variant="outlined" {...a11yProps(3)}>
+                    <Button
+                      variant="outlined"
+                      {...a11yProps(3)}
+                      onClick={() => navigate("/projects/notebot/notes/create")}
+                    >
                       {" "}
                       ADD NOTE{" "}
                     </Button>
