@@ -47,7 +47,7 @@ const getNotesByUserIdAndCourseId = async (req, res, next) => {
   const { user_id, course_id } = req.params;
 
   try {
-    const user = await userModel.findById(user_id).populate("notes");
+    const user = await userModel.findOne({uid:user_id}).populate("notes");
 
     if (!user.notes || user.notes.length === 0) {
       return res

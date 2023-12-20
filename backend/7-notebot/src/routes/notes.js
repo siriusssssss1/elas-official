@@ -11,7 +11,7 @@ router.post("/new", noteController.createNote); // AddNote button in the Dashboa
 router.put("/:note_id", noteController.updateNote); // Clicking on a note in the Dashboard page
 
 router.delete("/:note_id", noteController.deleteNote); // Clicking on the delete button in the NoteDetails page
-router.get("/users/:user_id/courses/:course_id/notes", noteController.getNotesByUserIdAndCourseId); // Show more link in the Dashboard page
+router.get("/users/:user_id/courses/:course_id", noteController.getNotesByUserIdAndCourseId); // Show more link in the Dashboard page
 router.get("/search/:keyword", noteController.getNotesByCourseTitle); // Search bar in the Dashboard page
 
 router.get("/users/:user_id/savednotes", noteController.getSavedNotesByUserId); // Grid view SavedNotes page
