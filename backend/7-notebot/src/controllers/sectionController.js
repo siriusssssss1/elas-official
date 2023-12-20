@@ -181,38 +181,42 @@ const deleteSection = async (req, res, next) => {
 
     try {
         const section = await sectionModel.findById(section_id).populate('widgets');
-
+        
         if (!section) {
             return res.status(404).json({ message: "Could not find section for the provided id." });
         }
 
-        const session = await mongoose.startSession();
-        session.startTransaction();
-
+       
         try {
-            await section.remove({ session });
-
-            // Remove the section from the note's sections array
-            section.note_id.sections.pull(section);
-
-            // Delete the section's widgets
-            await Promise.all(section.widgets.map(widget => widget.remove({ session })));
-
-            await section.note_id.save({ session });
-
-            await session.commitTransaction();
+            await sectionModel.deleteOne({ _id: section_id });
 
             res.status(200).json({ message: "Section deleted!" });
         } catch (error) {
-            await session.abortTransaction();
+            //await session.abortTransaction();
             throw error;
         }
     } catch (err) {
+      console.log(err);
         const error = new HttpError('An error occurred while deleting a section.', 500);
         return next(error);
     }
 
 };
+//const session = await mongoose.startSession();
+//session.startTransaction();
+
+
+// await section.remove();
+
+//Remove the section from the note's sections array
+//section.note_id.sections.pull(section);
+
+//Delete the section's widgets
+//await Promise.all(section.widgets.map(widget => widget.remove()));
+
+//await section.note_id.save();
+
+//await session.commitTransaction();
 
 //Add a section to a note
 const addSectionToNote = async (req, res, next) => {
