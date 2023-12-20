@@ -122,7 +122,7 @@ export default function NoteBot() {
                     <Button
                       variant="outlined"
                       {...a11yProps(3)}
-                      onClick={() => navigate("/projects/notebot/notes/create")}
+                      onClick={() => navigate("/projects/notebot/notes/create")} //adding Note
                     >
                       {" "}
                       ADD NOTE{" "}
