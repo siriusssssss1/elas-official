@@ -9,30 +9,30 @@ export default function AddNote() {
       </Grid>
     </Grid>
   );
-}
 
-return (
-  <Container maxWidth="md" sx={{ marginTop: 5 }}>
-    <PageHeader
-      title="My Notes"
-      isEditable={false}
-      variant={"standard"}
-      InputProps={{ classes }}
-      size="large"
-      actions={[
-        {
-          label: "Add Note",
-          startIcon: <AddIcon />,
-          onClick: () => navigate("/notes/create"),
-          color: "primary",
-        },
-        // {
-        //   label: "Add Course",
-        //   startIcon: <AddIcon />,
-        //   onClick: () => navigate("/courses"),
-        //   disableElevation: true,
-        // },
-      ]}
-    />
-  </Container>
-);
+  return (
+    <Container maxWidth="md" sx={{ marginTop: 5 }}>
+      <PageHeader
+        title="My Notes"
+        isEditable={false}
+        variant={"standard"}
+        InputProps={{ classes }}
+        size="large"
+        actions={[
+          {
+            label: "Add Note",
+            startIcon: <AddIcon />,
+            onClick: () => navigate("/notes/create"),
+            color: "primary",
+          },
+          // {
+          //   label: "Add Course",
+          //   startIcon: <AddIcon />,
+          //   onClick: () => navigate("/courses"),
+          //   disableElevation: true,
+          // },
+        ]}
+      />
+    </Container>
+  );
+}
