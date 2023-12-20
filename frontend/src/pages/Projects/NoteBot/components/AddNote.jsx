@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Typography } from "@mui/material";
+import { Container, Grid, Typography } from "@mui/material";
 
 export default function AddNote() {
   return (
@@ -10,3 +10,29 @@ export default function AddNote() {
     </Grid>
   );
 }
+
+return (
+  <Container maxWidth="md" sx={{ marginTop: 5 }}>
+    <PageHeader
+      title="My Notes"
+      isEditable={false}
+      variant={"standard"}
+      InputProps={{ classes }}
+      size="large"
+      actions={[
+        {
+          label: "Add Note",
+          startIcon: <AddIcon />,
+          onClick: () => navigate("/notes/create"),
+          color: "primary",
+        },
+        // {
+        //   label: "Add Course",
+        //   startIcon: <AddIcon />,
+        //   onClick: () => navigate("/courses"),
+        //   disableElevation: true,
+        // },
+      ]}
+    />
+  </Container>
+);
