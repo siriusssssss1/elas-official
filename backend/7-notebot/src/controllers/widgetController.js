@@ -100,8 +100,31 @@ const getWidget = async (req, res, next) => {
   }
 };
 
-    //delete widget from section
-    //const deleteWidget = async (req, res, next) => { ... }
+//delete widget from section
+const deleteWidget = async (req, res, next) => { 
+  const {section_id, widget_id} = req.params;
+
+  try {
+    const widget = await widgetModel.findById(widget_id);
+
+    if (!widget) {
+      return res
+        .status(404)
+        .json({ message: "Could not find widget for the provided id." });
+    }
+    try {
+      await widgetModel.deleteOne({ _id: widget_id });
+
+      res.status(200).json({ message: "Widget deleted!" });
+    } catch (error) {
+      throw error;
+    }
+  } catch (err) {
+  console.log(err);
+    const error = new HttpError('An error occurred while deleting a section.', 500);
+    return next(error);
+  }
+};
 
     //update widget
     //const updateWidget = async (req, res, next) => { ... }
@@ -110,3 +133,4 @@ const getWidget = async (req, res, next) => {
     exports.addWidgetToSection = addWidgetToSection;
     exports.createWidget = createWidget;
     exports.getWidget = getWidget;
+    exports.deleteWidget = deleteWidget; 
