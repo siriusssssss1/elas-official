@@ -704,6 +704,34 @@ const updateRating = async (req, res, next) => {
   }
 };
 
+const addNoteToCourse = async (req, res, next) => {
+  const { course_id } = req.params;
+  //const { note_id } = req.body; 
+
+  try {
+    const course = await courseModel.findById(course_id);
+    const note = await noteModel.findById(req.body.note_id);
+    console.log(note);
+
+
+    if (!course) {
+      return res.status(404).json({ message: "Course not found." });
+    }
+
+    // Save the new section
+    await note.save();
+
+    // Update the note's sections array with the newly created section
+    course.notes.push(note._id);
+    await course.save();
+
+    res.json({ message: "Note added to the course." });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Failed to add note to the course." });
+  }
+};
+
 exports.getNoteWidgets = getNoteWidgets;
 
 exports.getNotesByUserIdAndCourseId = getNotesByUserIdAndCourseId;
@@ -722,3 +750,4 @@ exports.createNoteWithEmptySections = createNote;
 exports.pushSectionsToNote = pushSectionsToNote;
 
 exports.updateRating = updateRating;
+exports.addNoteToCourse = addNoteToCourse;

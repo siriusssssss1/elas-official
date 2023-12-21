@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 const noteController = require("../controllers/noteController");
 const favController = require("../controllers/favoriteController");
+ 
 
 //Registering notes route
 router.get("/:note_id/widgets", noteController.getNoteWidgets); // Grid view SavedNotes page
@@ -27,6 +28,8 @@ router.post("/:note_id/favorite", favController.toggetFavoriteNote);
 router.get("/users/:user_id/favorite", favController.getFavNoteByUserId);
 
 router.post('/update_rating', noteController.updateRating);
+
+router.patch("/course/:course_id", noteController.addNoteToCourse);
 
 // test route
 router.get('/all', noteController.getNotes);
