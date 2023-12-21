@@ -28,7 +28,7 @@ router.post("/:note_id/favorite", favController.toggetFavoriteNote);
 router.get("/users/:user_id/favorite", favController.getFavNoteByUserId);
 
 router.post("/:note_id/draft", draftController.toggetDraftNote);
-router.get("/users/:user_id/draft", draftController.getDraftNoteByUserId);
+//router.get("/users/:user_id/draft", draftController.getDraftNoteByUserId);
 
 router.post('/update_rating', noteController.updateRating);
 

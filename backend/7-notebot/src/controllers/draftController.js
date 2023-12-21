@@ -32,41 +32,4 @@ const toggetDraftNote = async (req, res, next) => {
 };
 
 
-const getDraftNoteByUserId = async (req, res, next) => {
-    const user_id = req.params.user_id;
-  
-    console.log("user_id", user_id);
-  
-    try {
-      const groupedNotes = [];
-  
-      let drafts = await draftModel.find({
-        user_id: user_id,
-        // note_id: { $in: user.notes },
-      });
-  
-      const notes = await noteModel.find({
-        _id: { $in: drafts.map((draft) => draft.note_id) },
-      });
-  
-      console.log(notes)
-  
-      res.json({
-        notes: notes.map((note) => ({
-          ...note._doc,
-          isDraft: true,
-        })),
-      });
-    } catch (err) {
-      console.log(err);
-      const error = new HttpError(
-        "An error occurred while fetching notes. ",
-        500
-      );
-      return next(error);
-    }
-  };
-
-
 exports.toggetDraftNote = toggetDraftNote;
-exports.getDraftNoteByUserId = getDraftNoteByUserId;
