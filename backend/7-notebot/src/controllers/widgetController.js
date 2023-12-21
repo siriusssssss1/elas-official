@@ -126,11 +126,41 @@ const deleteWidget = async (req, res, next) => {
   }
 };
 
-    //update widget
-    //const updateWidget = async (req, res, next) => { ... }
+//update widget
+const updateWidget = async (req, res, next) => {
+    const { widget_id } = req.params;
+    const { layout_index, data } = req.body;
+
+    try {
+        // Input validation
+        if (!layout_index || !data ) {
+            return res.status(400).json({ message: "Invalid widget data." });
+        }
+
+        const widget = await widgetModel.findById(widget_id);
+
+        if (!widget) {
+            return res.status(404).json({ message: "Could not find widget for the provided id." });
+        }
+
+        widget.layout_index = layout_index;
+        widget.data = data;
+        
+        await widget.save();
+
+        res.status(200).json({ message: "Widget updated!", widget: widget.toObject({ getters: true }) });
+
+    } catch (err) {
+      console.log(err);
+        const error = new HttpError('An error occurred while updating a widget.', 500);
+        return next(error);
+    }
+};
+
 
     exports.getWidgetsBySectionId = getWidgetsBySectionId;
     exports.addWidgetToSection = addWidgetToSection;
     exports.createWidget = createWidget;
     exports.getWidget = getWidget;
     exports.deleteWidget = deleteWidget; 
+    exports.updateWidget = updateWidget;
