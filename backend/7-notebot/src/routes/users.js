@@ -4,7 +4,7 @@
  * in the server.js file.
  */
 
-const controller = require("../controllers/user.controller");
+const controller = require("../controllers/userController");
 
 /***************** START: INITIALIZE ROUTER MODULE *****************
  * @documentation
@@ -37,9 +37,9 @@ userRouter.use(function (req, res, next) {
  * The controller function is define in the 'user.controller.js' 
  * file under controllers folder.
  */
-userRouter.get("/users/:userId", controller.getUserById);
-userRouter.post("/users", controller.createNewUser);
-userRouter.put("/users/:userId", controller.updateUser);
+userRouter.get("/:userId", controller.getUserById);
+userRouter.post("/new", controller.createNewUser);
+userRouter.put("/:userId", controller.updateUser);
 
 /***************** END: CREATE ROUTES ****************************/
 

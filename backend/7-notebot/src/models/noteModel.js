@@ -9,7 +9,7 @@ const noteSchema = new mongoose.Schema({
     type: String,
   },
   user_id: {
-    type: mongoose.Types.ObjectId,
+    type: String,
     required: true,
     ref:'users'
   },
@@ -26,7 +26,7 @@ const noteSchema = new mongoose.Schema({
     required: true,
   },
   course_id: {
-    type: mongoose.Types.ObjectId,
+    type: String,
     required: true,
     ref:'courses'
   },
@@ -35,12 +35,12 @@ const noteSchema = new mongoose.Schema({
     ref:'sections'
   }],
   saved_by: [{
-    type: mongoose.Types.ObjectId,
+    type: String, //mongoose.Types.ObjectId
     ref: 'users'
   }],
   ratings: [
     {
-      userId: { type: mongoose.Types.ObjectId, ref: "users" },
+      userId: { type: mongoose.Types.ObjectId, ref: "users" }, //probably better: type:String
       rating: { type: Number, min: 1, max: 5, required: true },
     },
   ],

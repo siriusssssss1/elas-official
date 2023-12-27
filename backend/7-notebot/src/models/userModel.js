@@ -16,6 +16,7 @@ const User = new Schema({
   uid: { type: String, required: true },
   name: { type: String, required: true },
   username: { type: String, required: true },
+  notes: [{type: mongoose.Types.ObjectId, ref: 'notes'}]
 });
 /***************** END: DEFINE A SCHEMA *****************/
 

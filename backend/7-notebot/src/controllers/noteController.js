@@ -1,5 +1,5 @@
 const noteModel = require("../models/noteModel");
-const userModel = require("../models/user.model");
+const userModel = require("../models/userModel");
 const sectionModel = require("../models/sectionModel");
 const courseModel = require("../models/courseModel");
 const widgetModel = require("../models/widgetModel");
@@ -47,7 +47,7 @@ const getNotesByUserIdAndCourseId = async (req, res, next) => {
   const { user_id, course_id } = req.params;
 
   try {
-    const user = await userModel.findById(user_id).populate("notes");
+    const user = await userModel.findOne({uid:user_id}).populate("notes");
 
     if (!user.notes || user.notes.length === 0) {
       return res
@@ -71,17 +71,27 @@ const getNotesByUserIdAndCourseId = async (req, res, next) => {
 
 // Get user notes by user_id
 const getNoteByUserId = async (req, res, next) => {
-  const { user_id } = req.params;
-
+  const user_id = req.params.user_id;
+  
   try {
-    const user = await userModel.findById(user_id).populate("notes");
+    const user = await userModel.findOne({uid: user_id}).populate('notes');
+    //const notes = await noteModel.findById(user_id);
+    const notes = await noteModel.find({ uid: user_id }); 
 
+
+    if (!user) {
+      return res
+        .status(404)
+        .json({ message: "Could not find user for the provided user id." });
+    }
+    console.log(user.notes); 
+    
     if (!user.notes || user.notes.length === 0) {
-      res.json({ notes: [] });
-      return;
+        res.json({ notes: [] });
+        return;
     }
 
-    //res.json({ notes: user.notes.map(note => note.toObject({ getters: true })) });
+    res.json({ notes: user.notes.map(note => note.toObject({ getters: true })) });
     // Group notes by course ID
     const groupedNotes = {};
 
@@ -97,12 +107,14 @@ const getNoteByUserId = async (req, res, next) => {
       };
     }, {});
 
+
     for (let note of user.notes) {
       const courseId = note.course_id._id.toString();
 
       let course;
       if (courseId) {
-        course = await courseModel.findById(courseId);
+        //course = await courseModel.findById(courseId);
+        course = await courseModel.findOne({courseId});
       }
 
       if (!course) {
@@ -158,7 +170,7 @@ const getNotesByCourseTitle = async (req, res, next) => {
       .populate("user_id", "user_name")
       .select("note_id title");
 
-    const user_id = req.userData.userId;
+    const user_id = req.headers.user_id;
 
     let favorites = await favoriteModel.find({
       user_id,
@@ -180,6 +192,7 @@ const getNotesByCourseTitle = async (req, res, next) => {
       }))
     );
   } catch (err) {
+    console.log(err);
     const error = new HttpError(
       "An error occurred while fetching notes. ",
       500
@@ -226,8 +239,10 @@ const pushSectionsToNote = async (req, res, next) => {
       return res.status(404).json({ message: "Note not found." });
     }
 
+    
     note.sections.push(...section_ids);
     await note.save();
+    
 
     res.status(200).json({ message: "Sections added to note.", note });
   } catch (err) {
@@ -241,22 +256,29 @@ const pushSectionsToNote = async (req, res, next) => {
 };
 
 const createNote = async (req, res, next) => {
-  const session = await mongoose.startSession();
-  session.startTransaction();
-  const user_id = req.userData.userId;
+  
+
+  console.log("111");
+  // const session = await mongoose.startSession();
+  // session.startTransaction();
+  const user_id = req.body.user_id;
+  console.log(user_id);
 
   const { title, isPublic, course_id, sections, widgets } = req.body;
+  console.log("test1");
 
   try {
     // Input validation
     if (!user_id || !title || !course_id || !sections || !widgets) {
       return res.status(400).json({ message: "Missing required fields." });
+      
     }
+    console.log("test2");
 
     const [user, course] = await Promise.all([
-      userModel.findById(user_id),
-      courseModel.findById(course_id),
-    ]);
+       userModel.findOne({uid:user_id}),
+       courseModel.findById(course_id),
+     ]);
 
     if (!user.notes) {
       user.notes = [];
@@ -272,6 +294,7 @@ const createNote = async (req, res, next) => {
         .status(404)
         .json({ message: "Could not find course for the provided id." });
     }
+    console.log("3");
 
     const createdNote = new noteModel({
       title: title,
@@ -280,17 +303,20 @@ const createNote = async (req, res, next) => {
       course_id: course_id,
       user_id: user_id,
     });
-    await createdNote.save({ session });
+    console.log("4");
+    //await createdNote.save({ session });
+    await createdNote.save();
+    console.log("5");
 
     for (const section of sections) {
       const sectionObject = new sectionModel({
         layout_field: section.layout_field,
         note_id: createdNote._id,
       });
-      await sectionObject.save({ session });
+      await sectionObject.save();
 
       createdNote.sections.push(sectionObject._id);
-      await createdNote.save({ session });
+      await createdNote.save();
 
       if (widgets[section.id]) {
         for (let widgetIndex in widgets[section.id]) {
@@ -303,19 +329,19 @@ const createNote = async (req, res, next) => {
             section_id: sectionObject._id,
           });
 
-          await widgetObject.save({ session });
+          await widgetObject.save();
 
           sectionObject.widgets.push(widgetObject._id);
         }
-        await sectionObject.save({ session });
+        await sectionObject.save();
       }
     }
 
     user.notes.push(createdNote._id);
 
-    await user.save({ session });
-    await session.commitTransaction();
-    await session.endSession();
+    await user.save();
+    // await session.commitTransaction();
+    // await session.endSession();
 
     res.status(201).json({
       message: "Note , Sections , Widgets created successfully !",
@@ -323,12 +349,13 @@ const createNote = async (req, res, next) => {
     });
   } catch (err) {
     console.log(err);
+    
     const error = new HttpError(
       "Adding Note , Sections , Widgets failed! please try again later.",
       500
     );
-    await session.abortTransaction();
-    await session.endSession();
+    // await session.abortTransaction();
+    // await session.endSession();
 
     return next(error);
   }
@@ -347,14 +374,14 @@ const deleteNote = async (req, res, next) => {
         .json({ message: "Could not find note for the provided id." });
     }
 
-    if (note.user_id.toString() !== req.userData.userId) {
+    if (note.user_id.toString() !== req.headers.user_id) {
       return res
         .status(401)
         .json({ message: "You don't have permissions to delete this note." });
     }
 
-    const user = await userModel.findById(note.user_id);
-    const course = await courseModel.findById(note.course_id);
+    const user = await userModel.findOne({uid:note.user_id}); 
+    const course = await courseModel.findOne({courseId:note.course_id});
 
     await noteModel.deleteOne({
       _id: note_id,
@@ -366,23 +393,23 @@ const deleteNote = async (req, res, next) => {
 
     const widgetIds = widgets.map((widget) => widget._id);
 
-    user.notes.pull(note._id);
-    course.notes.pull(note._id);
+    // user.notes.pull(note._id);
+    // course.notes.pull(note._id);
 
-    await Promise.all([
-      user.save(),
-      course.save(),
-      sectionModel.deleteMany({
-        _id: {
-          $in: note.sections,
-        },
-      }),
-      widgetModel.deleteMany({
-        _id: {
-          $in: widgetIds,
-        },
-      }),
-    ]);
+    // await Promise.all([
+    //   user.save(),
+    //   course.save(),
+    //   sectionModel.deleteMany({
+    //     _id: {
+    //       $in: note.sections,
+    //     },
+    //   }),
+    //   widgetModel.deleteMany({
+    //     _id: {
+    //       $in: widgetIds,
+    //     },
+    //   }),
+    // ]);
 
     res.json({ message: "Note deleted!", note });
   } catch (err) {
@@ -401,7 +428,7 @@ const saveNote = async (req, res, next) => {
 
   try {
     // Find the user by user_id
-    const user = await userModel.findById(user_id);
+    const user = await userModel.findOne({uid:user_id});
 
     if (!user) {
       return res
@@ -440,6 +467,7 @@ const saveNote = async (req, res, next) => {
 
     res.json({ message: "Note saved successfully." });
   } catch (err) {
+    console.log(err);
     const error = new HttpError(
       "An error occurred while saving the note.",
       500
@@ -450,7 +478,7 @@ const saveNote = async (req, res, next) => {
 
 //get saved notes of a user
 const getSavedNotesByUserId = async (req, res, next) => {
-  const { user_id } = req.params;
+  const user_id = req.params.user_id;
 
   try {
     const notes = await noteModel
@@ -458,9 +486,12 @@ const getSavedNotesByUserId = async (req, res, next) => {
       .populate("course_id", "title")
       .populate("user_id", "user_name")
       .select("note_id title");
+    
+    console.log(notes);
 
     res.json(notes);
   } catch (err) {
+    console.log(err);
     const error = new HttpError("An error occurred while fetching notes.", 500);
     return next(error);
   }
@@ -543,10 +574,10 @@ const getNoteWidgets = async (req, res, next) => {
 
 const updateNote = async (req, res, next) => {
   try {
-    const session = await mongoose.startSession();
-    session.startTransaction();
-    const user_id = req.userData.userId;
-
+    // const session = await mongoose.startSession();
+    // session.startTransaction();
+    const user_id = req.body.user_id;
+   
     const { title, sections, widgets, course } = req.body;
 
     const note = await noteModel.findById(req.params.note_id);
@@ -560,7 +591,7 @@ const updateNote = async (req, res, next) => {
     note.title = title;
     note.course_id = course;
 
-    await note.save({ session });
+    await note.save();
     note.sections = [];
 
     for (const section of sections) {
@@ -574,7 +605,7 @@ const updateNote = async (req, res, next) => {
       sectionObject.layout_field = section.layout_field || undefined;
       sectionObject.note_id = note._id;
 
-      await sectionObject.save({ session });
+      await sectionObject.save();
 
       if (!note.sections.find((_id) => _id === sectionObject._id)) {
         note.sections.push(sectionObject._id);
@@ -597,18 +628,18 @@ const updateNote = async (req, res, next) => {
           widgetObject.layout_index = parseInt(widgetIndex);
           widgetObject.section_id = sectionObject._id;
 
-          await widgetObject.save({ session });
+          await widgetObject.save();
 
           sectionObject.widgets.push(widgetObject._id);
         }
-        await sectionObject.save({ session });
+        await sectionObject.save();
       }
     }
 
-    await note.save({ session });
+    await note.save();
 
-    await session.commitTransaction();
-    await session.endSession();
+    // await session.commitTransaction();
+    // await session.endSession();
 
     res.json({ note, sections, widgets });
   } catch (err) {
@@ -623,7 +654,8 @@ const updateNote = async (req, res, next) => {
 
 // Update Note Rating
 const updateRating = async (req, res, next) => {
-  const { noteId, userId, rating } = req.body;
+  const userId = req.body.user_id; 
+  const { noteId, rating } = req.body;
   console.log("Received parameters: noteId =", noteId, "userId =", userId, "rating =", rating);
   try {
     let updatedNote;
@@ -672,6 +704,34 @@ const updateRating = async (req, res, next) => {
   }
 };
 
+const addNoteToCourse = async (req, res, next) => {
+  const { course_id } = req.params;
+  //const { note_id } = req.body; 
+
+  try {
+    const course = await courseModel.findById(course_id);
+    const note = await noteModel.findById(req.body.note_id);
+    console.log(note);
+
+
+    if (!course) {
+      return res.status(404).json({ message: "Course not found." });
+    }
+
+    // Save the new section
+    await note.save();
+
+    // Update the note's sections array with the newly created section
+    course.notes.push(note._id);
+    await course.save();
+
+    res.json({ message: "Note added to the course." });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Failed to add note to the course." });
+  }
+};
+
 exports.getNoteWidgets = getNoteWidgets;
 
 exports.getNotesByUserIdAndCourseId = getNotesByUserIdAndCourseId;
@@ -690,3 +750,4 @@ exports.createNoteWithEmptySections = createNote;
 exports.pushSectionsToNote = pushSectionsToNote;
 
 exports.updateRating = updateRating;
+exports.addNoteToCourse = addNoteToCourse;
