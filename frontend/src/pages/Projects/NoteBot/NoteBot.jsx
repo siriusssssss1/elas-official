@@ -111,16 +111,35 @@ export default function NoteBot() {
           <Grid container justifyContent="center" spacing={100}>
             <Grid item xs={12}>
               <Box sx={{ width: "100%" }}>
-                <Box sx={{ borderBottom: 1, borderColor: "divider", display: 'flex', justifyContent: 'space-around'}}>
+                <Box
+                  sx={{
+                    borderBottom: 1,
+                    borderColor: "divider",
+                    display: "flex",
+                    justifyContent: "space-around",
+                  }}
+                >
                   <Tabs
                     value={value}
                     onChange={handleChange}
                     aria-label="basic tabs example"
-                    variant = "fullWidth"
+                    variant="fullWidth"
                   >
-                    <Tab label="My Notes" {...a11yProps(0)} sx={{ marginRight: 6 }}/>
-                    <Tab label="My Favorites" {...a11yProps(1)} sx={{ marginRight: 6 }}/>
-                    <Tab label="Drafts" {...a11yProps(2)} sx={{ marginRight: 8 }}/>
+                    <Tab
+                      label="My Notes"
+                      {...a11yProps(0)}
+                      sx={{ marginRight: 6 }}
+                    />
+                    <Tab
+                      label="My Favorites"
+                      {...a11yProps(1)}
+                      sx={{ marginRight: 6 }}
+                    />
+                    <Tab
+                      label="Drafts"
+                      {...a11yProps(2)}
+                      sx={{ marginRight: 8 }}
+                    />
                     <Button
                       variant="outlined"
                       {...a11yProps(3)}
@@ -149,9 +168,9 @@ export default function NoteBot() {
                   <AddNote />
                 </CustomTabPanel>
               </Box>
-              //<CustomTabPanel value={value} index={4}>
-              //    <CreateNote />
-               // </CustomTabPanel>
+              {/* <CustomTabPanel value={value} index={4}>
+                  <CreateNote />
+              </CustomTabPanel> */}
             </Grid>
           </Grid>
           {/* <Home />
