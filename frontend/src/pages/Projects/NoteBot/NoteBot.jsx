@@ -11,6 +11,7 @@ import MyNotes from "./components/MyNotes.jsx";
 import MyFavorites from "./components/MyFavorites.jsx";
 import Drafts from "./components/Drafts.jsx";
 import AddNote from "./components/AddNote.jsx";
+//import CreateNote from "./components/Notes/create.jsx";
 
 import noteBotLogo from "../../../assets/images/noteBot-logo.png";
 
@@ -92,10 +93,10 @@ export default function NoteBot() {
   }, []);
 
   return (
-    <Grid container justifyContent="flex-start" sx={{ py: 4, px: 2 }}>
+    <Grid container justifyContent="center" sx={{ py: 4, px: 2 }}>
       <Grid container sx={{ maxWidth: 1500, width: "100%" }} spacing={2}>
         <Grid item xs={12}>
-          <Grid container>
+          <Grid container alignItems="center" justifyContent="space-between">
             <Grid
               item
               component="img"
@@ -104,21 +105,22 @@ export default function NoteBot() {
               xs={6}
               sm={3}
               md={2}
-              sx={{ width: "100%", pb: 10 }}
+              sx={{ width: "100%", pb: 5 }}
             />
           </Grid>
-          <Grid container justifyContent="center" spacing={2}>
-            <Grid item xs>
+          <Grid container justifyContent="center" spacing={100}>
+            <Grid item xs={12}>
               <Box sx={{ width: "100%" }}>
-                <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                <Box sx={{ borderBottom: 1, borderColor: "divider", display: 'flex', justifyContent: 'space-around'}}>
                   <Tabs
                     value={value}
                     onChange={handleChange}
                     aria-label="basic tabs example"
+                    variant = "fullWidth"
                   >
-                    <Tab label="My Notes" {...a11yProps(0)} />
-                    <Tab label="My Favorites" {...a11yProps(1)} />
-                    <Tab label="Drafts" {...a11yProps(2)} />
+                    <Tab label="My Notes" {...a11yProps(0)} sx={{ marginRight: 6 }}/>
+                    <Tab label="My Favorites" {...a11yProps(1)} sx={{ marginRight: 6 }}/>
+                    <Tab label="Drafts" {...a11yProps(2)} sx={{ marginRight: 8 }}/>
                     <Button
                       variant="outlined"
                       {...a11yProps(3)}
@@ -147,6 +149,9 @@ export default function NoteBot() {
                   <AddNote />
                 </CustomTabPanel>
               </Box>
+              //<CustomTabPanel value={value} index={4}>
+              //    <CreateNote />
+               // </CustomTabPanel>
             </Grid>
           </Grid>
           {/* <Home />
