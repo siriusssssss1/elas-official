@@ -120,6 +120,7 @@ const createSection = async (req, res, next) => {
 const updateSection = async (req, res, next) => {
     const { section_id } = req.params;
     const { layout_field } = req.body;
+    console.log(section_id);
 
     try {
         // Input validation
