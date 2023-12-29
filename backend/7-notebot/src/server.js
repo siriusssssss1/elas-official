@@ -71,13 +71,17 @@ const userRoutes = require("./routes/users");
 const coursesRoutes = require("./routes/courses");
 const noteRoutes = require("./routes/notes");
 const sectionRoutes = require("./routes/sections");
-const widgetRoutes = require("./routes/widgets")
+const widgetRoutes = require("./routes/widgets");
+var chatRouter = require("./routes/chat");
+var chatbotRouter = require("./controllers/chatbotController");
 
 app.use(apiURL + '/users', userRoutes);
 app.use(apiURL + '/courses', coursesRoutes);
 app.use(apiURL + '/notes', noteRoutes);
 app.use(apiURL + 'sections', sectionRoutes);
 app.use(apiURL + '/widgets', widgetRoutes);
+app.use(apiURL + "/chat", chatbotRouter); // Mount the chatbotController as a middleware
+// app.use("/chat", chatRouter);
 // Add more routes here
 
 /***************** END: IMPORT ROUTES *****************/
