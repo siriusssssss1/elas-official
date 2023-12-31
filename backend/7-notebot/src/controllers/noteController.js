@@ -6,6 +6,7 @@ const widgetModel = require("../models/widgetModel");
 const mongoose = require("mongoose");
 const HttpError = require("../models/http-error");
 const favoriteModel = require("../models/favoriteModel");
+const { search } = require("../routes/notes");
 
 //const { validationResult } = require('express-validator');
 
@@ -155,13 +156,23 @@ const getNoteByUserId = async (req, res, next) => {
 // Get all notes by course title
 const getNotesByCourseTitle = async (req, res, next) => {
   const searchKeyword = req.params.keyword;
+  function escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+  }
+  const escapeKeyword = escapeRegExp(searchKeyword);
+  console.log(searchKeyword);
+  console.log(escapeKeyword);
 
   try {
     // Get all courses that match the search keyword
     const courses = await courseModel.find({
-      title: { $regex: searchKeyword, $options: "i" },
+      title: { $regex: escapeKeyword, $options: "i" }, //Form String beschreiben (z.B. email)
     });
+    console.log(courses);
+    
+
     const courseIds = courses.map((course) => course._id);
+    console.log(courseIds);
 
     // Get all notes that match the course ids
     const notes = await noteModel
@@ -169,6 +180,8 @@ const getNotesByCourseTitle = async (req, res, next) => {
       .populate("course_id", "title")
       .populate("user_id", "user_name")
       .select("note_id title");
+
+    console.log(notes);
 
     const user_id = req.headers.user_id;
 
@@ -482,7 +495,7 @@ const getSavedNotesByUserId = async (req, res, next) => {
 
   try {
     const notes = await noteModel
-      .find({ saved_by: user_id })
+      .find({ user_id: user_id })
       .populate("course_id", "title")
       .populate("user_id", "user_name")
       .select("note_id title");

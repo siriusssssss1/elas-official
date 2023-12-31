@@ -28,6 +28,7 @@ const getCoursesByUserId = async (req, res, next) => {
 
   try {
     const user = await userModel.findById(user_id).populate("courses");
+    console.log(user);
 
     if (!user) {
       return res
