@@ -34,5 +34,6 @@ router.patch("/course/:course_id", noteController.addNoteToCourse);
 // test route
 router.get('/all', noteController.getNotes);
 
+
 //export the router
 module.exports = router;

@@ -67,28 +67,23 @@ const getCoursesByUserId = async (req, res, next) => {
 
 //Create a new course
 const createCourse = async (req, res, next) => {
-  console.log("a")
-  const { title } = req.body;
-  console.log("b")
-  console.log(req.userData)
-  const user_id = req.body.user_id;
-  console.log(req.body);
-  console.log("c")
+  const { title, user_id } = req.body;
 
   //let session; // Declare the session variable
 
   try {
-    console.log("try")
     // Start a Mongoose session
     //session = await mongoose.startSession();
     //session.startTransaction();
     let course = new courseModel({
-      user_id: req.body.user_id,
-      title: req.body.title,
+      title: title,
+      user_id: user_id,
     });
-    console.log("new");
-    await course.save();
-    console.log("save");
+    const savedCourse = await course.save();
+    const course_id = savedCourse._id;
+
+    await userModel.updateMany({uid: user_id}, {$push: {courses:course_id}});
+
     // Create the course
     // const createdCourse = await courseModel.create([{ user_id, title }], {
     //   session,
@@ -150,8 +145,7 @@ const deleteCourseWithNotes = async (req, res, next) => {
       console.log(noteIds);
       res.status(200).json({ message: "Course and associated notes deleted." });
     } catch (error) {
-      console.log(error);
-      // await session.abortTransaction();
+      console.log(err);
       const httpError = new HttpError(
         `An error occurred while deleting the course: ${error.message}`,
         500
