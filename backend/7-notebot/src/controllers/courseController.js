@@ -24,10 +24,10 @@ const getAllCourses = async (req, res, next) => {
 
 //Get courses by user_id
 const getCoursesByUserId = async (req, res, next) => {
-  const user_id = req.body.userId;
-
+  const user_id = req.params.user_id;
+  console.log(user_id);
   try {
-    const user = await userModel.findById(user_id).populate("courses");
+    const user = await userModel.findOne({uid: user_id}).populate("courses");
     console.log(user);
 
     if (!user) {
@@ -56,6 +56,7 @@ const getCoursesByUserId = async (req, res, next) => {
       courses,
     });
   } catch (err) {
+    console.log(err);
     const error = new HttpError(
       "An error occurred while fetching courses.",
       500
