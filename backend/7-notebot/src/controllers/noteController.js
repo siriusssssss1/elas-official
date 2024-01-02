@@ -7,6 +7,8 @@ const mongoose = require("mongoose");
 const HttpError = require("../models/http-error");
 const favoriteModel = require("../models/favoriteModel");
 const { search } = require("../routes/notes");
+const searchModel = require("../models/searchModel");
+
 
 //const { validationResult } = require('express-validator');
 
@@ -160,7 +162,7 @@ const getNotesByCourseAndNoteTitle = async (req, res, next) => {
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
   }
   const escapeKeyword = escapeRegExp(searchKeyword);
-  
+
   try {
     // Get all courses that match the search keyword
     const courses = await courseModel.find({
@@ -178,6 +180,10 @@ const getNotesByCourseAndNoteTitle = async (req, res, next) => {
     
 
     const user_id = req.headers.user_id;
+
+    const latestSearch = new searchModel({user_id, search_query:searchKeyword, timestamp:new Date()})
+
+    await latestSearch.save();
 
     let favorites = await favoriteModel.find({
       user_id,

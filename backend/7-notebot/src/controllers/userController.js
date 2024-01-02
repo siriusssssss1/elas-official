@@ -1,4 +1,5 @@
 const db = require("../models");
+const searchModel = require("../models/searchModel");
 const User = db.user;
 
 /***************** START: GET USER INFO USING A CONTROLLER *****************
@@ -19,12 +20,12 @@ const User = db.user;
  * @returns a response object with a status code and a message. If a
  * user is found, it also includes the found user object in the response.
  */
-export const getUserById = async (req, res) => {
+const getUserById = async (req, res) => {
   try {
     const userId = req.params.userId;
     let foundUser = await User.findOne({ uid: userId });
     if (foundUser) {
-      return res.status(200).send({ message: `User found22!`, user: foundUser });
+      return res.status(200).send({ message: `User found!`, user: foundUser });
     }
     return res.status(200).send({ message: `User not found!` });
   } catch (err) {
@@ -36,7 +37,7 @@ export const getUserById = async (req, res) => {
 };
 /***************** END: GET USER INFO USING A CONTROLLER ******************/
 
-export const createNewUser = async (req, res) => {
+const createNewUser = async (req, res) => {
   try {
     let user = new User({
       uid: req.body.uid,
@@ -53,7 +54,7 @@ export const createNewUser = async (req, res) => {
   }
 };
 
-export const updateUser = async (req, res) => {
+const updateUser = async (req, res) => {
   try {
     const userId = req.params.userId;
     let foundUser = await User.findOne({ uid: userId });
@@ -68,7 +69,35 @@ export const updateUser = async (req, res) => {
     }
     return res.status(200).send({ message: `User not found!` });
   } catch (err) {
+    console.log(err);
     res.status(500).send({ message: `Error saving user to DB.` });
     return;
   }
 };
+
+const getLatestSearches = async (req, res) => {
+  try {
+    const user_id = req.params.userId;
+
+    // Create and save the latest search record
+    const latestSearches = await searchModel.find({
+      user_id: user_id,
+    });
+
+    //keine Dopplungen
+    //Limit
+
+    res.json({
+      latestSearches: latestSearches.map((latestSearch) => (latestSearch.search_query)),
+    });
+} catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Internal server error' });
+}
+};
+
+
+exports.getUserById = getUserById;
+exports.createNewUser = createNewUser;
+exports.updateUser = updateUser;
+exports.getLatestSearches = getLatestSearches;
