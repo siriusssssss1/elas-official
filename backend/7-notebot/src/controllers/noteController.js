@@ -154,34 +154,28 @@ const getNoteByUserId = async (req, res, next) => {
 };
 
 // Get all notes by course title
-const getNotesByCourseTitle = async (req, res, next) => {
+const getNotesByCourseAndNoteTitle = async (req, res, next) => {
   const searchKeyword = req.params.keyword;
   function escapeRegExp(string) {
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
   }
   const escapeKeyword = escapeRegExp(searchKeyword);
-  console.log(searchKeyword);
-  console.log(escapeKeyword);
-
+  
   try {
     // Get all courses that match the search keyword
     const courses = await courseModel.find({
       title: { $regex: escapeKeyword, $options: "i" }, //Form String beschreiben (z.B. email)
     });
-    console.log(courses);
-    
 
     const courseIds = courses.map((course) => course._id);
-    console.log(courseIds);
 
     // Get all notes that match the course ids
     const notes = await noteModel
-      .find({ course_id: { $in: courseIds } })
+      .find({$or: [{course_id: { $in: courseIds }},{title: { $regex: escapeKeyword, $options: "i" }}]})
       .populate("course_id", "title")
       .populate("user_id", "user_name")
       .select("note_id title");
-
-    console.log(notes);
+    
 
     const user_id = req.headers.user_id;
 
@@ -190,7 +184,7 @@ const getNotesByCourseTitle = async (req, res, next) => {
       note_id: { $in: notes.map((note) => note._id.toString()) },
     });
 
-    favorites = favorites.reduce(
+    favorites = favorites.reduce( //was macht das?
       (acc, fav) => ({
         ...acc,
         [fav.note_id]: true,
@@ -749,7 +743,7 @@ exports.getNoteWidgets = getNoteWidgets;
 
 exports.getNotesByUserIdAndCourseId = getNotesByUserIdAndCourseId;
 exports.getNoteByUserId = getNoteByUserId;
-exports.getNotesByCourseTitle = getNotesByCourseTitle;
+exports.getNotesByCourseAndNoteTitle = getNotesByCourseAndNoteTitle;
 exports.createNote = createNote;
 exports.updateNote = updateNote;
 exports.deleteNote = deleteNote;
