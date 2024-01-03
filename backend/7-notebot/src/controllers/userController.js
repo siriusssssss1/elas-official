@@ -75,6 +75,45 @@ const updateUser = async (req, res) => {
   }
 };
 
+// const getLatestSearches = async (req, res) => {
+//   try {
+//     const user_id = req.params.userId;
+
+//     // Create and save the latest search record
+//     const latestSearches = await searchModel.find({
+//       user_id: user_id,
+//     });
+
+//     const latestSearchQueryMap = new Map();
+
+//     // Update the Map with the latest occurrence of each search query
+//     latestSearches.forEach((latestSearch) => {
+//       const searchQuery = latestSearch.search_query;
+//       if (!latestSearchQueryMap.has(searchQuery) || latestSearch.timestamp > latestSearchQueryMap.get(searchQuery).timestamp) {
+//         latestSearchQueryMap.set(searchQuery, latestSearch);
+//       }
+//     });
+
+//     // Convert Map values back to an array for the response
+//     const uniqueLatestSearches = Array.from(latestSearchQueryMap.values());
+
+//     // Sort the searches by timestamp in descending order
+//     const sortedLatestSearches = uniqueLatestSearches.sort((a, b) => b.timestamp - a.timestamp);
+
+//     // Keep only the first 6 entries
+//     const latestSearchesToKeep = sortedLatestSearches.slice(0, 6);
+
+//     res.json({
+//       latestSearches: latestSearchesToKeep.map((latestSearch) => latestSearch.search_query),
+//     });
+
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).json({ message: 'Internal server error' });
+//   }
+// };
+
+
 const getLatestSearches = async (req, res) => {
   try {
     const user_id = req.params.userId;
@@ -84,17 +123,38 @@ const getLatestSearches = async (req, res) => {
       user_id: user_id,
     });
 
-    //keine Dopplungen
-    //Limit
+    const latestSearchQueue = [];
+
+    // Update the queue with the latest occurrence of each search query
+    latestSearches.forEach((latestSearch) => {
+      const searchQuery = latestSearch.search_query;
+      const index = latestSearchQueue.findIndex((item) => item.search_query === searchQuery);
+
+      if (index !== -1) {
+        // If the search query is already in the queue, update it with the latest timestamp
+        latestSearchQueue[index] = latestSearch;
+      } else {
+        // If the search query is not in the queue, add it to the end
+        latestSearchQueue.push(latestSearch);
+      }
+    });
+
+    // Sort the searches by timestamp in ascending order
+    latestSearchQueue.sort((a, b) => a.timestamp - b.timestamp);
+
+    // Keep only the latest 6 entries
+    const latestSearchesToKeep = latestSearchQueue.slice(-6);
 
     res.json({
-      latestSearches: latestSearches.map((latestSearch) => (latestSearch.search_query)),
+      latestSearches: latestSearchesToKeep.map((latestSearch) => latestSearch.search_query),
     });
-} catch (error) {
+  } catch (error) {
     console.log(error);
     res.status(500).json({ message: 'Internal server error' });
-}
+  }
 };
+
+
 
 
 exports.getUserById = getUserById;

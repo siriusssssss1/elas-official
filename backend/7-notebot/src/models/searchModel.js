@@ -12,9 +12,11 @@ const latestSearchSchema = new mongoose.Schema({
     timestamp: {
         type: Date,
         default: Date.now,
+        expires: 60 * 60 * 24 * 7
     },
 });
-// TODO: ttl index on timestamp
+// ttl index on timestamp
+latestSearchSchema.index({ timestamp: 1 }, { expireAfterSeconds: 0 });
 
 const LatestSearch = mongoose.model('LatestSearch', latestSearchSchema);
 
