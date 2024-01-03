@@ -39,7 +39,7 @@ const noteSchema = new mongoose.Schema({
   }],
   ratings: [
     {
-      userId: { type: mongoose.Types.ObjectId, ref: "users" }, //probably better: type:String
+      userId: { type: String, ref: "users" }, //probably better: type:String
       rating: { type: Number, min: 1, max: 5, required: true },
     },
   ],
