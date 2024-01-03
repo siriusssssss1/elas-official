@@ -26,13 +26,22 @@ const noteSchema = new mongoose.Schema({
   },
   course_id: {
     type: String,
-    required: true,
+    //required: true,
     ref:'courses'
   },
+  // courseReference: { 
+  //   type: mongoose.Schema.Types.ObjectId, 
+  //   ref: 'Course', 
+  //   default: null 
+  // },
   sections: [{
     type: mongoose.Types.ObjectId,
     ref:'sections'
   }],
+  // isDraft: {
+  //   type: Boolean,
+  //   default: false
+  // },
   saved_by: [{
     type: String, //mongoose.Types.ObjectId
     ref: 'users'
