@@ -11,6 +11,7 @@ const noteSchema = new mongoose.Schema({
   user_id: {
     type: String,
     required: true,
+    ref: 'user'
   },
   title: {
     type: String,
@@ -29,19 +30,19 @@ const noteSchema = new mongoose.Schema({
     //required: true,
     ref:'courses'
   },
-  // courseReference: { 
-  //   type: mongoose.Schema.Types.ObjectId, 
-  //   ref: 'Course', 
-  //   default: null 
-  // },
+  courseReference: { 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'courses', 
+    default: null 
+  },
   sections: [{
     type: mongoose.Types.ObjectId,
     ref:'sections'
   }],
-  // isDraft: {
-  //   type: Boolean,
-  //   default: false
-  // },
+  isDraft: {
+    type: Boolean,
+    default: false
+  },
   saved_by: [{
     type: String, //mongoose.Types.ObjectId
     ref: 'users'

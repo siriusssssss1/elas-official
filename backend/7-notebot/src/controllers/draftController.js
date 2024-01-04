@@ -3,23 +3,21 @@ const HttpError = require("../models/http-error");
 const noteModel = require("../models/noteModel");
 const draftModel = require("../models/draftModel");
 
+
 const getDraftByUserId = async (req, res, next) => {
     const user_id = req.params.user_id;
-  
-    console.log("user_id", user_id);
-  
+    
     try {
   
-      let drafts = await draftModel.find({
+      const drafts = await noteModel.find({
         user_id: user_id,
-        // note_id: { $in: user.notes },
+        isDraft: true
       });
   
       const notes = await noteModel.find({
         _id: { $in: drafts.map((draft) => draft.note_id) },
       });
-  
-      console.log(notes)
+
   
       res.json({
         notes: notes.map((note) => ({
@@ -50,68 +48,96 @@ const getDraftByUserId = async (req, res, next) => {
 //     }
 //   };
 
-const addNoteToDraft =  async (req, res) => {
-  const note_id = req.params.note_id;
-  const user_id = req.params.user_id;
+// const addNoteToDraft =  async (req, res) => {
+//   const note_id = req.params.note_id;
+//   const user_id = req.params.user_id;
 
-  const payload = {
-    note_id: note_id,
-    user_id: user_id,
-  };
+//   const payload = {
+//     note_id: note_id,
+//     user_id: user_id,
+//   };
 
-  console.log(note_id);
+//   console.log(note_id);
+//   try {
+
+//     const draft = await draftModel.findOne(payload);
+
+//     const note = await noteModel.findOne({_id:note_id});
+
+
+//     draft.note_id.push(note._id);
+//     await draft.save();
+
+//     await note.save();
+
+//     res.json({ message: "Note added to drafts." });
+//     } catch (err) {
+//       console.error(err);
+//       res.status(500).json({ message: "Failed to add note to drafts." });
+//   }
+// };
+
+const addNoteToDraft = async (req, res) => {
+  const { note_id, user_id } = req.body;
+
   try {
+    // Find the existing note
+    const note = await noteModel.findById(note_id);
 
-    const draft = await draftModel.findOne(payload);
+    if (!note) {
+      return res.status(404).json({ message: 'Note not found' });
+    }
 
-    const note = await noteModel.findOne({_id:note_id});
+    // Create a draft from the existing note, including user_id
+    const draft = new noteModel({
+      title: note.title,
+      isPublic: false,
+      user_id: user_id,
+      isDraft: true,
+      sections: note.sections
+    });
 
-
-    draft.note_id.push(note._id);
-    await draft.save();
-
-    await note.save();
-
-    res.json({ message: "Note added to drafts." });
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ message: "Failed to add note to drafts." });
+    const newDraft = await draft.save();
+    res.status(201).json(newDraft);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
 };
 
-  const updateDraft = async (req, res) => {
-    try {
-      const noteId = req.params.id;
-      const { title, content, courseId } = req.body;
-  
-      let updatedNote;
-  
-      if (courseId) {
-        // Move to a course
-        updatedNote = await Note.findByIdAndUpdate(
-          noteId,
-          { $set: { title, content, isDraft: false, course: courseId } },
-          { new: true }
-        );
-      } else {
-        // Update the draft
-        updatedNote = await Note.findByIdAndUpdate(
-          noteId,
-          { $set: { title, content } },
-          { new: true }
-        );
-      }
-  
-      // Delete the corresponding draft after moving to a course or updating
-      if (updatedNote.isDraft) {
-        await Draft.findOneAndDelete({ noteId: noteId });
-      }
-  
-      res.json(updatedNote);
-    } catch (error) {
-      res.status(500).json({ message: error.message });
+const updateDraft = async(req, res) => {
+  try {
+    const note_id = req.params.id;
+    const { title, content, course_id } = req.body;
+
+    let updatedNote;
+
+    if (course_id) {
+      // Move to a course
+      updatedNote = await noteModel.findByIdAndUpdate(
+        note_id,
+        { $set: { note_id, isDraft: false, course: course_id } },
+        { new: true }
+      );
+    } else {
+      // Update the draft
+      updatedNote = await noteModel.findByIdAndUpdate(
+        note_id,
+        { $set: { title, content } },
+        { new: true }
+      );
     }
-  };
+
+    // Delete the corresponding draft after moving to a course or updating
+    if (updatedNote.isDraft) {
+      await noteModel.findOneAndDelete({ note_id: note_id });
+    }
+
+    res.json(updatedNote);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  }
+};
 
   exports.getDraftByUserId = getDraftByUserId;
   exports.addNoteToDraft = addNoteToDraft;
