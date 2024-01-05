@@ -41,7 +41,7 @@ const noteSchema = new mongoose.Schema({
   }],
   isDraft: {
     type: Boolean,
-    default: false
+    //default: false
   },
   saved_by: [{
     type: String, //mongoose.Types.ObjectId

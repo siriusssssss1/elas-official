@@ -107,7 +107,7 @@ const addNoteToDraft = async (req, res) => {
 const updateDraft = async(req, res) => {
   try {
     const note_id = req.params.id;
-    const { title, content, course_id } = req.body;
+    const course_id = req.body;
 
     let updatedNote;
 
@@ -133,6 +133,7 @@ const updateDraft = async(req, res) => {
     }
 
     res.json(updatedNote);
+    
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: error.message });

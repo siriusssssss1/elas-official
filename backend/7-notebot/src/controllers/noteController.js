@@ -271,26 +271,21 @@ const pushSectionsToNote = async (req, res, next) => {
 const createNote = async (req, res, next) => {
   
 
-  console.log("111");
-  // const session = await mongoose.startSession();
-  // session.startTransaction();
   const user_id = req.body.user_id;
   console.log(user_id);
 
-  const { title, isPublic, course_id, sections, widgets } = req.body;
-  console.log("test1");
+  const { title, isPublic, sections, widgets } = req.body;
 
   try {
     // Input validation
-    if (!user_id || !title || !course_id || !sections || !widgets) {
+    if (!user_id || !title  || !sections || !widgets) {
       return res.status(400).json({ message: "Missing required fields." });
       
     }
-    console.log("test2");
 
-    const [user, course] = await Promise.all([
+    const [user] = await Promise.all([
        userModel.findOne({uid:user_id}),
-       courseModel.findById(course_id),
+       //courseModel.findById(course_id),
      ]);
 
     if (!user.notes) {
@@ -302,24 +297,21 @@ const createNote = async (req, res, next) => {
         .status(404)
         .json({ message: "Could not find user for the provided id." });
     }
-    if (!course) {
-      return res
-        .status(404)
-        .json({ message: "Could not find course for the provided id." });
-    }
-    console.log("3");
+    // if (!course) {
+    //   return res
+    //     .status(404)
+    //     .json({ message: "Could not find course for the provided id." });
+    // }
 
     const createdNote = new noteModel({
       title: title,
       isPublic: true,
       avg_rate: 4,
-      course_id: course_id,
+      //course_id: course_id,
       user_id: user_id,
     });
-    console.log("4");
     //await createdNote.save({ session });
     await createdNote.save();
-    console.log("5");
 
     for (const section of sections) {
       const sectionObject = new sectionModel({
@@ -329,7 +321,7 @@ const createNote = async (req, res, next) => {
       await sectionObject.save();
 
       createdNote.sections.push(sectionObject._id);
-      await createdNote.save();
+      // await createdNote.save();
 
       if (widgets[section.id]) {
         for (let widgetIndex in widgets[section.id]) {
@@ -367,8 +359,6 @@ const createNote = async (req, res, next) => {
       "Adding Note , Sections , Widgets failed! please try again later.",
       500
     );
-    // await session.abortTransaction();
-    // await session.endSession();
 
     return next(error);
   }
