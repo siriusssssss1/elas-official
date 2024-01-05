@@ -11,7 +11,7 @@ import MyNotes from "./components/MyNotes.jsx";
 import MyFavorites from "./components/MyFavorites.jsx";
 import Drafts from "./components/Drafts.jsx";
 import AddNote from "./components/AddNote.jsx";
-//import CreateNote from "./components/Notes/create.jsx";
+//import CreateNote from "./utils/notes/CreateNote.jsx";
 
 import noteBotLogo from "../../../assets/images/noteBot-logo.png";
 
@@ -169,7 +169,7 @@ export default function NoteBot() {
                 </CustomTabPanel>
               </Box>
               {/* <CustomTabPanel value={value} index={4}>
-                  <CreateNote />
+                <CreateNote />
               </CustomTabPanel> */}
             </Grid>
           </Grid>
