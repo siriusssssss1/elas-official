@@ -27,7 +27,7 @@ import { useNavigate } from "react-router-dom";
 import { useNoteWidgets } from "../hooks/useNoteWidgets";
 import { Chatbot } from "./../../chatbot";
 
-export const CreateNote = () => {
+export default CreateNote = () => {
   const {
     sections,
     widgets,
