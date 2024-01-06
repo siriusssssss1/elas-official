@@ -73,21 +73,26 @@ export default function NoteBot() {
     setValue(newValue);
   };
 
-  console.log(user);
-
   useEffect(() => {
     let elasUser = JSON.parse(sessionStorage.getItem("elas-user"));
     async function getUserInfoFunction(userId) {
       let reponse = await getUserInfo(userId);
-      setUser((prevState) => ({
-        ...prevState,
-        message: reponse.message,
-        user: {
-          uid: reponse.user.uid,
-          name: reponse.user.name,
-          username: reponse.user.username,
-        },
-      }));
+      if (reponse.user !== undefined) {
+        setUser((prevState) => ({
+          ...prevState,
+          message: reponse.message,
+          user: {
+            uid: reponse.user.uid,
+            name: reponse.user.name,
+            username: reponse.user.username,
+          },
+        }));
+      } else {
+        setUser((prevState) => ({
+          ...prevState,
+          message: reponse.message,
+        }));
+      }
     }
     getUserInfoFunction(elasUser.id);
   }, []);
