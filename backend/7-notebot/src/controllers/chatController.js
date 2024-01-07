@@ -1,13 +1,12 @@
-const OpenAIApi = require("openai");
+const {Configuration , OpenAIApi} = require("openai");
 //const backoff = require('backoff');
 // const HttpError = require("../model/http-error");
-//
-const openAIConfig = new OpenAIApi({
-    organization: "org-65qL0uV70AbvbEVHEZcr9iD8",
-    apiKey: "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",
+
+const configuration = new Configuration({
+    apiKey: process.env.OPENAI_API_KEY
   });
 
-const openapi = new OpenAIApi(openAIConfig);
+const openapi = new OpenAIApi(configuration);
 
 const chatCompletion = async (req, res) => {
   try {
