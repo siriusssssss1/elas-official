@@ -154,6 +154,31 @@ const getLatestSearches = async (req, res) => {
   }
 };
 
+const deleteLatestSearches =  async (req, res, next) => {
+  const user_id = req.params.userId;
+  console.log(user_id);
+
+    try {
+      const latestSearch = await searchModel.deleteMany({ user_id });
+
+      if (latestSearch.deletedCount === 0) {
+        return res
+          .status(404)
+          .json({ message: "Could not find latest searches for the provided id." });
+      }
+
+      res.status(200).json({ message: "Latest searches deleted." });
+    } catch (error) {
+      console.log(err);
+      const httpError = new HttpError(
+        `An error occurred while deleting latest searches: ${error.message}`,
+        500
+      );
+      return next(httpError);
+    } 
+};
+
+
 
 
 
@@ -161,3 +186,4 @@ exports.getUserById = getUserById;
 exports.createNewUser = createNewUser;
 exports.updateUser = updateUser;
 exports.getLatestSearches = getLatestSearches;
+exports.deleteLatestSearches = deleteLatestSearches;

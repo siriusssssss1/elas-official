@@ -151,8 +151,8 @@ const deleteCourseWithNotes = async (req, res, next) => {
         500
       );
       return next(httpError);
-     } 
-    }
+    } 
+};
 
 
 exports.getAllCourses = getAllCourses;

@@ -41,6 +41,7 @@ userRouter.get("/:userId", userController.getUserById);
 userRouter.post("/new", userController.createNewUser);
 userRouter.put("/:userId/update", userController.updateUser);
 userRouter.get("/:userId/latestSearches", userController.getLatestSearches);
+userRouter.delete("/:userId/latestSearchesDeleted", userController.deleteLatestSearches);
 
 /***************** END: CREATE ROUTES ****************************/
 
