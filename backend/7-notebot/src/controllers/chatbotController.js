@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const router = express.Router();
 
-router.post("/", async (req, res, next) => {
+ export const chatCompletion = async (req, res)=>{
   try {
     const { message } = req.body;
     // Make a request to the ChatGPT API
@@ -85,6 +85,6 @@ router.post("/", async (req, res, next) => {
     //res.status(500).json({ 'Something went wrong' });
     return next(error);
   }
-});
+};
 
-module.exports = router;
+module.exports = chatCompletion;
