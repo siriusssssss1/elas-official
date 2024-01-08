@@ -1,34 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Typography } from "@mui/material";
-import { makeStyles } from "@mui/styles";
+//import { makeStyles } from "@mui/styles";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
+//import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 
 import { getCards } from "../utils/api";
 
-const useStyles = makeStyles({
-  root: {
-    minWidth: 275,
-  },
-  bullet: {
-    display: "inline-block",
-    margin: "0 2px",
-    transform: "scale(0.8)",
-  },
-  title: {
-    fontSize: 14,
-  },
-  pos: {
-    marginBottom: 12,
-  },
-});
-
 export default function MyNotes() {
-  const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
-
   const [cards, setCards] = useState({
     message: "",
     cards: [],
@@ -57,43 +37,20 @@ export default function MyNotes() {
         <Typography>My Notes</Typography>
       </Grid>
       <Grid item>
-        {cards.cards.map((card) => {
-          // Generate Card UI
-          return (
-            <Card className={classes.root}>
-              <CardContent>
-                <Typography
-                  className={classes.title}
-                  color="textSecondary"
-                  gutterBottom
-                >
-                  {card.title}
-                </Typography>
-              </CardContent>
-              {card.isFavorite ? (
-                <CardContent>
-                  <Typography
-                    className={classes.title}
-                    color="textSecondary"
-                    gutterBottom
-                  >
-                    Favorit
-                  </Typography>
-                </CardContent>
-              ) : (
-                <CardContent>
-                  <Typography
-                    className={classes.title}
-                    color="textSecondary"
-                    gutterBottom
-                  >
-                    Nicht Favorit
-                  </Typography>
-                </CardContent>
-              )}
-            </Card>
-          );
-        })}
+        {cards.cards.map((card) => (
+          <Card style={{ minWidth: 275 }} key={card.id}>
+            <CardContent>
+              <Typography color="textSecondary" gutterBottom>
+                {card.title}
+              </Typography>
+            </CardContent>
+            <CardContent>
+              <Typography color="textSecondary" gutterBottom>
+                {card.isFavorite ? "Favorit" : "Nicht Favorit"}
+              </Typography>
+            </CardContent>
+          </Card>
+        ))}
       </Grid>
     </Grid>
   );
