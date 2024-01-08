@@ -1,9 +1,9 @@
 var express = require("express");
-var chatController = require( "../controllers/chatController");
+var chatbotController = require( "../controllers/chatbotController");
 
 const router = express.Router();
 
-router.post("/chatgpt", chatController.chatCompletion);
+router.post("/chatgpt", chatbotController);
 
 //export the router
 module.exports = router;
