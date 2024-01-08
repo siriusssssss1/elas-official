@@ -5,6 +5,9 @@ import Card from "@mui/material/Card";
 //import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+
 
 import { getCards } from "../utils/api";
 
@@ -13,6 +16,8 @@ export default function MyNotes() {
     message: "",
     cards: [],
   });
+
+  
 
   useEffect(() => {
     async function getCardInfo() {
@@ -31,10 +36,14 @@ export default function MyNotes() {
     getCardInfo();
   }, []);
 
+  
+
   return (
     <Grid container sx={{ maxWidth: 1500, width: "100%" }} spacing={2}>
       <Grid item>
-        <Typography>My Notes</Typography>
+        <Typography variant="h5" style={{ color: "#A5A5A5" }}>
+          My Notes
+        </Typography>
       </Grid>
       <Grid item>
         {cards.cards.map((card) => (
@@ -45,9 +54,11 @@ export default function MyNotes() {
               </Typography>
             </CardContent>
             <CardContent>
-              <Typography color="textSecondary" gutterBottom>
-                {card.isFavorite ? "Favorit" : "Nicht Favorit"}
-              </Typography>
+              {card.isFavorite ? (
+                <FavoriteIcon color="error" />
+              ) : (
+                <FavoriteBorderIcon color="error" />
+              )}
             </CardContent>
           </Card>
         ))}
