@@ -728,6 +728,9 @@ const addNoteToCourse = async (req, res, next) => {
     course.notes.push(note._id);
     await course.save();
 
+    note.course_id = course_id;
+    await note.save();
+
     res.json({ message: "Note added to the course." });
     } catch (err) {
       console.error(err);
