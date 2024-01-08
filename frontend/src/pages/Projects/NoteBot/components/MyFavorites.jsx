@@ -3,6 +3,7 @@ import { Grid, Typography } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 import { getCards } from "../utils/api";
 
@@ -39,7 +40,7 @@ export default function MyFavorites() {
       </Grid>
       <Grid item>
         {favoriteCards.cards.map((card) => (
-          <Card style={{ minWidth: 275 }} key={card.id}>
+          <Card style={{ minWidth: 275, marginBottom: 20}} key={card.id}>
             <CardContent>
               <Typography color="textSecondary" gutterBottom>
                 {card.title}
@@ -48,6 +49,10 @@ export default function MyFavorites() {
             <CardContent>
               <FavoriteIcon color="error" />
             </CardContent>
+            <CardContent style={{ position: "absolute", bottom: 0, right: 0, padding: "8px" }}>
+              <DeleteIcon style={{ color: "#A5A5A5" }} />
+            </CardContent>
+            
           </Card>
         ))}
       </Grid>

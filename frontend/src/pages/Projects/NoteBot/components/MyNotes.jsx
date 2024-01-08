@@ -7,6 +7,7 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 
 import { getCards } from "../utils/api";
@@ -36,6 +37,15 @@ export default function MyNotes() {
     getCardInfo();
   }, []);
 
+  const handleDeleteNote = (id) => {
+    const confirmDelete = window.confirm("Möchten Sie diese Notiz wirklich löschen?");
+
+    if (confirmDelete) {
+      // Führen Sie hier den tatsächlichen Löschvorgang durch
+      console.log(`Notiz mit der ID ${id} wurde gelöscht.`);
+    }
+  };
+
   
 
   return (
@@ -47,7 +57,7 @@ export default function MyNotes() {
       </Grid>
       <Grid item>
         {cards.cards.map((card) => (
-          <Card style={{ minWidth: 275 }} key={card.id}>
+          <Card style={{ minWidth: 275, marginBottom: 20, position: "relative" }} key={card.id}>
             <CardContent>
               <Typography color="textSecondary" gutterBottom>
                 {card.title}
@@ -59,6 +69,11 @@ export default function MyNotes() {
               ) : (
                 <FavoriteBorderIcon color="error" />
               )}
+            </CardContent>
+            <CardContent style={{ position: "absolute", bottom: 0, right: 0, padding: "8px" }}>
+              <DeleteIcon 
+              style={{ color: "#A5A5A5" }}
+              onClick={() => handleDeleteNote(card.id)} />
             </CardContent>
           </Card>
         ))}
