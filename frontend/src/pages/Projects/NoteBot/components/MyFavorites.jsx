@@ -32,27 +32,47 @@ export default function MyFavorites() {
   }, []);
 
   return (
-    <Grid container sx={{ maxWidth: 1500, width: "100%" }} spacing={2}>
-      <Grid item>
-        <Typography variant="h5" style={{ color: "#A5A5A5" }}>
+    <Grid container direction="column" sx={{ maxWidth: 1500, width: "100%" }} spacing={2}>
+      <Grid item xs={12}>
+        <Typography variant="h5" style={{ color: "#A5A5A5", marginBottom: "20px" }}>
           My Favorites
         </Typography>
       </Grid>
       <Grid item>
         {favoriteCards.cards.map((card) => (
-          <Card style={{ minWidth: 275, marginBottom: 20}} key={card.id}>
+          <Card
+            style={{
+              width: 275,
+              marginBottom: 20,
+              position: "relative",
+              height: "200px",
+              backgroundColor: "#d9d9d9",
+            }}
+            key={card.id}
+          >
             <CardContent>
-              <Typography color="textSecondary" gutterBottom>
+              <Typography
+                color="textSecondary"
+                variant="h6"
+                gutterBottom
+                style={{ textAlign: "center" }}
+              >
                 {card.title}
               </Typography>
             </CardContent>
-            <CardContent>
-              <FavoriteIcon color="error" />
+            <CardContent style={{ position: "absolute", top: 0, right: 0 }}>
+              {card.isFavorite ? (
+                <FavoriteIcon color="error" />
+              ) : (
+                <FavoriteBorderIcon color="error" />
+              )}
             </CardContent>
-            <CardContent style={{ position: "absolute", bottom: 0, right: 0, padding: "8px" }}>
-              <DeleteIcon style={{ color: "#A5A5A5" }} />
+            <CardContent style={{ position: "absolute", bottom: 0, right: 0, padding: "8px",}}>
+              <DeleteIcon
+                style={{ color: "#A5A5A5" }}
+                onClick={() => handleDeleteNote(card.id)}
+              />
             </CardContent>
-            
           </Card>
         ))}
       </Grid>

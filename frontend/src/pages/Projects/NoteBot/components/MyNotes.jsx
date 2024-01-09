@@ -69,17 +69,22 @@ export default function MyNotes() {
           >
             <CardContent
               style={{
+                textAlign: "center",
                 display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
+                flexDirection: "column",
               }}
             >
-              <Typography color="textSecondary" variant="h6" gutterBottom>
+              <Typography
+                color="textSecondary"
+                variant="h6"
+                gutterBottom
+                style={{ textAlign: "center" }}
+              >
                 {card.title}
               </Typography>
             </CardContent>
             <CardContent
-              style={{ position: "absolute", top: 0, right: 0, padding: "8px" }}
+              style={{ position: "absolute", top: 0, right: 0}}
             >
               {card.isFavorite ? (
                 <FavoriteIcon color="error" />
