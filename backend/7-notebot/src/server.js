@@ -73,15 +73,15 @@ const noteRoutes = require("./routes/notes");
 const sectionRoutes = require("./routes/sections");
 const widgetRoutes = require("./routes/widgets");
 //var chatRouter = require("./routes/chat");
-//var chatbotRouter = require("./routes/chatbotController");
-var draftRouter = require("./routes/drafts");
+const chatbotRouter = require("./routes/chatbotController");
+const draftRouter = require("./routes/drafts");
 
 app.use(apiURL + '/users', userRoutes);
 app.use(apiURL + '/courses', coursesRoutes);
 app.use(apiURL + '/notes', noteRoutes);
 app.use(apiURL + '/sections', sectionRoutes);
 app.use(apiURL + '/widgets', widgetRoutes);
-//app.use(apiURL + "/chat", chatbotRouter); // Mount the chatbotController as a middleware
+app.use(apiURL + "/chat", chatbotRouter); // Mount the chatbotController as a middleware
 // app.use("/chat", chatRouter);
 app.use(apiURL + '/drafts', draftRouter);
 // Add more routes here
