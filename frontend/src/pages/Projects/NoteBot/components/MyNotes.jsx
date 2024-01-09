@@ -9,7 +9,6 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-
 import { getCards } from "../utils/api";
 
 export default function MyNotes() {
@@ -17,8 +16,6 @@ export default function MyNotes() {
     message: "",
     cards: [],
   });
-
-  
 
   useEffect(() => {
     async function getCardInfo() {
@@ -38,7 +35,9 @@ export default function MyNotes() {
   }, []);
 
   const handleDeleteNote = (id) => {
-    const confirmDelete = window.confirm("Möchten Sie diese Notiz wirklich löschen?");
+    const confirmDelete = window.confirm(
+      "Möchten Sie diese Notiz wirklich löschen?"
+    );
 
     if (confirmDelete) {
       // Führen Sie hier den tatsächlichen Löschvorgang durch
@@ -46,34 +45,60 @@ export default function MyNotes() {
     }
   };
 
-  
-
   return (
     <Grid container sx={{ maxWidth: 1500, width: "100%" }} spacing={2}>
-      <Grid item>
-        <Typography variant="h5" style={{ color: "#A5A5A5" }}>
+      <Grid item xs={12}>
+        <Typography
+          variant="h5"
+          style={{ color: "#A5A5A5", marginBottom: "20px" }}
+        >
           My Notes
         </Typography>
       </Grid>
       <Grid item>
         {cards.cards.map((card) => (
-          <Card style={{ minWidth: 275, marginBottom: 20, position: "relative" }} key={card.id}>
-            <CardContent>
-              <Typography color="textSecondary" gutterBottom>
+          <Card
+            style={{
+              minWidth: 275,
+              marginBottom: 20,
+              position: "relative",
+              height: "200px",
+              backgroundColor: "#d9d9d9",
+            }}
+            key={card.id}
+          >
+            <CardContent
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Typography color="textSecondary" variant="h6" gutterBottom>
                 {card.title}
               </Typography>
             </CardContent>
-            <CardContent>
+            <CardContent
+              style={{ position: "absolute", top: 0, right: 0, padding: "8px" }}
+            >
               {card.isFavorite ? (
                 <FavoriteIcon color="error" />
               ) : (
                 <FavoriteBorderIcon color="error" />
               )}
             </CardContent>
-            <CardContent style={{ position: "absolute", bottom: 0, right: 0, padding: "8px" }}>
-              <DeleteIcon 
-              style={{ color: "#A5A5A5" }}
-              onClick={() => handleDeleteNote(card.id)} />
+            <CardContent
+              style={{
+                position: "absolute",
+                bottom: 0,
+                right: 0,
+                padding: "8px",
+              }}
+            >
+              <DeleteIcon
+                style={{ color: "#A5A5A5" }}
+                onClick={() => handleDeleteNote(card.id)}
+              />
             </CardContent>
           </Card>
         ))}
