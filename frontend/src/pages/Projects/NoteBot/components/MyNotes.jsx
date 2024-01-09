@@ -47,6 +47,15 @@ export default function MyNotes() {
     }
   };
 
+  const handleToggleFavorite = (id) => {
+    setCards((prevCards) => {
+      const updatedCards = prevCards.cards.map((card) =>
+        card.id === id ? { ...card, isFavorite: !card.isFavorite } : card
+      );
+      return { message: prevCards.message, cards: updatedCards };
+    });
+  };
+
   return (
     <Grid container sx={{ maxWidth: 1500, width: "100%" }} spacing={2}>
       <Grid item xs={12}>
@@ -100,7 +109,14 @@ export default function MyNotes() {
                 />
               </Stack>
             </CardContent>
+<<<<<<< Updated upstream
             <CardContent style={{ position: "absolute", top: 0, right: 0 }}>
+=======
+            <CardContent
+              style={{ position: "absolute", top: 0, right: 0}}
+              onClick={() => handleToggleFavorite(card.id)}
+            >
+>>>>>>> Stashed changes
               {card.isFavorite ? (
                 <FavoriteIcon color="error" />
               ) : (
