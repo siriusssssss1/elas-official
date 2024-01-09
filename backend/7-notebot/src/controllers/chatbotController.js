@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const router = express.Router();
 
- export const chatCompletion = async (req, res)=>{
+const chatCompletion = async (req, res)=>{
   try {
     const { message } = req.body;
     // Make a request to the ChatGPT API
@@ -87,4 +87,4 @@ const router = express.Router();
   }
 };
 
-module.exports = chatCompletion;
+exports.chatCompletion = chatCompletion;
