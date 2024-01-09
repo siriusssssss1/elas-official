@@ -10,6 +10,7 @@ db.mongoose = mongoose;
  * schema in other files.
  */
 db.user = require("./user.model");
+db.card = require("./card.model");
 /***************** END: EXPORT SCHEMA AS MODULE *****************/
 
 module.exports = db;

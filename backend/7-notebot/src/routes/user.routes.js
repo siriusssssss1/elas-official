@@ -26,8 +26,8 @@ userRouter.use(function (req, res, next) {
 
 /***************** START: CREATE ROUTES **************************
  * @documentation
- * When creating a route, you need to define the HTTP method
- * and the path. The HTTP method can be any of the following:
+ * When creating a route, youne the HTTP method
+ * and the path. The HTTP method can be a need to definy of the following:
  * GET, POST, PUT, DELETE, PATCH, HEAD, OPTIONS.
  * In the example below, 'userRouter' is used to define the
  * routes. The 'userRouter.get()' method is used to define a
