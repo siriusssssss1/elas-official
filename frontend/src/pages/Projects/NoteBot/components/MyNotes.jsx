@@ -8,6 +8,8 @@ import Button from "@mui/material/Button";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import DeleteIcon from "@mui/icons-material/Delete";
+import Rating from '@mui/material/Rating';
+import Stack from '@mui/material/Stack';
 
 import { getCards } from "../utils/api";
 
@@ -82,6 +84,9 @@ export default function MyNotes() {
               >
                 {card.title}
               </Typography>
+              <Stack spacing={1} direction="row" alignItems="flex-end" justifyContent="flex-start" style={{ position: 'absolute', bottom: '8px', left: '8px'}}>
+                <Rating name={`rating-${card.id}`} value={card.rating} precision={0.5} readOnly />
+              </Stack>
             </CardContent>
             <CardContent
               style={{ position: "absolute", top: 0, right: 0}}
