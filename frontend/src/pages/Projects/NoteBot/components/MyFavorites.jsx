@@ -32,6 +32,18 @@ export default function MyFavorites() {
     getFavoriteCards();
   }, []);
 
+  
+  const handleDeleteNote = (id) => {
+    const confirmDelete = window.confirm(
+      "Möchten Sie diese Notiz wirklich löschen?"
+    );
+
+    if (confirmDelete) {
+      // Führen Sie hier den tatsächlichen Löschvorgang durch
+      console.log(`Notiz mit der ID ${id} wurde gelöscht.`);
+    }
+  };
+
   return (
     <Grid container direction="column" sx={{ maxWidth: 1500, width: "100%" }} spacing={2}>
       <Grid item xs={12}>
