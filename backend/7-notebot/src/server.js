@@ -73,7 +73,7 @@ const noteRoutes = require("./routes/notes");
 const sectionRoutes = require("./routes/sections");
 const widgetRoutes = require("./routes/widgets");
 //var chatRouter = require("./routes/chat");
-const chatbotRouter = require("./routes/chatbotController");
+const chatbotRouter = require("./routes/chat");
 const draftRouter = require("./routes/drafts");
 
 app.use(apiURL + '/users', userRoutes);
