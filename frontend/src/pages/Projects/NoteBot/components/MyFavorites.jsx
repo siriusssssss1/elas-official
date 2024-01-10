@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Typography } from "@mui/material";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import DeleteIcon from "@mui/icons-material/Delete";
-import Rating from '@mui/material/Rating';
-import Stack from '@mui/material/Stack';
 import { getCards } from "../utils/api";
+import NoteCard from "./NoteCard";
 
 export default function MyFavorites() {
   const [favoriteCards, setFavoriteCards] = useState({
@@ -32,7 +27,6 @@ export default function MyFavorites() {
     getFavoriteCards();
   }, []);
 
-  
   const handleDeleteNote = (id) => {
     const confirmDelete = window.confirm(
       "Möchten Sie diese Notiz wirklich löschen?"
@@ -45,52 +39,76 @@ export default function MyFavorites() {
   };
 
   return (
-    <Grid container direction="column" sx={{ maxWidth: 1500, width: "100%" }} spacing={2}>
-      <Grid item xs={12}>
-        <Typography variant="h5" style={{ color: "#A5A5A5", marginBottom: "20px" }}>
-          My Favorites
-        </Typography>
-      </Grid>
-      <Grid item>
-        {favoriteCards.cards.map((card) => (
-          <Card
-            style={{
-              width: 275,
-              marginBottom: 20,
-              position: "relative",
-              height: "200px",
-              backgroundColor: "#d9d9d9",
-            }}
-            key={card.id}
+    <Grid display={"flex"} flexDirection={"column"}>
+      {/* Header */}
+      <Grid
+        display={"flex"}
+        marginX={4} // Einrückung Linie unter Überschriften
+        sx={{
+          borderBottom: 1,
+        }}
+      >
+        {/* Left side header */}
+        <Grid item width={0.5} marginLeft={8}>
+          <Typography
+            variant="h5"
+            style={{ color: "#A5A5A5", marginBottom: "20px" }}
           >
-            <CardContent>
-              <Typography
-                color="textSecondary"
-                variant="h6"
-                gutterBottom
-                style={{ textAlign: "center" }}
-              >
-                {card.title}
-              </Typography>
-              <Stack spacing={1} direction="row" alignItems="flex-end" justifyContent="flex-start" style={{ position: 'absolute', bottom: '8px', left: '8px'}}>
-                <Rating name={`rating-${card.id}`} value={card.rating} precision={0.5} readOnly />
-              </Stack>
-            </CardContent>
-            <CardContent style={{ position: "absolute", top: 0, right: 0 }}>
-              {card.isFavorite ? (
-                <FavoriteIcon color="error" />
-              ) : (
-                <FavoriteBorderIcon color="error" />
-              )}
-            </CardContent>
-            <CardContent style={{ position: "absolute", bottom: 0, right: 0, padding: "8px",}}>
-              <DeleteIcon
-                style={{ color: "#A5A5A5" }}
-                onClick={() => handleDeleteNote(card.id)}
-              />
-            </CardContent>
-          </Card>
-        ))}
+            My Favorite Courses
+          </Typography>
+        </Grid>
+
+        {/* Right side header */}
+        <Grid item width={0.5} marginLeft={8}>
+          <Typography
+            variant="h5"
+            style={{ color: "#A5A5A5", marginBottom: "20px" }}
+          >
+            My Favorite Notes
+          </Typography>
+        </Grid>
+      </Grid>
+      {/* Cards */}
+      <Grid container sx={{ maxWidth: 1500, width: "100%" }}>
+        {/* Left side grid */}
+        <Grid
+          width={0.5}
+          paddingTop={4}
+          paddingRight={4}
+          sx={{
+            borderRight: 1,
+            columnGap: 2,
+            rowGap: 4,
+          }}
+        >
+          <Grid item>
+            {Array(2)
+              .fill(favoriteCards.cards)
+              .flat()
+              .map((card) => (
+                <NoteCard key={card.id} card={card} />
+              ))}
+          </Grid>
+        </Grid>
+
+        {/* Right side grid */}
+        <Grid width={0.5} paddingTop={4} paddingLeft={4}>
+          <Grid
+            item
+            display={"flex"}
+            flexWrap={"wrap"}
+            columnGap={2}
+            rowGap={3}
+            justifyContent={"space-between"}
+          >
+            {Array(4)
+              .fill(favoriteCards.cards)
+              .flat()
+              .map((card) => (
+                <NoteCard key={card.id} card={card} />
+              ))}
+          </Grid>
+        </Grid>
       </Grid>
     </Grid>
   );
