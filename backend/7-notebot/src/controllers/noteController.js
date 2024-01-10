@@ -81,7 +81,6 @@ const getNoteByUserId = async (req, res, next) => {
     //const notes = await noteModel.findById(user_id);
     const notes = await noteModel.find({ uid: user_id }); 
 
-
     if (!user) {
       return res
         .status(404)
@@ -94,7 +93,7 @@ const getNoteByUserId = async (req, res, next) => {
         return;
     }
 
-    res.json({ notes: user.notes.map(note => note.toObject({ getters: true })) });
+    //res.json({ notes: user.notes.map(note => note.toObject({ getters: true })) });
     // Group notes by course ID
     const groupedNotes = {};
 
@@ -111,15 +110,24 @@ const getNoteByUserId = async (req, res, next) => {
     }, {});
 
 
+    // for (let note of user.notes) {
+    //   const courseId = note.course_id._id.toString();
+      
+    //   let course;
+    //   if (courseId) {
+    //     //course = await courseModel.findById(courseId);
+    //     course = await courseModel.findOne({courseId});
+    //   }
     for (let note of user.notes) {
-      const courseId = note.course_id._id.toString();
-
+      //const courseId = note.course_id ? note.course_id._id.toString() : '';
+      const courseId = note.course_id; //._id; //.toString();
+    
       let course;
       if (courseId) {
         //course = await courseModel.findById(courseId);
-        course = await courseModel.findOne({courseId});
+        course = await courseModel.findOne({ _id: courseId });
       }
-
+  
       if (!course) {
         course = {
           _id: "",
@@ -456,7 +464,7 @@ const saveNote = async (req, res, next) => {
     }
 
     // Check if the user has already saved the note
-    const isNoteSaved = note.saved_by.includes(user._id);
+    const isNoteSaved = note.saved_by.includes(user.uid);
 
     if (isNoteSaved) {
       return res
@@ -465,7 +473,7 @@ const saveNote = async (req, res, next) => {
     }
 
     // Save the note for the user
-    note.saved_by.push(user._id);
+    note.saved_by.push(user.uid);
     await note.save();
 
     res.json({ message: "Note saved successfully." });
