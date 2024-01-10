@@ -1,22 +1,20 @@
-// const mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-// const draftSchema = new mongoose.Schema({
+const draftSchema = new mongoose.Schema({
 
-//     notes: [{ 
-//         type: mongoose.Types.ObjectId,
-//         ref:'notes'
-//     }],
-//     user_id: {
-//         type: String,
-//         required: true,
-//         ref:'users'
-//     },
-//     isPublic: {
-//         type: Boolean,
-//         default: false
-//     }
-// });
+    
+    note_id: [{ 
+        type: mongoose.Types.ObjectId,
+        required: true,
+        ref:'notes'
+      }],
+      user_id: {
+        type: String,
+        required: true,
+        ref:'users'
+      },
+});
 
-// const Draft = mongoose.model('Draft', draftSchema);
+const Draft = mongoose.model('Draft', draftSchema);
 
-// module.exports = Draft;
+module.exports = Draft;

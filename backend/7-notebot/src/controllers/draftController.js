@@ -9,20 +9,24 @@ const getDraftByUserId = async (req, res, next) => {
     
     try {
   
-      const drafts = await noteModel.find({
+      let drafts = await draftModel.find({
         user_id: user_id,
-        isDraft: true
+        //isDraft: true
       });
+      console.log(drafts);
   
       const notes = await noteModel.find({
         _id: { $in: drafts.map((draft) => draft.note_id) },
       });
+
+      console.log(notes);
 
   
       res.json({
         notes: notes.map((note) => ({
           ...note._doc,
           isDraft: true,
+          isPublic: false
         })),
       });
     } catch (err) {
@@ -80,6 +84,11 @@ const getDraftByUserId = async (req, res, next) => {
 const addNoteToDraft = async (req, res) => {
   const { note_id, user_id } = req.body;
 
+  const payload = {
+    note_id: note_id,
+    user_id: user_id,
+  };
+
   try {
     // Find the existing note
     const note = await noteModel.findById(note_id);
@@ -87,22 +96,31 @@ const addNoteToDraft = async (req, res) => {
     if (!note) {
       return res.status(404).json({ message: 'Note not found' });
     }
-
-    // Create a draft from the existing note, including user_id
-    const draft = new noteModel({
-      title: note.title,
-      isPublic: false,
-      user_id: user_id,
-      isDraft: true,
-      sections: note.sections
+    // // Create a draft from the existing note, including user_id
+    // const draft = new noteModel({
+    //   title: note.title,
+    //   isPublic: false,
+    //   user_id: user_id,
+    //   isDraft: true,
+    //   sections: note.sections
+    // });
+    // const newDraft = await draft.save();
+    // res.status(201).json(newDraft);
+      const draft = await draftModel.findOne(payload);
+  
+      if (draft) {
+        await draftModel.deleteOne(payload);
+      } else {
+        const draft = new draftModel(payload);
+        await draft.save();
+      }
+      res.status(201).json({
+        message: "Updated successfully !",
     });
 
-    const newDraft = await draft.save();
-    res.status(201).json(newDraft);
   } catch (error) {
     res.status(400).json({ message: error.message });
-  }
-};
+  }};
 
 const updateDraft = async(req, res) => {
   try {

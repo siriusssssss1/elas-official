@@ -39,10 +39,10 @@ const noteSchema = new mongoose.Schema({
     type: mongoose.Types.ObjectId,
     ref:'sections'
   }],
-  isDraft: {
-    type: Boolean,
-    //default: false
-  },
+  // isDraft: {
+  //   type: Boolean,
+  //   //default: false
+  // },
   saved_by: [{
     type: String, //mongoose.Types.ObjectId
     ref: 'users'

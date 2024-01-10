@@ -45,8 +45,6 @@ const toggetFavoriteNote = async (req, res, next) => {
 const getFavNoteByUserId = async (req, res, next) => {
   const user_id = req.params.user_id;
 
-  console.log("user_id", user_id);
-
   try {
     const groupedNotes = [];
 
@@ -54,12 +52,13 @@ const getFavNoteByUserId = async (req, res, next) => {
       user_id: user_id,
       // note_id: { $in: user.notes },
     });
+    console.log(favorites);
 
     const notes = await noteModel.find({
       _id: { $in: favorites.map((favorite) => favorite.note_id) },
     });
 
-    console.log(notes)
+    console.log(notes);
 
     res.json({
       notes: notes.map((note) => ({
