@@ -585,11 +585,10 @@ const getNoteWidgets = async (req, res, next) => {
 
 const updateNote = async (req, res, next) => {
   try {
-    // const session = await mongoose.startSession();
-    // session.startTransaction();
+    
     const user_id = req.body.user_id;
    
-    const { title, sections, widgets, course } = req.body;
+    const { title, sections, widgets, course_id } = req.body;
 
     const note = await noteModel.findById(req.params.note_id);
 
@@ -600,14 +599,28 @@ const updateNote = async (req, res, next) => {
     }
 
     note.title = title;
-    note.course_id = course;
+
+    if (!course_id) {
+      note.isDraft = true;
+      note.isPublic = false;
+    } else {
+      note.course_id = course_id;
+    }
 
     await note.save();
+
+    // note.course_id = course_id;
+    // await note.save();
+    
     note.sections = [];
 
     for (const section of sections) {
       let sectionObject =
         section._id && (await sectionModel.findById(section._id));
+      
+      if (!course_id) {
+        // isDraft should be true and isPublic should be false
+      }  
 
       if (!sectionObject) {
         sectionObject = new sectionModel();

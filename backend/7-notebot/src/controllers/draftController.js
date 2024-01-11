@@ -122,42 +122,47 @@ const addNoteToDraft = async (req, res) => {
     res.status(400).json({ message: error.message });
   }};
 
-const updateDraft = async(req, res) => {
-  try {
-    const note_id = req.params.id;
-    const course_id = req.body;
+// const updateDraft = async(req, res) => {
+//   try {
+//     const note_id = req.params.id;
+//     const course_id = req.body;
 
-    let updatedNote;
+//     let updatedNote;
 
-    if (course_id) {
-      // Move to a course
-      updatedNote = await noteModel.findByIdAndUpdate(
-        note_id,
-        { $set: { note_id, isDraft: false, course: course_id } },
-        { new: true }
-      );
-    } else {
-      // Update the draft
-      updatedNote = await noteModel.findByIdAndUpdate(
-        note_id,
-        { $set: { title, content } },
-        { new: true }
-      );
-    }
+//     if (course_id) {
+//       // Move to a course
+//       updatedNote = await noteModel.findByIdAndUpdate(
+//         note_id,
+//         { $set: { note_id, course: course_id } },
+//         { new: true }
+//       );
+//       console.log(updatedNote);
+//       await draftModel.findOneAndDelete({ note_id: note_id });
 
-    // Delete the corresponding draft after moving to a course or updating
-    if (updatedNote.isDraft) {
-      await noteModel.findOneAndDelete({ note_id: note_id });
-    }
+//     } else {
+//       // Update the draft
+//       updatedNote = await noteModel.findByIdAndUpdate(
+//         note_id,
+//         { $set: { title } },
+//         { new: true }
+//       );
+//     }
 
-    res.json(updatedNote);
+//     // // Delete the corresponding draft after moving to a course or updating
+//     // if (updatedNote.isDraft) {
+//     //   await draftModel.findOneAndDelete({ note_id: note_id });
+//     // }
+
+//     res.json(updatedNote);
     
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: error.message });
-  }
-};
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).json({ message: error.message });
+//   }
+// };
+
+ 
 
   exports.getDraftByUserId = getDraftByUserId;
   exports.addNoteToDraft = addNoteToDraft;
-  exports.updateDraft = updateDraft;
+  //exports.updateDraft = updateDraft;
