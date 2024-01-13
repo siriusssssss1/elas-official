@@ -132,8 +132,7 @@ const createCourse = async (req, res, next) => {
 //delete course and its notes
 const deleteCourseWithNotes = async (req, res, next) => {
   const { course_id } = req.params;
-
-
+  
     try {
       const course = await courseModel.findByIdAndDelete(course_id);
       console.log(course);

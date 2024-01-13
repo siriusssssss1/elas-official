@@ -377,7 +377,7 @@ const deleteNote = async (req, res, next) => {
   const note_id = req.params.note_id;
 
   try {
-    const note = await noteModel.findById(note_id);
+    const note = await noteModel.findByIdAndDelete(note_id);
 
     if (!note) {
       return res
@@ -394,33 +394,31 @@ const deleteNote = async (req, res, next) => {
     const user = await userModel.findOne({uid:note.user_id}); 
     const course = await courseModel.findOne({courseId:note.course_id});
 
-    await noteModel.deleteOne({
-      _id: note_id,
-    });
+    // await noteModel.deleteOne({
+    //   _id: note_id,
+    // });
+    const sectionIds = note.sections;
 
-    const widgets = await widgetModel.find({
-      section_id: { $in: note.sections },
-    });
+    for (const sectionId of sectionIds) {
+      // Find and delete the section
+        const section = await sectionModel.findByIdAndDelete(sectionId);
 
-    const widgetIds = widgets.map((widget) => widget._id);
+        if (section) {
+          // Delete widgets associated with the section
+            const widgetIds = section.widgets;
+            console.log(widgetIds);
 
-    // user.notes.pull(note._id);
-    // course.notes.pull(note._id);
+            for (const widgetId of widgetIds) {
+              const widget = await widgetModel.findByIdAndDelete(widgetId);
+            }
+          }
+        }  
+      
+    // const widgets = await widgetModel.find({
+    //   section_id: { $in: note.sections },
+    // });
 
-    // await Promise.all([
-    //   user.save(),
-    //   course.save(),
-    //   sectionModel.deleteMany({
-    //     _id: {
-    //       $in: note.sections,
-    //     },
-    //   }),
-    //   widgetModel.deleteMany({
-    //     _id: {
-    //       $in: widgetIds,
-    //     },
-    //   }),
-    // ]);
+    // const widgetIds = widgets.map((widget) => widget._id);
 
     res.json({ message: "Note deleted!", note });
   } catch (err) {
