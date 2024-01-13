@@ -181,21 +181,18 @@ const deleteSection = async (req, res, next) => {
     const { section_id } = req.params;
 
     try {
-        const section = await sectionModel.findById(section_id).populate('widgets');
+        const section = await sectionModel.findByIdAndDelete(section_id);
         
         if (!section) {
             return res.status(404).json({ message: "Could not find section for the provided id." });
         }
 
-       
-        try {
-            await sectionModel.deleteOne({ _id: section_id });
+        const widgetIds = section.widgets;
+        for (const widgetId of widgetIds) {
+          const widget = await widgetModel.findByIdAndDelete(widgetId);
+        }  
 
             res.status(200).json({ message: "Section deleted!" });
-        } catch (error) {
-            //await session.abortTransaction();
-            throw error;
-        }
     } catch (err) {
       console.log(err);
         const error = new HttpError('An error occurred while deleting a section.', 500);
