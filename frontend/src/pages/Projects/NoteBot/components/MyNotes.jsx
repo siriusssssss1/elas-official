@@ -1,15 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Typography } from "@mui/material";
-//import { makeStyles } from "@mui/styles";
-import Card from "@mui/material/Card";
-//import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import DeleteIcon from "@mui/icons-material/Delete";
-import Rating from "@mui/material/Rating";
-import Stack from "@mui/material/Stack";
+import NoteCard from "./NoteCard";
 
 import { getCards } from "../utils/api";
 
@@ -57,7 +48,7 @@ export default function MyNotes() {
   };
 
   return (
-    <Grid container sx={{ maxWidth: 1500, width: "100%" }} spacing={2}>
+    <Grid container spacing={2} sx={{ maxWidth: 1500, width: "100%" }} > 
       <Grid item xs={12}>
         <Typography
           variant="h5"
@@ -66,77 +57,12 @@ export default function MyNotes() {
           My Notes
         </Typography>
       </Grid>
-      <Grid item>
+      <Grid item container spacing={2}>
         {cards.cards.map((card) => (
-          <Card
-            style={{
-              minWidth: 275,
-              marginBottom: 20,
-              position: "relative",
-              height: "200px",
-              backgroundColor: "#d9d9d9",
-            }}
-            key={card.id}
-          >
-            <CardContent
-              style={{
-                textAlign: "center",
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              <Typography
-                color="textSecondary"
-                variant="h6"
-                gutterBottom
-                style={{ textAlign: "center" }}
-              >
-                {card.title}
-              </Typography>
 
-              <Stack
-                spacing={1}
-                direction="row"
-                alignItems="center"
-                justifyContent="flex-start"
-                style={{ position: "absolute", bottom: "8px", left: "8px" }}
-              >
-                <Rating
-                  name={`rating-${card.id}`}
-                  value={card.rating}
-                  precision={0.5}
-                  readOnly
-                />
-              </Stack>
-            </CardContent>
-<<<<<<< Updated upstream
-            <CardContent style={{ position: "absolute", top: 0, right: 0 }}>
-=======
-            <CardContent
-              style={{ position: "absolute", top: 0, right: 0}}
-              onClick={() => handleToggleFavorite(card.id)}
-            >
->>>>>>> Stashed changes
-              {card.isFavorite ? (
-                <FavoriteIcon color="error" />
-              ) : (
-                <FavoriteBorderIcon color="error" />
-              )}
-            </CardContent>
-            <CardContent
-              style={{
-                position: "absolute",
-                bottom: 0,
-                right: 0,
-                padding: "8px",
-              }}
-            >
-              <DeleteIcon
-                style={{ color: "#A5A5A5" }}
-                onClick={() => handleDeleteNote(card.id)}
-              />
-            </CardContent>
-          </Card>
+          
+          <NoteCard key={card.id} card={card} />
+
         ))}
       </Grid>
     </Grid>
