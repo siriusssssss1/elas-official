@@ -1,5 +1,7 @@
 const courseModel = require("../models/courseModel");
 const noteModel = require("../models/noteModel");
+const sectionModel = require("../models/sectionModel");
+const widgetModel = require("../models/widgetModel");
 const userModel = require("../models/userModel");
 const HttpError = require("../models/http-error");
 const mongoose = require("mongoose");
@@ -134,7 +136,7 @@ const deleteCourseWithNotes = async (req, res, next) => {
 
     try {
       const course = await courseModel.findByIdAndDelete(course_id);
-
+      console.log(course);
       if (!course) {
         return res
           .status(404)
@@ -143,7 +145,35 @@ const deleteCourseWithNotes = async (req, res, next) => {
 
       const noteIds = course.notes;
       console.log(noteIds);
-      res.status(200).json({ message: "Course and associated notes deleted." });
+      for (const noteId of noteIds) {
+        // Find and delete the note
+        const note = await noteModel.findByIdAndDelete(noteId);
+        
+
+        if (note) {
+        // Delete sections and widgets associated with the note
+          const sectionIds = note.sections;
+          console.log(sectionIds);
+
+          for (const sectionId of sectionIds) {
+          // Find and delete the section
+            const section = await sectionModel.findByIdAndDelete(sectionId);
+
+            if (section) {
+            // Delete widgets associated with the section
+              const widgetIds = section.widgets;
+              console.log(widgetIds);
+
+              for (const widgetId of widgetIds) {
+                const widget = await widgetModel.findByIdAndDelete(widgetId);
+            }
+          }
+        }
+      }
+    }
+      // console.log(noteIds);
+      // const note = await noteModel.findByIdAndDelete(noteIds);
+    res.status(200).json({ message: "Course and associated notes deleted." });
     } catch (error) {
       console.log(err);
       const httpError = new HttpError(
