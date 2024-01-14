@@ -170,6 +170,17 @@ const deleteCourseWithNotes = async (req, res, next) => {
         }
       }
     }
+    
+    await userModel.updateMany(
+      {uid: course.user_id},
+      {
+        $pull: {
+          courses: course_id,
+          notes: { $in: noteIds },
+        },
+      },
+      { new: true }
+    );
       // console.log(noteIds);
       // const note = await noteModel.findByIdAndDelete(noteIds);
     res.status(200).json({ message: "Course and associated notes deleted." });

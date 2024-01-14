@@ -394,6 +394,17 @@ const deleteNote = async (req, res, next) => {
     const user = await userModel.findOne({uid:note.user_id}); 
     const course = await courseModel.findOne({courseId:note.course_id});
 
+    await userModel.updateMany(
+      {uid: note.user_id},
+      {
+        $pull: {
+          notes: note_id,
+        },
+      },
+      { new: true }
+    );
+  
+
     // await noteModel.deleteOne({
     //   _id: note_id,
     // });
