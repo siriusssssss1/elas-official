@@ -313,7 +313,7 @@ const createNote = async (req, res, next) => {
 
     const createdNote = new noteModel({
       title: title,
-      isPublic: true,
+      isPublic: false,
       avg_rate: 4,
       //course_id: course_id,
       user_id: user_id,
@@ -739,6 +739,8 @@ const addNoteToCourse = async (req, res, next) => {
     if (!course) {
       return res.status(404).json({ message: "Course not found." });
     }
+
+    note.isPublic = true;
 
     // Save the new section
     await note.save();
