@@ -11,7 +11,7 @@ import {
   styled,
   useTheme,
 } from "@mui/material";
-//import { PageHeader } from "../../../components/PageHeader";
+import { PageHeader } from "../../../components/PageHeader";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import SaveIcon from "@mui/icons-material/Save";
 import AddIcon from "@mui/icons-material/Add";
@@ -26,6 +26,7 @@ import { createNote, getCourses } from "./api";
 import { useNavigate } from "react-router-dom";
 import { useNoteWidgets } from "../hooks/useNoteWidgets";
 import { Chatbot } from "./../../chatbot";
+import { LayoutSelector } from "./chooseLayout";
 
 export default CreateNote = () => {
   const {
@@ -42,6 +43,20 @@ export default CreateNote = () => {
   } = useNoteWidgets();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
+
+  const [showLayoutSelector, setShowLayoutSelector] = useState(false);
+  const [selectedLayout, setSelectedLayout] = useState(null);
+  const handleLayoutSelect = (layout) => {
+    setSelectedLayout(layout);
+    setShowLayoutSelector(false);
+    // Hier kannst du weitere Aktionen ausführen, basierend auf dem ausgewählten Layout
+  };
+  const addSectionWithLayout = () => {
+    // Füge hier deine Logik hinzu, um eine neue Abschnitt mit dem ausgewählten Layout hinzuzufügen
+    console.log("Selected Layout:", selectedLayout);
+    // ...
+  };
+
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -185,7 +200,7 @@ export default CreateNote = () => {
       >
         <Button
           color="primary"
-          onClick={addSection}
+          onClick={() => setShowLayoutSelector(true)}
           variant="contained"
           sx={{
             borderRadius: "50%",
@@ -200,6 +215,11 @@ export default CreateNote = () => {
           <AddIcon />
         </Button>
       </Stack>
+
+      {showLayoutSelector && (
+        <LayoutSelector onLayoutSelect={handleLayoutSelect} />
+      )}
+
 
       <AddCourseDialog
         onClose={closeAddCourse}
