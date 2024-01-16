@@ -47,7 +47,7 @@ function AddNote() {
             bgcolor: "#C2C2C2",
             borderRadius: "4px",
             "& .MuiButton-startIcon": {
-              color: "#767676", // Adjust icon color here if needed
+              color: "#767676", 
             },
             "& .MuiButton-label": {
               fontFamily: "Arial",
@@ -72,7 +72,7 @@ function AddNote() {
           alignItems: "center",
           border: "2px dashed #767676",
           borderRadius: "10px",
-          marginY: "30px", // Adjust as per the design's vertical spacing
+          marginY: "30px", 
         }}
       >
         <div
@@ -92,16 +92,16 @@ function AddNote() {
                   position: "absolute",
                   transform: "translate(-50%, -50%)",
                   color: "#FFFFFF",
-                  fontSize: "36px", // Anpassen Sie die Größe nach Bedarf
-                  lineHeight: "42px", // Anpassen Sie die Größe nach Bedarf
+                  fontSize: "36px", 
+                  lineHeight: "42px", 
                 }}
               />
             }
             sx={{
               bgcolor: "#ED7D31",
               borderRadius: "50%",
-              width: "60px", // Anpassen Sie die Größe nach Bedarf
-              height: "60px", // Anpassen Sie die Größe nach Bedarf
+              width: "60px", 
+              height: "60px", 
             
               "& .MuiButton-startIcon": {
                 margin: "auto", // Zentriert das Icon im Button

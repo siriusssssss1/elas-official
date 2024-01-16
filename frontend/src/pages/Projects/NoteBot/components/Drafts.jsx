@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Typography } from "@mui/material";
+import NoteCard from "./NoteCard";
+
+import { getCards } from "../utils/api";
 
 export default function Drafts() {
   return (

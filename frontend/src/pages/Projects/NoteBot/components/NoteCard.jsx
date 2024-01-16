@@ -17,6 +17,7 @@ export default function NoteCard({ card }) {
         position: "relative",
         height: "200px",
         backgroundColor: "#d9d9d9",
+        margin: "8px"
       }}
       key={card.id}
     >

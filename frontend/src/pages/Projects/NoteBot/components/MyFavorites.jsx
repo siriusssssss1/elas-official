@@ -71,14 +71,15 @@ export default function MyFavorites() {
       {/* Cards */}
       <Grid container sx={{ maxWidth: 1500, width: "100%" }}>
         {/* Left side grid */}
-        <Grid
+        <Grid 
           width={0.5}
           paddingTop={4}
           paddingRight={4}
           sx={{
             borderRight: 1,
-            columnGap: 2,
-            rowGap: 4,
+            "& > div": {
+              display: "grid",
+            },
           }}
         >
           <Grid item>
@@ -97,8 +98,6 @@ export default function MyFavorites() {
             item
             display={"flex"}
             flexWrap={"wrap"}
-            columnGap={2}
-            rowGap={3}
             justifyContent={"space-between"}
           >
             {Array(4)
