@@ -110,7 +110,8 @@ export default function NoteBot() {
               xs={6}
               sm={3}
               md={2}
-              sx={{ width: "100%", pb: 5 }}
+              sx={{ width: "100%", pb: 5
+             }}
             />
           </Grid>
           <Grid container justifyContent="center" spacing={100}>
@@ -122,6 +123,7 @@ export default function NoteBot() {
                     borderColor: "divider",
                     display: "flex",
                     justifyContent: "space-around",
+                    
                   }}
                 >
                   <Tabs
@@ -129,35 +131,41 @@ export default function NoteBot() {
                     onChange={handleChange}
                     aria-label="basic tabs example"
                     variant="fullWidth"
+                    
                   >
                     <Tab
                       label="My Notes"
-                      {...a11yProps(0)}
-                      sx={{ marginRight: 6 }}
+                      {...a11yProps(0)} sx={{ color: "#ED7D31", fontWeight: "bold", marginRight: 6 }}
                     />
                     <Tab
                       label="My Favorites"
-                      {...a11yProps(1)}
-                      sx={{ marginRight: 6 }}
+                      {...a11yProps(0)} sx={{ color: "#ED7D31", fontWeight: "bold", marginRight: 6 }}
                     />
                     <Tab
                       label="Drafts"
-                      {...a11yProps(2)}
-                      sx={{ marginRight: 8 }}
+                      {...a11yProps(0)} sx={{ color: "#ED7D31", fontWeight: "bold", marginRight: 6 }}
                     />
                     <Button
                       variant="outlined"
-                      {...a11yProps(3)}
+                      {...a11yProps(0)}
+                      sx={{
+                        color: "#ED7D31",
+                        fontWeight: "bold",
+                        borderColor: "#ED7D31", 
+                        marginRight: 6,
+                      }}
                       onClick={() => navigate("/projects/notebot/notes/create")} //adding Note
                     >
                       {" "}
-                      ADD NOTE{" "}
+                      + ADD NOTE{" "}
                     </Button>
 
                     {/* label: "Add Note",
             startIcon: <AddIcon />,
             onClick: () => navigate("/notes/create"),
             color: "primary", */}
+
+                
                   </Tabs>
                 </Box>
                 <CustomTabPanel value={value} index={0}>
