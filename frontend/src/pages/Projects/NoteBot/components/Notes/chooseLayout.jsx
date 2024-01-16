@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Unstable_Grid2";
-import { LayoutItem } from "../../../components/Layouts/LayoutItem";
+import { LayoutItem } from "../../../components/Layouts/LayoutItem"; // file still missing 
 import { useTheme } from "@mui/material/styles";
 
 export function LayoutSelector({ onLayoutSelect }) {
@@ -20,7 +20,7 @@ export function LayoutSelector({ onLayoutSelect }) {
         alignContent={"center"}
       >
         CHOOSE LAYOUT
-      </Box>
+      </Box>    
       <Grid container justifyContent={"center"} alignContent={"center"}>
         <LayoutItem columns={[12]} handle={onLayoutSelect}></LayoutItem>
         <LayoutItem columns={[6, 6]} handle={onLayoutSelect}></LayoutItem>

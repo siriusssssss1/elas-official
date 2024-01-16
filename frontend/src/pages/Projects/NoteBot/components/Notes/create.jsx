@@ -213,7 +213,7 @@ export default CreateNote = () => {
         }}
       />
 
-      {open && <Chatbot />}
+      {/* {open && <Chatbot />}
 
       <Fab
         sx={{
@@ -230,7 +230,8 @@ export default CreateNote = () => {
           src={"/chatBot.png"}
           onClick={toggleChat}
         />
-      </Fab>
+      </Fab> */}
+      
     </Container>
   );
 };
