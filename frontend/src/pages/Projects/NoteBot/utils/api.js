@@ -23,8 +23,24 @@ export const getUserInfo = async (userId) => {
 
 export const getCards = async () => {
   try {
-    const response = await Backend.get(`/api/notebot/courses/all`);
-
+   // const response = await Backend.get(`/api/notebot/courses/all`);
+   const response = {
+    data: {
+      message: "Cards found!",
+      cards: [
+        {
+          title: "Mathe",
+          isFavorite: false,
+          rating: 2.1,
+        },
+        {
+          title: "GPT",
+          isFavorite: true,
+          rating: 4.8,
+        }
+      ]
+    }
+  } 
     const {
       data: { message, cards },
     } = response;

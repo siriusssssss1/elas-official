@@ -29,21 +29,25 @@ export default function MyNotes() {
     getCardInfo();
   }, []);
 
-  const handleDeleteNote = (id) => {
-    const updatedCards = cards.cards.filter((card) => card.id !== id);
-    setCards({ message: cards.message, cards: updatedCards });
-  };
+  
 
-  //const handleDeleteNote = (id) => {
-   // const confirmDelete = window.confirm(
-    //  "Möchten Sie diese Notiz wirklich löschen?"
-   // );
+  // const handleDeleteNote = (id) => {
+  //   const updatedCards = cards.cards.filter((card) => card.id !== id);
+  //   setCards({ message: cards.message, cards: updatedCards });
+  // };
 
-   // if (confirmDelete) {
-      // Führen Sie hier den tatsächlichen Löschvorgang durch
-   //   console.log(`Notiz mit der ID ${id} wurde gelöscht.`);
-   // }
-  //};
+
+
+  // const handleDeleteNote = (id) => {
+  //  const confirmDelete = window.confirm(
+  //    "Möchten Sie diese Notiz wirklich löschen?"
+  //  );
+
+  //  if (confirmDelete) {
+     
+  //    console.log(`Notiz mit der ID ${id} wurde gelöscht.`);
+  //  }
+  // };
 
   const handleToggleFavorite = (id) => {
     setCards((prevCards) => {

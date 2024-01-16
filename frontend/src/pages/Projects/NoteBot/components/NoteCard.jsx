@@ -8,7 +8,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Rating from "@mui/material/Rating";
 import Stack from "@mui/material/Stack";
 import { Typography } from "@mui/material";
-import handleDeleteNote from "./MyNotes";
+import handleDeleteNote2 from "./MyNotes";
 import handleToggleFavorite from "./MyNotes";
 
 
@@ -74,7 +74,7 @@ export default function NoteCard({ card, handleDeleteNote, handleToggleFavorite 
       >
         <DeleteIcon
           style={{ color: "#A5A5A5" }}
-          onClick={() => handleDeleteNote(card.id)}
+          onClick={() => handleDeleteNote2(card.id)}
         />
       </CardContent>
     </Card>
