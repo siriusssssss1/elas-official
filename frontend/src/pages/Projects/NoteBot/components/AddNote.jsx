@@ -10,7 +10,7 @@ import {
 import AddIcon from '@mui/icons-material/Add';
 import SaveIcon from "@mui/icons-material/Save";
 
-function AddNote() {
+function AddNote() { 
   return (
     <Container maxWidth="lg" sx={{ position: "relative", bgcolor: "#FFFFFF" }}>
       <Box
@@ -87,7 +87,7 @@ function AddNote() {
             variant="contained"
             color="primary"
             startIcon={
-              <AddIcon 
+              <AddIcon          //sollte zu einer seperaten Datei "Section" mit Bearbeitungsmodus führen
                 style={{
                   position: "absolute",
                   transform: "translate(-50%, -50%)",
@@ -121,7 +121,8 @@ function AddNote() {
               textTransform: "uppercase",
             }}
           >
-            Add  a Section
+            Add  a Section 
+
           </span>
         </div>
       </Paper>

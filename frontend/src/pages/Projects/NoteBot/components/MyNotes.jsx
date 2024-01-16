@@ -59,8 +59,6 @@ export default function MyNotes() {
   };
 
  
-  
-
   return (
     <Grid container spacing={2} sx={{ maxWidth: 1500, width: "100%" }} > 
       <Grid item xs={12}>
