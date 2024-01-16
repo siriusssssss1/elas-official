@@ -24,26 +24,9 @@ export const getUserInfo = async (userId) => {
 export const getCards = async () => {
   try {
     // TODO: Backend Team implement fucntion to get cards
-    // const response = await Backend.get(`/notebot/cards`);
     
     // Fake data until fixed
-    const response = {
-      data: {
-        message: "Cards found!",
-        cards: [
-          {
-            title: "Mathe",
-            isFavorite: false,
-            rating: 2.1,
-          },
-          {
-            title: "GPT",
-            isFavorite: true,
-            rating: 4.8,
-          }
-        ]
-      }
-    } 
+    const response = await Backend.get(`/notebot/cards`);
 
     const {
       data: { message, cards },
