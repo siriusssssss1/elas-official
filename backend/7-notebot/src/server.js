@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import debugLib from "debug";
 import bodyParser from "body-parser";
 import path from "path";
+import mongoose from "mongoose";
 import { Eureka } from "eureka-js-client";
 
 dotenv.config();
@@ -15,17 +16,28 @@ const db = require("./models");
 global.__basedir = __dirname;
 
 // Middlewares
+
+
+// Dummy middleware, remove later
+// app.use((req, res, next) => {
+//   console.log("dummyMiddleware")
+//   req.userData = {userId: "a5eef233-281b-4378-b8f2-bdb5e54d6203"}
+//   next()
+// });
+
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use("/", express.static(path.join(__dirname, "public")));
+
 
 // Get port from environment and store in Express
 const port = normalizePort(process.env.PORT || "8007");
 app.set("port", port);
 
 // Create connection to MongoDB
-db.mongoose
+mongoose
   .connect(process.env.MONGO_DB, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -37,6 +49,8 @@ db.mongoose
     console.error("!!!! Error connecting to MongoDB !!!!", err);
     process.exit();
   });
+
+  
 
 // Create HTTP server
 const server = http.createServer(app);
@@ -53,8 +67,23 @@ let apiURL = "/api/notebot";
  * the apiURL and the routes using the app.use() method.
  */
 
-const userRoutes = require("./routes/user.routes");
-app.use(apiURL, userRoutes);
+const userRoutes = require("./routes/users");
+const coursesRoutes = require("./routes/courses");
+const noteRoutes = require("./routes/notes");
+const sectionRoutes = require("./routes/sections");
+const widgetRoutes = require("./routes/widgets");
+//var chatRouter = require("./routes/chat");
+const chatbotRouter = require("./routes/chat");
+const draftRouter = require("./routes/drafts");
+
+app.use(apiURL + '/users', userRoutes);
+app.use(apiURL + '/courses', coursesRoutes);
+app.use(apiURL + '/notes', noteRoutes);
+app.use(apiURL + '/sections', sectionRoutes);
+app.use(apiURL + '/widgets', widgetRoutes);
+app.use(apiURL + "/chat", chatbotRouter); // Mount the chatbotController as a middleware
+// app.use("/chat", chatRouter);
+app.use(apiURL + '/drafts', draftRouter);
 // Add more routes here
 
 /***************** END: IMPORT ROUTES *****************/
