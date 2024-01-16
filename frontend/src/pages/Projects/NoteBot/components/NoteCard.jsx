@@ -8,8 +8,11 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Rating from "@mui/material/Rating";
 import Stack from "@mui/material/Stack";
 import { Typography } from "@mui/material";
+import handleDeleteNote from "./MyNotes";
+import handleToggleFavorite from "./MyNotes";
 
-export default function NoteCard({ card }) {
+
+export default function NoteCard({ card, handleDeleteNote, handleToggleFavorite }) {
   return (
     <Card
       style={{
@@ -17,6 +20,7 @@ export default function NoteCard({ card }) {
         position: "relative",
         height: "200px",
         backgroundColor: "#d9d9d9",
+        marginBottom: "20px",
       }}
       key={card.id}
     >
@@ -55,9 +59,9 @@ export default function NoteCard({ card }) {
       </CardContent>
       <CardContent style={{ position: "absolute", top: 0, right: 0 }}>
         {card.isFavorite ? (
-          <FavoriteIcon color="error" />
+          <FavoriteIcon color="error" onClick={handleToggleFavorite}/>
         ) : (
-          <FavoriteBorderIcon color="error" />
+          <FavoriteBorderIcon color="error" onClick={handleToggleFavorite}/>
         )}
       </CardContent>
       <CardContent
