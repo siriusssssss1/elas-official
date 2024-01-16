@@ -23,10 +23,7 @@ export const getUserInfo = async (userId) => {
 
 export const getCards = async () => {
   try {
-    // TODO: Backend Team implement fucntion to get cards
-    
-    // Fake data until fixed
-    const response = await Backend.get(`/notebot/cards`);
+    const response = await Backend.get(`/api/notebot/courses/all`);
 
     const {
       data: { message, cards },
