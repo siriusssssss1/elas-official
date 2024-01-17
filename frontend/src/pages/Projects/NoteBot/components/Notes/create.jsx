@@ -25,7 +25,7 @@ import { Section } from "./Section";
 import { createNote, getCourses } from "./api";
 import { useNavigate } from "react-router-dom";
 import { useNoteWidgets } from "../hooks/useNoteWidgets";
-import { Chatbot } from "./../../chatbot";
+//import { Chatbot } from "./../../chatbot";
 
 export default CreateNote = () => {
   const {
@@ -146,7 +146,7 @@ export default CreateNote = () => {
           // },
         ]}
       />
-      {sections.map((section, index) => (
+      {sections.map((section, index) => ( //Hier wird über eine Liste von sections (Abschnitten) gemappt
         <>
           {index > 0 && <Box sx={{ height: 16, width: "100%" }} />}
           <Section
@@ -163,7 +163,7 @@ export default CreateNote = () => {
           />
         </>
       ))}
-      {sections.length > 0 && (
+      {sections.length > 0 && ( //horizontaler Trennstrich
         <Divider
           sx={{
             margin: 4,
@@ -185,7 +185,7 @@ export default CreateNote = () => {
       >
         <Button
           color="primary"
-          onClick={addSection}
+          onClick={addSection} //Ein Stapel mit Button ("+") wird gerendert, um einen neuen Abschnitt hinzuzufügen
           variant="contained"
           sx={{
             borderRadius: "50%",
@@ -201,7 +201,7 @@ export default CreateNote = () => {
         </Button>
       </Stack>
 
-      <AddCourseDialog
+      <AddCourseDialog //Popup-Dialog für Hinzufügen von Kursen ?
         onClose={closeAddCourse}
         isOpen={isAddCourseActive}
         courses={courses}
@@ -231,7 +231,7 @@ export default CreateNote = () => {
           onClick={toggleChat}
         />
       </Fab> */}
-      
+
     </Container>
   );
 };

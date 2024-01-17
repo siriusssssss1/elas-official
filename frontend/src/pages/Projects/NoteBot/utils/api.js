@@ -41,7 +41,7 @@ export const getCards = async () => {
       ]
     }
   } 
-    const {
+    const { //relevante Daten (message und cards) werden destrukturiert und in den Variablen message und cards gespeichert
       data: { message, cards },
     } = response;
 
