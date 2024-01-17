@@ -1,6 +1,7 @@
 const widgetModel = require("../models/widgetModel.js");
 const sectionModel = require("../models/sectionModel.js");
 const HttpError = require("../models/http-error.js");
+const mongoose = require("mongoose");
 
 // Get widgets by section id
 const getWidgetsBySectionId = async (req, res, next) => {
@@ -114,6 +115,17 @@ const deleteWidget = async (req, res, next) => {
     }
     try {
       await widgetModel.deleteOne({ _id: widget_id });
+
+      const sectionID = new mongoose.Types.ObjectId(widget.section_id);
+        await sectionModel.updateMany(
+          { _id: sectionID },
+          {
+            $pull: {
+              widgets: widget_id,
+            },
+          },
+          { new: true }
+        );
 
       res.status(200).json({ message: "Widget deleted!" });
     } catch (error) {
