@@ -23,11 +23,14 @@ export const getUserInfo = async (userId) => {
 
 export const getCards = async () => {
   try {
-   // const response = await Backend.get(`/api/notebot/courses/all`);
+
+   const responseNr2 = await Backend.get(`/notebot/courses/all`);
+   console.log(responseNr2.data)
+   
    const response = {
     data: {
       message: "Cards found!",
-      cards: [
+      courses: [
         {
           title: "Mathe",
           isFavorite: false,
@@ -42,15 +45,15 @@ export const getCards = async () => {
     }
   } 
     const { //relevante Daten (message und cards) werden destrukturiert und in den Variablen message und cards gespeichert
-      data: { message, cards },
-    } = response;
+      data: { message, courses },
+    } = responseNr2;
 
-    return { message, cards };
+    return { message, courses };
   } catch (err) {
     console.log(err);
     return {
       message: "Server not connected",
-      cards: undefined
+      courses: undefined
     };
   }
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Container,
   TextField,
@@ -7,10 +7,11 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
-import AddIcon from '@mui/icons-material/Add';
+import AddIcon from "@mui/icons-material/Add";
 import SaveIcon from "@mui/icons-material/Save";
 
-function AddNote() { 
+function AddNote() {
+  const [newSection, setNewSection] = useState(false);
   return (
     <Container maxWidth="lg" sx={{ position: "relative", bgcolor: "#FFFFFF" }}>
       <Box
@@ -47,7 +48,7 @@ function AddNote() {
             bgcolor: "#C2C2C2",
             borderRadius: "4px",
             "& .MuiButton-startIcon": {
-              color: "#767676", 
+              color: "#767676",
             },
             "& .MuiButton-label": {
               fontFamily: "Arial",
@@ -58,74 +59,108 @@ function AddNote() {
           }}
           startIcon={<SaveIcon />}
         >
-
           Save
         </Button>
       </Box>
-      <Paper
-        variant="outlined"
-        sx={{
-          width: "100%",
-          height: "239px",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          border: "2px dashed #767676",
-          borderRadius: "10px",
-          marginY: "30px", 
-        }}
-      >
-        <div
-          style={{
+      {newSection && (
+        <Button
+          variant="contained"
+          color="primary"
+          startIcon={
+            <AddIcon //sollte zu einer seperaten Datei "Section" mit Bearbeitungsmodus führen
+              style={{
+                position: "absolute",
+                transform: "translate(-50%, -50%)",
+                color: "#FFFFFF",
+                fontSize: "36px",
+                lineHeight: "42px",
+              }}
+            />
+          }
+          sx={{
+            bgcolor: "#ED7D31",
+            borderRadius: "50%",
+            width: "60px",
+            height: "60px",
+
+            "& .MuiButton-startIcon": {
+              margin: "auto", // Zentriert das Icon im Button
+              display: "block", // Setzt das Icon auf block-level, um es zu zentrieren
+              color: "#FFFFFF",
+            },
+          }}
+          onClick={() => setNewSection((prevState) => !prevState)}
+        >
+          {" "}
+          hide{" "}
+        </Button>
+      )}
+      {!newSection && (
+        <Paper
+          variant="outlined"
+          sx={{
+            width: "100%",
+            height: "239px",
             display: "flex",
-            alignItems: "center",
             justifyContent: "center",
-            flexDirection: "column",
+            alignItems: "center",
+            border: "2px dashed #767676",
+            borderRadius: "10px",
+            marginY: "30px",
           }}
         >
-          <Button
-            variant="contained"
-            color="primary"
-            startIcon={
-              <AddIcon          //sollte zu einer seperaten Datei "Section" mit Bearbeitungsmodus führen
-                style={{
-                  position: "absolute",
-                  transform: "translate(-50%, -50%)",
-                  color: "#FFFFFF",
-                  fontSize: "36px", 
-                  lineHeight: "42px", 
-                }}
-              />
-            }
-            sx={{
-              bgcolor: "#ED7D31",
-              borderRadius: "50%",
-              width: "60px", 
-              height: "60px", 
-            
-              "& .MuiButton-startIcon": {
-                margin: "auto", // Zentriert das Icon im Button
-                display: "block", // Setzt das Icon auf block-level, um es zu zentrieren
-                color: "#FFFFFF",
-              },
-            }}
-          />
-          <span
+          <div
             style={{
-              marginLeft: "10px",
-              marginTop: "10px",
-              fontFamily: "Arial",
-              fontSize: "18px",
-              lineHeight: "21px",
-              color: "#555555",
-              textTransform: "uppercase",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexDirection: "column",
             }}
           >
-            Add  a Section 
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={
+                <AddIcon //sollte zu einer seperaten Datei "Section" mit Bearbeitungsmodus führen
+                  style={{
+                    position: "absolute",
+                    transform: "translate(-50%, -50%)",
+                    color: "#FFFFFF",
+                    fontSize: "36px",
+                    lineHeight: "42px",
+                  }}
+                />
+              }
+              sx={{
+                bgcolor: "#ED7D31",
+                borderRadius: "50%",
+                width: "60px",
+                height: "60px",
 
-          </span>
-        </div>
-      </Paper>
+                "& .MuiButton-startIcon": {
+                  margin: "auto", // Zentriert das Icon im Button
+                  display: "block", // Setzt das Icon auf block-level, um es zu zentrieren
+                  color: "#FFFFFF",
+                },
+              }}
+              onClick={() => setNewSection((prevState) => !prevState)}
+            />
+            <span
+              style={{
+                marginLeft: "10px",
+                marginTop: "10px",
+                fontFamily: "Arial",
+                fontSize: "18px",
+                lineHeight: "21px",
+                color: "#555555",
+                textTransform: "uppercase",
+              }}
+            >
+              Add a Section
+            </span>
+          </div>
+        </Paper>
+      )}
     </Container>
   );
 }
