@@ -6,9 +6,9 @@ const widgetModel = require("../models/widgetModel");
 const mongoose = require("mongoose");
 const HttpError = require("../models/http-error");
 const favoriteModel = require("../models/favoriteModel");
+const draftModel = require("../models/draftModel");
 const { search } = require("../routes/notes");
 const searchModel = require("../models/searchModel");
-
 
 //const { validationResult } = require('express-validator');
 
@@ -392,7 +392,8 @@ const deleteNote = async (req, res, next) => {
     }
 
     const user = await userModel.findOne({uid:note.user_id}); 
-    const course = await courseModel.findOne({courseId:note.course_id});
+    const course = await courseModel.findOne({_id:note.course_id});
+    console.log(course);
 
     await userModel.updateMany(
       {uid: note.user_id},
@@ -403,7 +404,26 @@ const deleteNote = async (req, res, next) => {
       },
       { new: true }
     );
-  
+    
+    if (course) {
+      const courseId2 = new mongoose.Types.ObjectId(note.course_id);
+      console.log(courseId2);
+      await courseModel.updateMany(
+        { _id: courseId2 },
+        {
+          $pull: {
+            notes: note_id,
+          },
+        },
+        { new: true }
+      );
+    }
+    //if (note.isDraft) {   
+    //   await draftModel.updateMany(
+    //     {}
+    //   )
+    // }
+
 
     // await noteModel.deleteOne({
     //   _id: note_id,
