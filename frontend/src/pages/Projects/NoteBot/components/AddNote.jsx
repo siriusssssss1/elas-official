@@ -62,21 +62,12 @@ function AddNote() {
           Save
         </Button>
       </Box>
-      {newSection && (
+
+      {newSection && ( //wenn true, dann true
         <Button
           variant="contained"
           color="primary"
-          startIcon={
-            <AddIcon //sollte zu einer seperaten Datei "Section" mit Bearbeitungsmodus führen
-              style={{
-                position: "absolute",
-                transform: "translate(-50%, -50%)",
-                color: "#FFFFFF",
-                fontSize: "36px",
-                lineHeight: "42px",
-              }}
-            />
-          }
+        
           sx={{
             bgcolor: "#ED7D31",
             borderRadius: "50%",
@@ -84,18 +75,19 @@ function AddNote() {
             height: "60px",
 
             "& .MuiButton-startIcon": {
-              margin: "auto", // Zentriert das Icon im Button
-              display: "block", // Setzt das Icon auf block-level, um es zu zentrieren
+              margin: "auto", 
+              display: "block", 
               color: "#FFFFFF",
             },
           }}
-          onClick={() => setNewSection((prevState) => !prevState)}
+          onClick={() => setNewSection((prevState) => !prevState)} //State wird umgekehrt
         >
           {" "}
           hide{" "}
         </Button>
       )}
-      {!newSection && (
+
+      {!newSection && ( //wenn true, dann false
         <Paper
           variant="outlined"
           sx={{
@@ -121,7 +113,7 @@ function AddNote() {
               variant="contained"
               color="primary"
               startIcon={
-                <AddIcon //sollte zu einer seperaten Datei "Section" mit Bearbeitungsmodus führen
+                <AddIcon 
                   style={{
                     position: "absolute",
                     transform: "translate(-50%, -50%)",
@@ -138,8 +130,8 @@ function AddNote() {
                 height: "60px",
 
                 "& .MuiButton-startIcon": {
-                  margin: "auto", // Zentriert das Icon im Button
-                  display: "block", // Setzt das Icon auf block-level, um es zu zentrieren
+                  margin: "auto", 
+                  display: "block", 
                   color: "#FFFFFF",
                 },
               }}
