@@ -2,6 +2,7 @@ const sectionModel = require('../models/sectionModel')
 const noteModel = require('../models/noteModel');
 const widgetModel = require('../models/widgetModel');
 const HttpError = require('../models/http-error');
+const mongoose = require("mongoose");
 
 // Get sections by note id
 const getSectionsByNoteId = async (req, res, next) => {
@@ -186,6 +187,17 @@ const deleteSection = async (req, res, next) => {
         if (!section) {
             return res.status(404).json({ message: "Could not find section for the provided id." });
         }
+
+        const noteID = new mongoose.Types.ObjectId(section.note_id);
+        await noteModel.updateMany(
+          { _id: noteID },
+          {
+            $pull: {
+              sections: section_id,
+            },
+          },
+          { new: true }
+        );
 
         const widgetIds = section.widgets;
         for (const widgetId of widgetIds) {

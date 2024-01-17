@@ -418,12 +418,6 @@ const deleteNote = async (req, res, next) => {
         { new: true }
       );
     }
-    //if (note.isDraft) {   
-    //   await draftModel.updateMany(
-    //     {}
-    //   )
-    // }
-
 
     // await noteModel.deleteOne({
     //   _id: note_id,
