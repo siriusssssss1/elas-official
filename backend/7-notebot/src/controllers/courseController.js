@@ -42,17 +42,6 @@ const getCoursesByUserId = async (req, res, next) => {
       course.toObject({ getters: true })
     );
 
-    // await Promise.all(
-    //   courses.map((course) => {
-    //     return noteModel
-    //       .find({
-    //         course_id: course._id,
-    //       })
-    //       .then((list) => {
-    //         course.notes_count = list.length;
-    //       });
-    //   })
-    // );
 
     res.json({
       courses,
@@ -71,12 +60,7 @@ const getCoursesByUserId = async (req, res, next) => {
 const createCourse = async (req, res, next) => {
   const { title, user_id } = req.body;
 
-  //let session; // Declare the session variable
-
   try {
-    // Start a Mongoose session
-    //session = await mongoose.startSession();
-    //session.startTransaction();
     let course = new courseModel({
       title: title,
       user_id: user_id,
@@ -86,21 +70,6 @@ const createCourse = async (req, res, next) => {
 
     await userModel.updateMany({uid: user_id}, {$push: {courses:course_id}});
 
-    // Create the course
-    // const createdCourse = await courseModel.create([{ user_id, title }], {
-    //   session,
-    // });
-    // console.log("createdCourse", createdCourse);
-    // // Assign the course to the user
-    // await userModel.findByIdAndUpdate(
-    //   user_id,
-    //   { $push: { courses: createdCourse[0]._id } },
-    //   { session }
-    // );
-
-    // Commit the transaction
-    //await session.commitTransaction();
-
     res.status(201).json({ course: course });
     return;
   } catch (error) {
@@ -108,24 +77,6 @@ const createCourse = async (req, res, next) => {
     res.status(500).send({ message: `Error saving course to DB` });
     return;
     
-  
-    // Abort the transaction and roll back changes
-    // if (session) {
-    //   await session.abortTransaction();
-    // }
-
-  //   const httpError = new HttpError(
-  //     `An error occurred while creating the course: ${error.message}`,
-  //     500
-  //   );
-  //   return next(httpError);
-  // } finally {
-
-  //   console.log("finally")
-  //   // End the session
-  //   if (session) {
-  //     session.endSession();
-  //   }
   }
 };
 

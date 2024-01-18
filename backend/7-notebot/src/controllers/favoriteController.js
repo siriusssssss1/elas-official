@@ -7,8 +7,7 @@ const noteModel = require("../models/noteModel");
 const courseModel = require("../models/courseModel");
 
 const toggetFavoriteNote = async (req, res, next) => {
-  // const session = await mongoose.startSession();
-  // session.startTransaction();
+
   const user_id = req.body.user_id;
   const { note_id } = req.params;
   const payload = {

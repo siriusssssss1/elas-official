@@ -2,16 +2,44 @@ const widgetController = require("../controllers/widgetController.js");
 const express = require('express');
 const router = express.Router();
 
-//Registering widgets route
-// the rest of the path , pointer to the function from widgetController
+// Registering widgets route
+
+/**
+ * @route GET /widgets/section/:section_id
+ * @description Get widgets by section ID - Get widgets for a specific section.
+ */
 router.get('/section/:section_id', widgetController.getWidgetsBySectionId);
+
+/**
+ * @route PATCH /widgets/section/:section_id
+ * @description Add widget to section - Add a widget to a specific section.
+ */
 router.patch('/section/:section_id', widgetController.addWidgetToSection);
+
+/**
+ * @route PATCH /widgets/:widget_id
+ * @description Update widget - Update a specific widget.
+ */
 router.patch('/:widget_id', widgetController.updateWidget);
+
+/**
+ * @route DELETE /widgets/:section_id/:widget_id
+ * @description Delete widget - Delete a specific widget from a section.
+ */
 router.delete('/:section_id/:widget_id', widgetController.deleteWidget);
 
+/**
+ * @route POST /widgets
+ * @description Create widget - Create a new widget.
+ */
 router.post('/', widgetController.createWidget);
 
-//test 
+// Test route
+/**
+ * @route GET /widgets/widget/test
+ * @description Test route to get a widget - Get a widget for testing purposes.
+ */
 router.get('/widget/test', widgetController.getWidget);
-//export the router
+
+// Export the router
 module.exports = router;
