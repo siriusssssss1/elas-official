@@ -612,8 +612,11 @@ const updateNote = async (req, res, next) => {
     const user_id = req.body.user_id;
    
     const { title, sections, widgets, course_id } = req.body;
+    console.log(course_id);
 
     const note = await noteModel.findById(req.params.note_id);
+    const course = await courseModel.findById(course_id);
+
 
     if (!note) {
       return res
@@ -621,16 +624,8 @@ const updateNote = async (req, res, next) => {
         .json({ message: "Could not find note for the provided id." });
     }
 
+
     note.title = title;
-
-    if (!course_id) {
-      note.isDraft = true;
-      note.isPublic = false;
-    } else {
-      note.course_id = course_id;
-    }
-
-    await note.save();
 
     // note.course_id = course_id;
     // await note.save();
@@ -683,7 +678,18 @@ const updateNote = async (req, res, next) => {
       }
     }
 
+    if (!course_id) {
+      note.isDraft = true;
+      note.isPublic = false;
+    } else {
+      note.course_id = course_id;
+      note.isPublic = true;
+    }
+
     await note.save();
+    
+    course.notes.push(note._id);
+    await course.save();
 
     // await session.commitTransaction();
     // await session.endSession();
