@@ -33,7 +33,7 @@ router.delete('/:course_id', courseController.deleteCourseWithNotes);
 
 /**
  * @route POST /courses/:course_id/favorite
- * @description Toggle favorite status for a course.
+ * @description Togget favorite status for a course.
  */
 router.post("/:course_id/favorite", favController.toggetFavoriteCourse);
 

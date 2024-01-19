@@ -170,7 +170,7 @@ const deleteLatestSearches =  async (req, res, next) => {
       res.status(200).json({ message: "Latest searches deleted." });
     } catch (error) {
       console.log(err);
-      const httpError = new HttpError(
+      const httpError = new httpError(
         `An error occurred while deleting latest searches: ${error.message}`,
         500
       );

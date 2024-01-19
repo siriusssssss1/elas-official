@@ -24,7 +24,7 @@ export const getUserInfo = async (userId) => {
 export const getCards = async () => {
   try {
 
-   const responseNr2 = await Backend.get(`/notebot/courses/all`);
+   const responseNr2 = await Backend.get(`/notebot/notes/all`);
    console.log(responseNr2.data)
    
    const response = {
@@ -44,6 +44,7 @@ export const getCards = async () => {
       ]
     }
   } 
+  return {cards: responseNr2.data.notes}; 
     const { //relevante Daten (message und cards) werden destrukturiert und in den Variablen message und cards gespeichert
       data: { message, courses },
     } = responseNr2;
