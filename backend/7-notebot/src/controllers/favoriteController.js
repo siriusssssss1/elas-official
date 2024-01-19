@@ -1,6 +1,5 @@
 const favoriteModel = require("../models/favoriteModel");
 const favoriteCourseModel = require("../models/favoriteCourseModel");
-
 const mongoose = require("mongoose");
 const HttpError = require("../models/http-error");
 const noteModel = require("../models/noteModel");

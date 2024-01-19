@@ -76,7 +76,7 @@ router.get("/note/:note_id", noteController.getNoteByNoteID);
  * @route POST /notes/:note_id/favorite
  * @description Toggle favorite status for a note - Toggle the favorite status of a note.
  */
-router.post("/:note_id/favorite", favController.toggleFavoriteNote);
+router.post("/:note_id/favorite", favController.toggetFavoriteCourse);
 
 /**
  * @route GET /notes/users/:user_id/favorite
