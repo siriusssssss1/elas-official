@@ -290,7 +290,7 @@ const createNote = async (req, res, next) => {
       return res.status(400).json({ message: "Missing required fields." });
       
     }
-
+    //DONT USE PROMISES
     const [user] = await Promise.all([
        userModel.findOne({uid:user_id}),
        //courseModel.findById(course_id),
@@ -521,7 +521,13 @@ const getSavedNotesByUserId = async (req, res, next) => {
 const getNotes = async (req, res, next) => {
   try {
     const notes = await noteModel.find();
+    // if (notes.isDraft) {
+    //   return res
+    //     .status(404)
+    //     .json({ message: "Could not find note" });
+    // } 
     res.json({ notes: notes.map((note) => note.toObject({ getters: true })) });
+
   } catch (err) {
     const error = new HttpError(
       "An error occurred while fetching notes. ",
@@ -614,6 +620,7 @@ const updateNote = async (req, res, next) => {
       note.isPublic = false;
     } else {
       note.course_id = course_id;
+      //note.isDraft = false;
     }
 
     await note.save();

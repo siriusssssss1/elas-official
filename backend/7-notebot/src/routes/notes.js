@@ -1,5 +1,7 @@
+var express = require("express");
 const noteController = require("../controllers/noteController");
 const favController = require("../controllers/favoriteController");
+
 
 // Creating a router instance
 const router = express.Router();
@@ -74,9 +76,9 @@ router.get("/note/:note_id", noteController.getNoteByNoteID);
 
 /**
  * @route POST /notes/:note_id/favorite
- * @description Toggle favorite status for a note - Toggle the favorite status of a note.
+ * @description Togget favorite status for a note - Toggle the favorite status of a note.
  */
-router.post("/:note_id/favorite", favController.toggleFavoriteNote);
+router.post("/:note_id/favorite", favController.toggetFavoriteNote);
 
 /**
  * @route GET /notes/users/:user_id/favorite
