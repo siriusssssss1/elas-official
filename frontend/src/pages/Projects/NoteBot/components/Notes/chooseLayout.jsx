@@ -1,6 +1,8 @@
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Unstable_Grid2";
-import { LayoutItem } from "../Layouts/LayoutItem"; // file still missing -> components/Layouts/LayouItem
+
+import { LayoutItem } from "../Layouts/LayoutItem.jsx"; // file still missing 
+
 import { useTheme } from "@mui/material/styles";
 
 export function LayoutSelector({ onLayoutSelect }) {
