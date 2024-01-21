@@ -73,6 +73,7 @@ function AddNote() {
           Save
         </Button>
       </Box>
+      
       {newSection && (
         <Button
           variant="contained"
@@ -95,6 +96,7 @@ function AddNote() {
           {" "}
           hide{" "}
         </Button>
+
       )}
       {!newSection && (
         <Paper
