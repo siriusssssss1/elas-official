@@ -80,3 +80,4 @@ export default function NoteCard({ card, handleDeleteNote, handleToggleFavorite 
     </Card>
   );
 }
+

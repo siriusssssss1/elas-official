@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Typography } from "@mui/material";
-import NoteCard from "./NoteCard";
+import DraftCard from "./DraftCard";
 
 import { getDrafts } from "../utils/api";
 
@@ -43,14 +43,14 @@ export default function Drafts() {
           variant="h5"
           style={{ color: "#A5A5A5", marginBottom: "20px" }}
         >
-          My Notes
+          My Drafts
         </Typography>
       </Grid>
       <Grid item container spacing={2}>
         {cards.cards.map((card) => (
 
           
-          <NoteCard key={card.id} card={card} style={{ marginBottom: "20px" }}/>
+          <DraftCard key={card.id} card={card} style={{ marginBottom: "20px" }}/>
 
         ))}
       </Grid>
