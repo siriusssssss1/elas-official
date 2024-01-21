@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Typography } from "@mui/material";
-import { getCards } from "../utils/api";
+import { getFavNotes } from "../utils/api";
 import NoteCard from "./NoteCard";
 
 export default function MyFavorites() {
@@ -11,7 +11,7 @@ export default function MyFavorites() {
 
   useEffect(() => {
     async function getFavoriteCards() {
-      const cardsInfo = await getCards();
+      const cardsInfo = await getFavNotes();
 
       if (cardsInfo.cards !== undefined) {
         const favorites = cardsInfo.cards.filter((card) => card.isFavorite);
@@ -82,14 +82,14 @@ export default function MyFavorites() {
             },
           }}
         >
-          <Grid item>
+          {/* <Grid item>
             {Array(2)
               .fill(favoriteCards.cards)
               .flat()
               .map((card) => (
                 <NoteCard key={card.id} card={card} />
               ))}
-          </Grid>
+          </Grid> */}
         </Grid>
 
         {/* Right side grid */}
@@ -100,7 +100,7 @@ export default function MyFavorites() {
             flexWrap={"wrap"}
             justifyContent={"space-between"}
           >
-            {Array(4)
+            {Array(1)
               .fill(favoriteCards.cards)
               .flat()
               .map((card) => (
