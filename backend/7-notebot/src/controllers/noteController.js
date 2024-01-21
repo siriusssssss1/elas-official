@@ -618,6 +618,7 @@ const updateNote = async (req, res, next) => {
     const { title, sections, widgets, course_id } = req.body;
 
     const note = await noteModel.findById(req.params.note_id);
+    const course = await courseModel.findById(course_id);
 
     if (!note) {
       return res
@@ -627,18 +628,6 @@ const updateNote = async (req, res, next) => {
 
     note.title = title;
 
-    if (!course_id) {
-      note.isDraft = true;
-      note.isPublic = false;
-    } else {
-      note.course_id = course_id;
-      //note.isDraft = false;
-    }
-
-    await note.save();
-
-    // note.course_id = course_id;
-    // await note.save();
     
     note.sections = [];
 
@@ -687,8 +676,18 @@ const updateNote = async (req, res, next) => {
         await sectionObject.save();
       }
     }
+    if (!course_id) {
+      note.isDraft = true;
+      note.isPublic = false;
+    } else {
+      note.course_id = course_id;
+      note.isPublic = true;
+    }
 
     await note.save();
+    
+    course.notes.push(note._id);
+    await course.save();
 
     // await session.commitTransaction();
     // await session.endSession();
