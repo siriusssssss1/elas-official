@@ -14,6 +14,7 @@ import { LayoutSelector } from "./Notes/chooseLayout.jsx";
 function AddNote() {
   const [newSection, setNewSection] = useState(false);
   const [showLayoutOptions, setShowLayoutOptions] = useState(false);
+
   const handleAddSectionClick = () => {
     setNewSection((prevState) => !prevState);
     setShowLayoutOptions(false); // Hide layout options when adding a new section
@@ -21,7 +22,6 @@ function AddNote() {
   const handleLayoutOptionsClick = () => {
     setShowLayoutOptions(!showLayoutOptions);
   };
-
 
   return (
     <Container maxWidth="lg" sx={{ position: "relative", bgcolor: "#FFFFFF" }}>
@@ -73,12 +73,10 @@ function AddNote() {
           Save
         </Button>
       </Box>
-
-      {newSection && ( //wenn true, dann true
+      {newSection && (
         <Button
           variant="contained"
           color="primary"
-        
           sx={{
             bgcolor: "#ED7D31",
             borderRadius: "50%",
@@ -86,21 +84,19 @@ function AddNote() {
             height: "60px",
 
             "& .MuiButton-startIcon": {
-              margin: "auto", 
-              display: "block", 
+              margin: "auto",
+              display: "block",
               color: "#FFFFFF",
             },
           }}
-          //onClick={() => setNewSection((prevState) => !prevState)} //State wird umgekehrt
-          onClick={handleAddSectionClick}
+          onClick={() => setNewSection((prevState) => !prevState)} //State wird umgekehrt
+          //onClick={handleAddSectionClick}
         >
           {" "}
           hide{" "}
-          
         </Button>
       )}
-
-      {!newSection && ( //wenn true, dann false
+      {!newSection && (
         <Paper
           variant="outlined"
           sx={{
@@ -126,7 +122,7 @@ function AddNote() {
               variant="contained"
               color="primary"
               startIcon={
-                <AddIcon 
+                <AddIcon
                   style={{
                     position: "absolute",
                     transform: "translate(-50%, -50%)",
@@ -143,13 +139,13 @@ function AddNote() {
                 height: "60px",
 
                 "& .MuiButton-startIcon": {
-                  margin: "auto", 
-                  display: "block", 
+                  margin: "auto",
+                  display: "block",
                   color: "#FFFFFF",
                 },
               }}
-              //onClick={() => setNewSection((prevState) => !prevState)}
-              onClick={handleLayoutOptionsClick}
+              onClick={() => setNewSection((prevState) => !prevState)}
+              //onClick={handleLayoutOptionsClick}
             />
             <span
               style={{
@@ -167,7 +163,8 @@ function AddNote() {
           </div>
         </Paper>
       )}
-      {showLayoutOptions && <LayoutSelector />} {/* Zeige Layout-Optionen, wenn showLayoutOptions wahr ist */}
+      {showLayoutOptions && <LayoutSelector />}{" "}
+      {/* Zeige Layout-Optionen, wenn showLayoutOptions wahr ist */}
     </Container>
   );
 }
