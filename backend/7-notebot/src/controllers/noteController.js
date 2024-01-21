@@ -80,7 +80,7 @@ const getNoteByUserId = async (req, res, next) => {
   try {
     const user = await userModel.findOne({uid: user_id}).populate('notes');
     //const notes = await noteModel.findById(user_id);
-    const notes = await noteModel.find({ uid: user_id }); 
+    const notes = await noteModel.find({ uid: user_id, isPublic: true }); 
 
     if (!user) {
       return res
@@ -532,12 +532,12 @@ const getSavedNotesByUserId = async (req, res, next) => {
 //get all notes
 const getNotes = async (req, res, next) => {
   try {
-    const notes = await noteModel.find();
-    // if (notes.isDraft) {
-    //   return res
-    //     .status(404)
-    //     .json({ message: "Could not find note" });
-    // } 
+    const notes = await noteModel.find({ isPublic: true });
+
+    if (!notes || notes.length === 0) {
+      return res.status(404).json({ message: "No public notes found" });
+    }
+
     res.json({ notes: notes.map((note) => note.toObject({ getters: true })) });
 
   } catch (err) {
@@ -548,6 +548,7 @@ const getNotes = async (req, res, next) => {
     return next(error);
   }
 };
+
 
 const getNoteByNoteID = async (req, res, next) => {
   const { note_id } = req.params;
