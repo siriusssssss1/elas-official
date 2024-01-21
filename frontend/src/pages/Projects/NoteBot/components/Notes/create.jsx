@@ -94,7 +94,7 @@ export default CreateNote = () => {
     fetchCourses();
   }, [fetchCourses]);
 
-  const onSubmit = async (data = {}) => {
+  const onSubmit = async (data = {}) => { //verwendet die createNote-Funktion, um eine neue Notiz zu erstellen, und navigiert dann zur neu erstellten Notiz
     if (!title) {
       alert("Title is empty");
       return;
