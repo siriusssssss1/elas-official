@@ -291,11 +291,8 @@ const createNote = async (req, res, next) => {
       return res.status(400).json({ message: "Missing required fields." });
       
     }
-    //DONT USE PROMISES
-    const [user] = await Promise.all([
-       userModel.findOne({uid:user_id}),
-       //courseModel.findById(course_id),
-     ]);
+    const user = await userModel.findOne({ uid: user_id });
+
 
     if (!user.notes) {
       user.notes = [];
