@@ -10,18 +10,28 @@ import {
 import AddIcon from "@mui/icons-material/Add";
 import SaveIcon from "@mui/icons-material/Save";
 import { LayoutSelector } from "./Notes/chooseLayout.jsx";
+//import { useNavigate } from "react-router-dom";
 
 function AddNote() {
   const [newSection, setNewSection] = useState(false);
   const [showLayoutOptions, setShowLayoutOptions] = useState(false);
 
-  const handleAddSectionClick = () => {
-    setNewSection((prevState) => !prevState);
-    setShowLayoutOptions(false); // Hide layout options when adding a new section
-  };
+  // const handleAddSectionClick = () => {
+  //   setNewSection((prevState) => !prevState);
+  //   setShowLayoutOptions(false); // Hide layout options when adding a new section
+  // };
   const handleLayoutOptionsClick = () => {
-    setShowLayoutOptions(!showLayoutOptions);
+    setShowLayoutOptions(true);
   };
+  const handleHideClick = () => {
+    setShowLayoutOptions(false);
+  };
+  const handleLayoutSelect = (layout) => {
+    console.log("Ausgewähltes Layout:", layout);
+    setShowLayoutOptions(false);
+  };
+
+  //const navigate = useNavigate();
 
   return (
     <Container maxWidth="lg" sx={{ position: "relative", bgcolor: "#FFFFFF" }}>
@@ -90,8 +100,10 @@ function AddNote() {
               color: "#FFFFFF",
             },
           }}
-          onClick={() => setNewSection((prevState) => !prevState)} //State wird umgekehrt
+          //onClick={() => setShowLayoutOptions((prevState) => !prevState)} //State wird umgekehrt
           //onClick={handleAddSectionClick}
+          //onClick= {() => navigate ("Projects/NoteBot/Notes/Sectiom")}
+          onClick={handleLayoutOptionsClick}
         >
           {" "}
           hide{" "}
@@ -146,8 +158,10 @@ function AddNote() {
                   color: "#FFFFFF",
                 },
               }}
-              onClick={() => setNewSection((prevState) => !prevState)}
+              //onClick={() => setNewSection((prevState) => !prevState)}
               //onClick={handleLayoutOptionsClick}
+              //onClick= {() => navigate ("Projects/NoteBot/Notes/Sectiom")}
+              onClick={handleLayoutOptionsClick}
             />
             <span
               style={{
@@ -165,8 +179,9 @@ function AddNote() {
           </div>
         </Paper>
       )}
-      {showLayoutOptions && <LayoutSelector />}{" "}
-      {/* Zeige Layout-Optionen, wenn showLayoutOptions wahr ist */}
+      {showLayoutOptions && <LayoutSelector onLayoutSelect={handleLayoutSelect} />}
+      {/* {showLayoutOptions && <LayoutSelector />}{" "}
+      Zeige Layout-Optionen, wenn showLayoutOptions wahr ist */}
     </Container>
   );
 }
