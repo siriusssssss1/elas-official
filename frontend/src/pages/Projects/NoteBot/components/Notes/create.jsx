@@ -11,21 +11,26 @@ import {
   styled,
   useTheme,
 } from "@mui/material";
-//import { PageHeader } from "../../../components/PageHeader";
+import { PageHeader } from "../../../components/PageHeader";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import SaveIcon from "@mui/icons-material/Save";
 import AddIcon from "@mui/icons-material/Add";
 import { useEffect } from "react";
 import { useState } from "react";
 
-//import { useAuth } from "../../../contexts/AuthProvider";
-//import { AddCourseDialog } from "./components/AddCourseDialog.jsx";
+import { useAuth } from "../../../contexts/AuthProvider";
+import { AddCourseDialog } from "./components/AddCourseDialog.jsx";
 import { useToggle } from "../../../app/hooks/useToggle";
 import { Section } from "./Section";
 import { createNote, getCourses } from "./api";
 import { useNavigate } from "react-router-dom";
 import { useNoteWidgets } from "../hooks/useNoteWidgets";
-//import { Chatbot } from "./../../chatbot";
+import { Chatbot } from "./../../chatbot";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+
 
 export default CreateNote = () => {
   const {
@@ -111,6 +116,43 @@ export default CreateNote = () => {
     console.log("RES", res);
     navigate(`/notes/${res.note._id}`);
   };
+  // const [selectedLocation, setSelectedLocation] = useState('course'); // 'course' oder 'drafts'
+  // const [saveDialogOpen, setSaveDialogOpen] = useState(false);
+  // const openSaveDialog = () => {
+  //   setSaveDialogOpen(true);
+  // };
+
+  // const closeSaveDialog = () => {
+  //   setSaveDialogOpen(false);
+  // };
+
+  // const handleSave = async () => {
+  //   if (selectedLocation === 'course') {
+  //     // Speichern in Kurs
+  //     try {
+  //       // Fügen Sie hier den Code für das Speichern in Kursen hinzu
+  //       const response = await saveNoteInCourse(courseId, noteData);
+  //     } catch (error) {
+  //       console.error('Error saving note in course:', error);
+  //       // Hier können Sie geeignete Fehlerbehandlung hinzufügen
+  //       let errorMessage = 'An error occurred while saving the note. Please try again.';
+
+  //     }
+  //   } else {
+  //     // Speichern in Entwürfen
+
+  //     try {
+  //       // Fügen Sie hier den Code für das Speichern in Entwürfen hinzu
+  //       const response = await saveNoteInDrafts(noteData);
+  //     } catch (error) {
+  //       console.error('Error saving note in drafts:', error);
+  //       let errorMessage = 'An error occurred while saving the note. Please try again.';
+  //     }
+  //   }
+  
+  //   // Schließen Sie das Popup-Fenster
+  //   closeSaveDialog();
+  // };
 
   return (
     <Container sx={{ flexGrow: 1, padding: 6 }}>
@@ -137,6 +179,14 @@ export default CreateNote = () => {
             disableElevation: true,
             disabled: !hasWidgets,
           },
+      //     <SaveDialog
+      //   open={saveDialogOpen}
+      //   onClose={closeSaveDialog}
+      //   onSave={handleSave}
+      //   selectedLocation={selectedLocation}
+      //   onLocationChange={(location) => setSelectedLocation(location)}
+      // />
+
           // {
           //   label: "Add to course",
           //   startIcon: <SaveIcon />,
@@ -213,7 +263,7 @@ export default CreateNote = () => {
         }}
       />
 
-      {/* {open && <Chatbot />}
+      {open && <Chatbot />}
 
       <Fab
         sx={{
@@ -230,8 +280,26 @@ export default CreateNote = () => {
           src={"/chatBot.png"}
           onClick={toggleChat}
         />
-      </Fab> */}
+      </Fab>
 
     </Container>
   );
 };
+// const SaveDialog = ({ open, onClose, onSave, selectedLocation, onLocationChange }) => {
+//   return (
+//     <Dialog open={open} onClose={onClose}>
+//       <DialogTitle>Save Note</DialogTitle>
+//       <DialogContent>
+//         <p>Select where you want to save the note:</p>
+//         <Select value={selectedLocation} onChange={(e) => onLocationChange(e.target.value)}>
+//           <MenuItem value="course">In Course</MenuItem>
+//           <MenuItem value="drafts">In Drafts</MenuItem>
+//         </Select>
+//       </DialogContent>
+//       <DialogActions>
+//         <Button onClick={onSave}>Save</Button>
+//         <Button onClick={onClose}>Cancel</Button>
+//       </DialogActions>
+//     </Dialog>
+//   );
+// };
