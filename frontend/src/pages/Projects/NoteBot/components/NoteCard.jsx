@@ -102,7 +102,7 @@ export default function NoteCard({ card, handleDeleteNote, handleToggleFavorite 
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {"Confirmation Option"}
+          {"Delete this Note?"}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
