@@ -13,15 +13,19 @@ import {
   DialogContent,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import CheckIcon from "@mui/icons-material/Check";
 import SaveIcon from "@mui/icons-material/Save";
+import Checkbox from "@mui/material/Checkbox";
+import CloseIcon from "@mui/icons-material/Close";
+import IconButton from "@mui/material/IconButton";
 import { LayoutSelector } from "./Notes/chooseLayout.jsx";
+import FormControlLabel from "@mui/material/FormControlLabel";
 //import { useNavigate } from "react-router-dom";
 
-
-const top100Films = [
-  { label: 'The Shawshank Redemption', year: 1994 },
-  { label: 'The Godfather', year: 1972 },
-  { label: 'The Godfather: Part II', year: 1974 },
+const top100Films = [ // Courses list aus backend 
+  { label: "The Shawshank Redemption", year: 1994 },
+  { label: "The Godfather", year: 1972 },
+  { label: "The Godfather: Part II", year: 1974 },
 ];
 
 function AddNote() {
@@ -49,9 +53,23 @@ function AddNote() {
 
   const handleClose = (value) => {
     setOpenDialog(false);
-    
   };
-  
+
+  // Zustände für die Checkboxen
+  const [addToDrafts, setAddToDrafts] = useState(false);
+  const [createNewCourse, setCreateNewCourse] = useState(false);
+
+  const handleAddToDraftsChange = (event) => {
+    setAddToDrafts(event.target.checked);
+    if (event.target.checked) {
+      // Logik für das Hinzufügen zu Entwürfen
+      // Zum Beispiel: handleClose oder eine andere Aktion
+    }
+  };
+  const handleCreateNewCourseChange = (event) => {
+    setCreateNewCourse(event.target.checked);
+    // Weitere Logik für "Create New Course"
+  };
 
   //const navigate = useNavigate();
 
@@ -101,34 +119,99 @@ function AddNote() {
             },
           }}
           startIcon={<SaveIcon />}
-          onClick = {handleClickOpen}
+          onClick={handleClickOpen}
         >
           Save
         </Button>
       </Box>
-      <Dialog onClose={handleClose} open={openDialog} sx = {{height: "1000px"}}>
-      <DialogTitle>
-        Save to Course
-      </DialogTitle>
-      <DialogContent>
-      <Autocomplete
-      disablePortal
-      id="combo-box-demo"
-      options={top100Films}
-      sx={{ width: 300 }}
-      renderInput={(params) => <TextField {...params} label="Courses" />}
-    />
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose}>
-          Add to Drafts
-        </Button>
-        <Button onClick={handleClose}>
-          Add to Course
-        </Button>
-      </DialogActions>
+      <Dialog onClose={handleClose} open={openDialog} sx={{ height: "800px" }}>
+        <DialogTitle sx={{ m: 0, p: 2 }}>
+          Add note to course
+          <IconButton
+            aria-label="close"
+            onClick={handleClose}
+            sx={{
+              position: "absolute",
+              right: 8,
+              top: 8,
+              color: (theme) => theme.palette.grey[500],
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent>
+          <Autocomplete
+            disablePortal
+            id="combo-box-demo"
+            options={top100Films}
+            sx={{ width: 300 }}
+            renderInput={(params) => (
+              <TextField {...params} label="Courses List" />
+            )}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between", // Platz zwischen Checkboxen und Button
+              width: "100%", // Volle Breite des Dialogs nutzen
+              paddingTop: 2, // Optionaler Abstand nach oben
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start", // optional, für linksbündige Checkboxen
+                marginRight: 2, // optional, Abstand zum "Assign and Save" Button
+              }}
+            >
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={addToDrafts}
+                    onChange={handleAddToDraftsChange}
+                    name="addToDrafts"
+                    color="primary"
+                  />
+                }
+                label="Or add to drafts"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={createNewCourse}
+                    onChange={handleCreateNewCourseChange}
+                    name="createNewCourse"
+                    color="primary"
+                  />
+                }
+                label="Or create new course"
+              />
+            </Box>
+            <Button
+              onClick={handleClose}
+              variant="contained"
+              sx={{
+                bgcolor: "#ED7D31", // Farbe des Buttons
+                color: "white", // Textfarbe
+                "&:hover": {
+                  bgcolor: "darken(#ED7D31, 0.2)", // Dunklere Farbe beim Hover
+                },
+                alignSelf: "flex-end", // Button nach unten ausrichten
+                textTransform: "none", // Standardmäßige Großbuchstaben entfernen
+                // Optional können Sie hier die Schriftart, Größe usw. anpassen
+              }}
+              endIcon={<CheckIcon />}
+            >
+              ASSIGN AND SAVE
+            </Button>
+          </Box>
+        </DialogActions>
       </Dialog>
-      
+
       {newSection && (
         <Button
           variant="contained"
@@ -153,7 +236,6 @@ function AddNote() {
           {" "}
           hide{" "}
         </Button>
-
       )}
       {!newSection && (
         <Paper
@@ -224,7 +306,9 @@ function AddNote() {
           </div>
         </Paper>
       )}
-      {showLayoutOptions && <LayoutSelector onLayoutSelect={handleLayoutSelect} />}
+      {showLayoutOptions && (
+        <LayoutSelector onLayoutSelect={handleLayoutSelect} />
+      )}
       {/* {showLayoutOptions && <LayoutSelector />}{" "}
       Zeige Layout-Optionen, wenn showLayoutOptions wahr ist */}
     </Container>
