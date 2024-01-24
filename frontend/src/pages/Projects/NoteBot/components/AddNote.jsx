@@ -30,6 +30,7 @@ function AddNote() {
     console.log("Ausgewähltes Layout:", layout);
     setShowLayoutOptions(false);
   };
+  
 
   //const navigate = useNavigate();
 
@@ -79,6 +80,7 @@ function AddNote() {
             },
           }}
           startIcon={<SaveIcon />}
+          
         >
           Save
         </Button>
@@ -100,10 +102,10 @@ function AddNote() {
               color: "#FFFFFF",
             },
           }}
-          //onClick={() => setShowLayoutOptions((prevState) => !prevState)} //State wird umgekehrt
+          onClick={() => setShowLayoutOptions((prevState) => !prevState)} //State wird umgekehrt
           //onClick={handleAddSectionClick}
           //onClick= {() => navigate ("Projects/NoteBot/Notes/Sectiom")}
-          onClick={handleLayoutOptionsClick}
+          //onClick={handleLayoutOptionsClick}
         >
           {" "}
           hide{" "}
@@ -158,10 +160,10 @@ function AddNote() {
                   color: "#FFFFFF",
                 },
               }}
-              //onClick={() => setNewSection((prevState) => !prevState)}
+              onClick={() => setNewSection((prevState) => !prevState)}
               //onClick={handleLayoutOptionsClick}
               //onClick= {() => navigate ("Projects/NoteBot/Notes/Sectiom")}
-              onClick={handleLayoutOptionsClick}
+              //onClick={handleLayoutOptionsClick}
             />
             <span
               style={{
