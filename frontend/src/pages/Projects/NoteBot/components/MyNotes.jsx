@@ -4,7 +4,7 @@ import NoteCard from "./NoteCard";
 
 import { getCards } from "../utils/api";
 //import {handleDeleteConfirm} from "./NoteCard";
-import { deleteNoteFromServer } from './utils/api.js';
+//import { deleteNoteFromServer } from '../utils/api.js';
 
 
 export default function MyNotes() {
