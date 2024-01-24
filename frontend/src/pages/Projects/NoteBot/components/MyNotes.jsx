@@ -3,6 +3,7 @@ import { Grid, Typography} from "@mui/material";
 import NoteCard from "./NoteCard";
 
 import { getCards } from "../utils/api";
+//import {handleDeleteConfirm} from "./NoteCard";
 
 export default function MyNotes() {
   const [cards, setCards] = useState({
@@ -57,9 +58,11 @@ export default function MyNotes() {
       return { message: prevCards.message, cards: updatedCards };
     });
   };
-  const handleDeleteNote = (noteId) => {
-    // Aktualisieren Sie hier den Zustand, um die Notiz zu entfernen
-    setNotes(prevNotes => prevNotes.filter(note => note.id !== noteId));
+  const handleDeleteNote = async (noteId) => {
+    await deleteNoteFromServer(noteId);
+  // Zustand aktualisieren, um die Notiz aus der UI zu entfernen
+  setNotes(prevNotes => prevNotes.filter(note => note.id !== noteId));
+
   };
   
 
@@ -78,7 +81,11 @@ export default function MyNotes() {
         {cards.cards.map((card) => (
 
           
-          <NoteCard key={card.id} card={card} style={{ marginBottom: "20px" }}/>
+          <NoteCard 
+          key={card.id} 
+          card={card} 
+          style={{ marginBottom: "20px" }}
+          handleDeleteNote={handleDeleteNote}/>
 
         ))}
       </Grid>
