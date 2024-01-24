@@ -60,6 +60,7 @@ export default function MyNotes() {
       return { message: prevCards.message, cards: updatedCards };
     });
   };
+
   const handleDeleteNote = async (noteId) => {
     await deleteNoteFromServer(noteId);
   // Zustand aktualisieren, um die Notiz aus der UI zu entfernen
@@ -82,7 +83,6 @@ export default function MyNotes() {
       <Grid item container spacing={2}>
         {cards.cards.map((card) => (
 
-          
           <NoteCard 
           key={card.id} 
           card={card} 

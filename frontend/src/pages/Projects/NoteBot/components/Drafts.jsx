@@ -3,6 +3,8 @@ import { Grid, Typography } from "@mui/material";
 import DraftCard from "./DraftCard";
 
 import { getDrafts } from "../utils/api";
+import { deleteNoteFromServer } from '../utils/api.js';
+
 
 export default function Drafts() {
   const [cards, setCards] = useState({
@@ -27,14 +29,13 @@ export default function Drafts() {
     getCardInfo();
   }, []);
 
+  const handleDeleteNote = async (noteId) => {
+    await deleteNoteFromServer(noteId);
+  // Zustand aktualisieren, um die Notiz aus der UI zu entfernen
+  setNotes(prevNotes => prevNotes.filter(note => note.id !== noteId));
 
-  // return (
-  //   <Grid container sx={{ maxWidth: 1500, width: "100%" }} spacing={2}>
-  //     <Grid item>
-  //     <Typography variant="h5" style={{ color: "#A5A5A5" }}>Drafts</Typography>
-  //     </Grid>
-  //   </Grid>
-  // );
+  };
+
 
   return (
     <Grid container spacing={2} sx={{ maxWidth: 1500, width: "100%" }} > 
@@ -50,7 +51,7 @@ export default function Drafts() {
         {cards.cards.map((card) => (
 
           
-          <DraftCard key={card.id} card={card} style={{ marginBottom: "20px" }}/>
+          <DraftCard key={card.id} card={card} style={{ marginBottom: "20px" }} handleDeleteNote={handleDeleteNote}/>
 
         ))}
       </Grid>
