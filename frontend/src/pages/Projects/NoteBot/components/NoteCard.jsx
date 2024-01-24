@@ -7,12 +7,25 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Rating from "@mui/material/Rating";
 import Stack from "@mui/material/Stack";
-import { Typography } from "@mui/material";
+import { Typography,  Dialog, DialogTitle, DialogActions, DialogContent, DialogContentText } from "@mui/material";
 import handleDeleteNote2 from "./MyNotes";
 import handleToggleFavorite from "./MyNotes";
 
 
 export default function NoteCard({ card, handleDeleteNote, handleToggleFavorite }) {
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+
+
   return (
     <Card
       style={{
@@ -74,8 +87,29 @@ export default function NoteCard({ card, handleDeleteNote, handleToggleFavorite 
       >
         <DeleteIcon
           style={{ color: "#A5A5A5" }}
-          onClick={() => handleDeleteNote2(card.id)}
+          onClick = {handleClickOpen}
         />
+        <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Confirmation Option"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Do you really want to delete this note?
+          </DialogContentText>
+          <DialogActions>
+          <Button onClick={handleClose}>Disagree</Button>
+          <Button onClick={handleClose} autoFocus>
+            Agree
+          </Button>
+        </DialogActions>
+        </DialogContent>
+      </Dialog>
       </CardContent>
     </Card>
   );
