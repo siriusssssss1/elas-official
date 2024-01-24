@@ -7,7 +7,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Rating from "@mui/material/Rating";
 import Stack from "@mui/material/Stack";
-import { Typography,  Dialog, DialogTitle, DialogActions, DialogContent, DialogContentText } from "@mui/material";
+import { Typography, Button, Dialog, DialogTitle, DialogActions, DialogContent, DialogContentText } from "@mui/material";
 import handleDeleteNote2 from "./MyNotes";
 import handleToggleFavorite from "./MyNotes";
 
