@@ -70,9 +70,9 @@ export default CreateNote = () => {
 
   const navigate = useNavigate();
 
-  const toggleChat = () => {
-    setOpen(!open);
-  };
+  // const toggleChat = () => {
+  //   setOpen(!open);
+  // };
 
   const {
     isActive: isAddCourseActive,
@@ -104,6 +104,32 @@ export default CreateNote = () => {
       alert("Title is empty");
       return;
     }
+
+    const noteData = {
+      title: title,
+      courseId: data.courseId || course,
+      //user,
+      sections: sections,
+      widgets: widgets,
+      isDrafts: true // Markiere als Entwurf
+    }
+
+    try {
+      // Sende die POST-Anfrage an das Backend
+      const res = await createNote(
+        token,
+        user,
+        noteData
+      );
+
+       // Hier könntest du den Navigationsbefehl ändern, um zur Draft-Liste zu navigieren
+    navigate(`/drafts`);
+  } catch (error) {
+    console.error("Fehler beim Speichern der Notiz", error);
+    // Handle Fehler, z.B. mit einer Benachrichtigung
+  }
+};
+
     const res = await createNote(
       token,
       title,
@@ -165,17 +191,10 @@ export default CreateNote = () => {
         variant={"outlined"}
         actions={[
           {
-            label: "download as pdf",
-            startIcon: <FileDownloadIcon />,
-            onClick: () => {},
-            color: "primary",
-            variant: "outlined",
-            disabled: true,
-          },
-          {
             label: "Save",
             startIcon: <SaveIcon />,
-            onClick: openAddCourse,
+            onClick: () => onSubmit(), // Aufruf von onSubmit beim Klicken
+            //onClick: openAddCourse,
             disableElevation: true,
             disabled: !hasWidgets,
           },
@@ -262,25 +281,6 @@ export default CreateNote = () => {
           fetchCourses();
         }}
       />
-
-      {open && <Chatbot />}
-
-      <Fab
-        sx={{
-          position: "fixed",
-          right: 24,
-          bottom: 24,
-        }}
-        size="medium"
-        aria-label={"label"}
-        color={""}
-      >
-        <Avatar
-          sx={{ width: 60, height: 60 }}
-          src={"/chatBot.png"}
-          onClick={toggleChat}
-        />
-      </Fab>
 
     </Container>
   );
