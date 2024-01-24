@@ -12,6 +12,8 @@ import MyFavorites from "./components/MyFavorites.jsx";
 import Drafts from "./components/Drafts.jsx";
 import AddNote from "./components/AddNote.jsx";
 //import CreateNote from "./utils/notes/CreateNote.jsx";
+import SearchPage from './components/search.jsx';
+
 
 import noteBotLogo from "../../../assets/images/noteBot-logo.png";
 
@@ -113,6 +115,10 @@ export default function NoteBot() {
               sx={{ width: "100%", pb: 5
              }}
             />
+              <div className="App">
+                {/* Your other components */}
+                <SearchPage />
+              </div>
           </Grid>
           <Grid container justifyContent="center" spacing={100}>
             <Grid item xs={12}>
