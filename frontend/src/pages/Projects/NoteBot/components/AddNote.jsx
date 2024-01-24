@@ -6,11 +6,23 @@ import {
   Box,
   Paper,
   Typography,
+  Dialog,
+  DialogTitle,
+  DialogActions,
+  Autocomplete,
+  DialogContent,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import SaveIcon from "@mui/icons-material/Save";
 import { LayoutSelector } from "./Notes/chooseLayout.jsx";
 //import { useNavigate } from "react-router-dom";
+
+
+const top100Films = [
+  { label: 'The Shawshank Redemption', year: 1994 },
+  { label: 'The Godfather', year: 1972 },
+  { label: 'The Godfather: Part II', year: 1974 },
+];
 
 function AddNote() {
   const [newSection, setNewSection] = useState(false);
@@ -29,6 +41,15 @@ function AddNote() {
   const handleLayoutSelect = (layout) => {
     console.log("Ausgewähltes Layout:", layout);
     setShowLayoutOptions(false);
+  };
+  const [openDialog, setOpenDialog] = useState(false);
+  const handleClickOpen = () => {
+    setOpenDialog(true);
+  };
+
+  const handleClose = (value) => {
+    setOpenDialog(false);
+    
   };
   
 
@@ -80,11 +101,33 @@ function AddNote() {
             },
           }}
           startIcon={<SaveIcon />}
-          
+          onClick = {handleClickOpen}
         >
           Save
         </Button>
       </Box>
+      <Dialog onClose={handleClose} open={openDialog} sx = {{height: "1000px"}}>
+      <DialogTitle>
+        Save to Course
+      </DialogTitle>
+      <DialogContent>
+      <Autocomplete
+      disablePortal
+      id="combo-box-demo"
+      options={top100Films}
+      sx={{ width: 300 }}
+      renderInput={(params) => <TextField {...params} label="Courses" />}
+    />
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>
+          Add to Drafts
+        </Button>
+        <Button onClick={handleClose}>
+          Add to Course
+        </Button>
+      </DialogActions>
+      </Dialog>
       
       {newSection && (
         <Button

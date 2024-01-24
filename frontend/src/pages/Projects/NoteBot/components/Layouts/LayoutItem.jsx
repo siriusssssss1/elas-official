@@ -11,7 +11,7 @@ import {
 import styled from "@emotion/styled";
 
 const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#dfdede",
+  backgroundColor:   "#1A2027",
   ...theme.typography.body2,
   padding: theme.spacing(1),
   textAlign: "center",
@@ -34,9 +34,8 @@ export const LayoutItem = ({ columns ,handle }) => {
         p:1,
         ":hover": {
             boxShadow: 1,
-            bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#101010' : '#fff'),
-            color: (theme) =>
-              theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800',
+            bgcolor: "#1A2027",
+            color: "#1A2027",
             borderRadius: 1,
           },
       }}
