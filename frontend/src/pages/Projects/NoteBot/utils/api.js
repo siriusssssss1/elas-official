@@ -83,3 +83,17 @@ export const getFavNotes = async () => {
     };
   }
 };
+
+export const deleteNoteFromServer = async (noteId) => {
+  try {
+    const response = await fetch(`/api/notes/${noteId}`, {
+      method: 'DELETE',
+      // Weitere Konfigurationen für den Request, falls nötig (wie Headers)
+    });
+    if (!response.ok) {
+      throw new Error('Failed to delete the note');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
