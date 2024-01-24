@@ -70,11 +70,6 @@ export const getFavNotes = async () => {
    console.log(responseNr2.data)
    
   return {cards: responseNr2.data.notes}; 
-    const { //relevante Daten (message und cards) werden destrukturiert und in den Variablen message und cards gespeichert
-      data: { message, courses },
-    } = responseNr2;
-
-    return { message, courses };
   } catch (err) {
     console.log(err);
     return {
@@ -86,14 +81,11 @@ export const getFavNotes = async () => {
 
 export const deleteNoteFromServer = async (noteId) => {
   try {
-    const response = await fetch(`/api/notes/${noteId}`, {
-      method: 'DELETE',
-      // Weitere Konfigurationen für den Request, falls nötig (wie Headers)
-    });
-    if (!response.ok) {
-      throw new Error('Failed to delete the note');
-    }
-  } catch (error) {
-    console.error('Error:', error);
+    const response = await Backend.delete(`/notebot/notes/${noteId}`);
+    console.log(response.data); // Message from the server
+    return response.data;
+  } catch (err) {
+    console.log(err);
+    return { message: 'Server not connected' };
   }
 };
