@@ -148,7 +148,7 @@ export default function NoteBot() {
                       {...a11yProps(0)} sx={{ color: "#ED7D31", fontWeight: "bold", marginRight: 6 }}
                     />
                     <Tab
-                      label="Drafts"
+                      label="My Drafts"
                       {...a11yProps(0)} sx={{ color: "#ED7D31", fontWeight: "bold", marginRight: 6 }}
                     />
                     <Button
