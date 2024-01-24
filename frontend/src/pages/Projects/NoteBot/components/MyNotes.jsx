@@ -57,6 +57,11 @@ export default function MyNotes() {
       return { message: prevCards.message, cards: updatedCards };
     });
   };
+  const handleDeleteNote = (noteId) => {
+    // Aktualisieren Sie hier den Zustand, um die Notiz zu entfernen
+    setNotes(prevNotes => prevNotes.filter(note => note.id !== noteId));
+  };
+  
 
  
   return (

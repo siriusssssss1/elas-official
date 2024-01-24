@@ -30,6 +30,12 @@ export default function NoteCard({ card, handleDeleteNote, handleToggleFavorite 
     setOpen(false);
   };
 
+  const handleDeleteConfirm = () => {
+    handleClose(); // Schließt den Dialog
+    handleDeleteNote(card.id); // Ruft die Löschfunktion mit der ID der Notiz auf
+  };
+  
+
 
 
   return (
@@ -110,7 +116,7 @@ export default function NoteCard({ card, handleDeleteNote, handleToggleFavorite 
           </DialogContentText>
           <DialogActions>
           <Button onClick={handleClose}>Disagree</Button>
-          <Button onClick={handleClose} autoFocus>
+          <Button onClick={handleDeleteConfirm} autoFocus>
             Agree
           </Button>
         </DialogActions>
