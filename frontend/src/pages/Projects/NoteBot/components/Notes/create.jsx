@@ -32,7 +32,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 
 
-export default CreateNote = () => {
+export default createNote = async() => {
   const {
     sections,
     widgets,
@@ -284,7 +284,7 @@ export default CreateNote = () => {
 
     </Container>
   );
-};
+
 // const SaveDialog = ({ open, onClose, onSave, selectedLocation, onLocationChange }) => {
 //   return (
 //     <Dialog open={open} onClose={onClose}>
