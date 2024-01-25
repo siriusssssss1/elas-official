@@ -114,3 +114,31 @@ export const getNotesByCourseAndNoteTitle = async (keyword) => {
     return { message: 'Server not connected' };
   }
 };
+
+
+export const createNote = async (
+  title,
+  course,
+  user,
+) => { 
+  const response = await fetch(`notebot/notes/new`, {
+    method: "POST",
+    headers: { "Content-type": "application/json"},
+    body: JSON.stringify({
+      title :title,
+      course_id: course,
+      user_id: user,
+    }),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    let error = new Error("Http status code" + response.status);
+    error.data = data;
+    error.status = response.status;
+    throw error;
+  }
+
+  return data;
+};
