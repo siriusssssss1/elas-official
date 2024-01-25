@@ -7,19 +7,23 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Rating from "@mui/material/Rating";
 import Stack from "@mui/material/Stack";
-import { Typography, 
-        Button, 
-        Dialog, 
-        DialogTitle, 
-        DialogActions, 
-        DialogContent, 
-        DialogContentText } from "@mui/material";
+import {
+  Typography,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+} from "@mui/material";
 //import handleDeleteNote2 from "./MyNotes";
 //import handleToggleFavorite from "./MyNotes";
 
-
-export default function NoteCard({ card, handleDeleteNote, handleToggleFavorite }) {
-
+export default function NoteCard({
+  card,
+  handleDeleteNote,
+  handleToggleFavorite,
+}) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -34,9 +38,12 @@ export default function NoteCard({ card, handleDeleteNote, handleToggleFavorite 
     handleClose(); // Schließt den Dialog
     handleDeleteNote(card.id); // Ruft die Löschfunktion mit der ID der Notiz auf
   };
-  
 
-
+  const handleFavoriteClick = () => {
+    console.log(`Favorite clicked for note id: ${card.id}`);
+    // Assuming handleToggleFavorite requires the id of the note to toggle its favorite status
+    handleToggleFavorite(card.id);
+  };
 
   return (
     <Card
@@ -45,7 +52,7 @@ export default function NoteCard({ card, handleDeleteNote, handleToggleFavorite 
         position: "relative",
         height: "200px",
         backgroundColor: "#d9d9d9",
-        margin: "8px"
+        margin: "8px",
       }}
       key={card.id}
     >
@@ -84,9 +91,9 @@ export default function NoteCard({ card, handleDeleteNote, handleToggleFavorite 
       </CardContent>
       <CardContent style={{ position: "absolute", top: 0, right: 0 }}>
         {card.isFavorite ? (
-          <FavoriteIcon color="error" onClick={handleToggleFavorite}/>
+          <FavoriteIcon color="error" onClick={handleFavoriteClick} />
         ) : (
-          <FavoriteBorderIcon color="error" onClick={handleToggleFavorite}/>
+          <FavoriteBorderIcon color="error" onClick={handleFavoriteClick} />
         )}
       </CardContent>
       <CardContent
@@ -97,33 +104,29 @@ export default function NoteCard({ card, handleDeleteNote, handleToggleFavorite 
           padding: "8px",
         }}
       >
-        <DeleteIcon
-          style={{ color: "#A5A5A5" }}
-          onClick = {handleClickOpen}
-        />
+        <DeleteIcon style={{ color: "#A5A5A5" }} onClick={handleClickOpen} />
         <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {"Delete this Note?"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Do you really want to delete this note?
-          </DialogContentText>
-          <DialogActions>
-          <Button onClick={handleClose}>Disagree</Button>
-          <Button onClick={handleDeleteConfirm} autoFocus>
-            Agree
-          </Button>
-        </DialogActions>
-        </DialogContent>
-      </Dialog>
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Delete this Note?"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Do you really want to delete this note?
+            </DialogContentText>
+            <DialogActions>
+              <Button onClick={handleClose}>Disagree</Button>
+              <Button onClick={handleDeleteConfirm} autoFocus>
+                Agree
+              </Button>
+            </DialogActions>
+          </DialogContent>
+        </Dialog>
       </CardContent>
     </Card>
   );
 }
-
