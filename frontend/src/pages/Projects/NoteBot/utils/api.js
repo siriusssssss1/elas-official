@@ -79,6 +79,19 @@ export const getFavNotes = async () => {
   }
 };
 
+export const toggleFavNote = async (noteId) => {
+  try {
+    const response = await Backend.post(`/notebot/notes/${noteId}/favorite`);
+    console.log(response.data); // Message from the server
+    return response.data;
+  } catch (err) {
+    console.log(err);
+    return { message: 'Server not connected' };
+  }
+};
+
+
+
 export const deleteNoteFromServer = async (noteId) => {
   try {
     const response = await Backend.delete(`/notebot/notes/${noteId}`);

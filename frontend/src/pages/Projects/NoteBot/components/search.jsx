@@ -28,7 +28,7 @@ const SearchPage = () => {
   return (
     <div>
       <Toolbar style={{ marginLeft: '80px', width: '80%', backgroundColor: 'transparent', padding: '0' }}>
-        <div style={{ marginTop: '-30px', position: 'relative', borderRadius: '0px', backgroundColor: '#ffffff', width: '80%', height: '120%' }}>
+        <div style={{ marginTop: '-30px', position: 'relative', borderRadius: '0px', backgroundColor: 'transparent', width: '80%', height: '120%' }}>
           <div
             style={{
               padding: '8px',
@@ -49,7 +49,7 @@ const SearchPage = () => {
             renderInput={(params) => (
               <InputBase
                 {...params}
-                placeholder="Search…"
+                placeholder="SEARCH…"
                 style={{ padding: '8px 48px', width: '100%' }}
                 inputProps={{ 'aria-label': 'search' }}
               />
@@ -67,7 +67,7 @@ const SearchPage = () => {
           </ul>
         </div>
       )}
-      <Divider style={{ backgroundColor: '#ED7D31', marginTop: '-23px', marginLeft: '80px', width: '60%' }} />
+      <Divider style={{ backgroundColor: '#ED7D31', marginTop: '-26px', marginLeft: '80px', width: '60%' }} />
       {/* Your content goes here */}
     </div>
   );

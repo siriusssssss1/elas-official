@@ -5,6 +5,7 @@ import NoteCard from "./NoteCard";
 import { getCards } from "../utils/api";
 //import {handleDeleteConfirm} from "./NoteCard";
 import { deleteNoteFromServer } from '../utils/api.js';
+import { toggleFavNote } from '../utils/api.js';
 
 
 export default function MyNotes() {
@@ -41,6 +42,8 @@ export default function MyNotes() {
   //    console.log(`Notiz mit der ID ${id} wurde gelöscht.`);
   //  }
   // };
+
+
   const handleToggleFavorite = (id) => {
     setCards((prevCards) => {
       const updatedCards = prevCards.cards.map((card) =>
@@ -85,7 +88,8 @@ export default function MyNotes() {
           key={card.id} 
           card={card} 
           style={{ marginBottom: "20px" }}
-          handleDeleteNote={handleDeleteNote}/>
+          handleDeleteNote={handleDeleteNote}
+          handleToggleFavorite={handleToggleFavorite}/>
 
         ))}
       </Grid>
