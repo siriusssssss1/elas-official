@@ -89,3 +89,15 @@ export const deleteNoteFromServer = async (noteId) => {
     return { message: 'Server not connected' };
   }
 };
+
+
+export const getNotesByCourseAndNoteTitle = async (keyword) => {
+  try {
+    const response = await Backend.get(`notebot/notes/search/${keyword}/`);
+    console.log(response.data); // Message from the server
+    return response.data;
+  } catch (err) {
+    console.log(err);
+    return { message: 'Server not connected' };
+  }
+};

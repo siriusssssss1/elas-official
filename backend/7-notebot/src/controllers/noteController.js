@@ -633,9 +633,6 @@ const updateNote = async (req, res, next) => {
       let sectionObject =
         section._id && (await sectionModel.findById(section._id));
       
-      if (!course_id) {
-        // isDraft should be true and isPublic should be false
-      }  
 
       if (!sectionObject) {
         sectionObject = new sectionModel();
@@ -678,8 +675,7 @@ const updateNote = async (req, res, next) => {
       note.isDraft = true;
       note.isPublic = false;
     } else {
-      note.course_id = course_id;
-      note.isPublic = true;
+      //
     }
 
     await note.save();

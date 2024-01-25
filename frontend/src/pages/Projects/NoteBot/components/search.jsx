@@ -4,11 +4,12 @@ import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import Autocomplete from '@mui/material/Autocomplete';
 import Divider from '@mui/material/Divider';
+import { getNotesByCourseAndNoteTitle } from "../utils/api"
 
 const SearchPage = () => {
-  const [showLatestSearches, setShowLatestSearches] = useState(false);
-  const [searchValue, setSearchValue] = useState('');
-  const latestSearches = ["Search 1", "Search 2", "Search 3"];
+   const [showLatestSearches, setShowLatestSearches] = useState(false);
+   const [searchValue, setSearchValue] = useState('');
+   const latestSearches = ["Search 1", "Search 2", "Search 3"];
 
   const handleSearchClick = () => {
     setShowLatestSearches(!showLatestSearches);
@@ -16,6 +17,12 @@ const SearchPage = () => {
 
   const handleInputChange = (event, value) => {
     setSearchValue(value);
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
   };
 
   return (
