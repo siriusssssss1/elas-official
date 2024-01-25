@@ -20,7 +20,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import IconButton from "@mui/material/IconButton";
 import { LayoutSelector } from "./Notes/chooseLayout.jsx";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import { createCourse } from "../../../../../../backend/7-notebot/src/controllers/courseController.js";
+//import { createCourse } from "../../../../../../backend/7-notebot/src/controllers/courseController.js";
 //import { useNavigate } from "react-router-dom";
 
 const top100Films = [ // Courses list aus backend 
@@ -193,7 +193,7 @@ function AddNote() {
               />
             </Box>
             <Button
-              onClick={createCourse}
+              //onClick={createCourse}
               variant="contained"
               sx={{
                 bgcolor: "#ED7D31", // Farbe des Buttons
