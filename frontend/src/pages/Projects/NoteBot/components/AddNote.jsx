@@ -18,12 +18,15 @@ import SaveIcon from "@mui/icons-material/Save";
 import Checkbox from "@mui/material/Checkbox";
 import CloseIcon from "@mui/icons-material/Close";
 import IconButton from "@mui/material/IconButton";
+import ChooseLayout from "./Notes/chooseLayout.jsx";
 import { LayoutSelector } from "./Notes/chooseLayout.jsx";
 import FormControlLabel from "@mui/material/FormControlLabel";
+
 //import { createCourse } from "../../../../../../backend/7-notebot/src/controllers/courseController.js";
 //import { useNavigate } from "react-router-dom";
 
-const top100Films = [ // Courses list aus backend 
+const top100Films = [
+  // Courses list aus backend
   { label: "The Shawshank Redemption", year: 1994 },
   { label: "The Godfather", year: 1972 },
   { label: "The Godfather: Part II", year: 1974 },
@@ -42,7 +45,14 @@ function AddNote() {
   };
   const handleHideClick = () => {
     setShowLayoutOptions(false);
+    setNewSection(false);
   };
+  const handleHideAndReset = () => {
+    //hiermit kann man wieder zwischen den modi switchen ()
+    setShowLayoutOptions(false); // Versteckt die Layout-Optionen
+    setNewSection(false); // Setzt newSection zurück auf false
+  };
+
   const handleLayoutSelect = (layout) => {
     console.log("Ausgewähltes Layout:", layout);
     setShowLayoutOptions(false);
@@ -208,36 +218,14 @@ function AddNote() {
               endIcon={<CheckIcon />}
             >
               ASSIGN AND SAVE
-              
             </Button>
           </Box>
         </DialogActions>
       </Dialog>
 
       {newSection && (
-        <Button
-          variant="contained"
-          color="primary"
-          sx={{
-            bgcolor: "#ED7D31",
-            borderRadius: "50%",
-            width: "60px",
-            height: "60px",
-
-            "& .MuiButton-startIcon": {
-              margin: "auto",
-              display: "block",
-              color: "#FFFFFF",
-            },
-          }}
-          onClick={() => setShowLayoutOptions((prevState) => !prevState)} //State wird umgekehrt
-          //onClick={handleAddSectionClick}
-          //onClick= {() => navigate ("Projects/NoteBot/Notes/Sectiom")}
-          //onClick={handleLayoutOptionsClick}
-        >
-          {" "}
-          hide{" "}
-        </Button>
+        // Anstatt eines "Hide"-Buttons, zeigen Sie die ChooseLayout-Komponente
+        <ChooseLayout onLayoutSelect={handleLayoutSelect} />
       )}
       {!newSection && (
         <Paper

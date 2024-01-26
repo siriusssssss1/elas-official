@@ -1,40 +1,90 @@
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Unstable_Grid2";
+import React from "react";
+import {
+  Box,
+  Paper,
+  Grid,
+  Card,
+  CardActionArea,
+  Typography,
+} from "@mui/material";
 
-import { LayoutItem } from "../Layouts/LayoutItem.jsx"; // file still missing 
-import { useTheme } from "@mui/material/styles";
+const ChooseLayout = ({ onLayoutSelect }) => {
+  const handleLayoutClick = (layout) => {
+    console.log("Layout gewählt:", layout);
+    onLayoutSelect(layout);
+  };
 
-export function LayoutSelector({ onLayoutSelect }) {
-  const theme = useTheme();
+  // Hier fügen Sie Ihr Layout entsprechend der hochgeladenen Datei ein
+  // Zum Beispiel könnte es so aussehen (passen Sie dies an Ihr Design an):
   return (
-    <Box
-      padding={2}
-      sx={{
-        backgroundColor: theme.palette.grey[100],
-        borderRadius: 2,
-      }}
-    >
-      <Box
-        margin={2}
-        display={"flex"}
-        justifyContent={"center"}
-        alignContent={"center"}
+    <Box sx={{ width: "100%", overflow: "hidden" }}>
+      {" "}
+      <Paper
+        variant="outlined"
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          marginY: "30px",
+          padding: "20px",
+          width: "inherit", // Um sicherzustellen, dass Paper die Breite der umgebenden Box erbt
+          backgroundColor: "#f5f5f5",
+        }}
       >
-        CHOOSE LAYOUT
-      </Box>    
-      <Grid container justifyContent={"center"} alignContent={"center"}>
-        <LayoutItem columns={[12]} handle={onLayoutSelect}></LayoutItem>
-        <LayoutItem columns={[6, 6]} handle={onLayoutSelect}></LayoutItem>
-        <LayoutItem columns={[4, 4, 4]} handle={onLayoutSelect}></LayoutItem>
-        <LayoutItem columns={[4, 8]} handle={onLayoutSelect}></LayoutItem>
-        <LayoutItem columns={[8, 4]} handle={onLayoutSelect}></LayoutItem>
-      </Grid>
-      <Grid container justifyContent={"center"} alignContent={"center"}>
-        <LayoutItem columns={[3, 3, 6]} handle={onLayoutSelect}></LayoutItem>
-        <LayoutItem columns={[6, 3, 3]} handle={onLayoutSelect}></LayoutItem>
-        <LayoutItem columns={[3, 6, 3]} handle={onLayoutSelect}></LayoutItem>
-        <LayoutItem columns={[2, 8, 2]} handle={onLayoutSelect}></LayoutItem>
-      </Grid>
+        <Typography
+          variant="h6"
+          sx={{ width: "100%", textAlign: "center", marginBottom: "20px" }}
+        >
+          CHOOSE A LAYOUT
+        </Typography>
+        <CardActionArea
+          sx={{ width: "100%" }}
+          onClick={() => handleLayoutClick("Ihr gewähltes Layout")}
+        >
+          <Grid container spacing={1} justifyContent="center">
+            {/* Erster Grid-Container als Grid-Item */}
+            {/* <Grid item xs={1}>
+              <Card sx={{ backgroundColor: "#e0e0e0", height: "100px" }}></Card>
+            </Grid> */}
+
+            {/* Zweiter Grid-Container als Grid-Item */}
+            <Grid item container spacing={1.5} justifyContent="center">
+              <Grid item xs={1.6}>
+                <Card
+                  sx={{ backgroundColor: "#e0e0e0", height: "100px" }}
+                ></Card>
+              </Grid>
+              <Grid item xs={1.6}>
+                <Card
+                  sx={{ backgroundColor: "#e0e0e0", height: "100px" }}
+                ></Card>
+              </Grid>
+            </Grid>
+            {/* Dritter Grid-Container als Grid-Item */}
+            {/* <Grid item container spacing={1.5} justifyContent="center">
+              <Grid item xs={1.4}>
+                <Card
+                  sx={{ backgroundColor: "#e0e0e0", height: "100px" }}
+                ></Card>
+              </Grid>
+              <Grid item xs={1.4}>
+                <Card
+                  sx={{ backgroundColor: "#e0e0e0", height: "100px" }}
+                ></Card>
+              </Grid>
+              <Grid item xs={1.4}>
+                <Card
+                  sx={{ backgroundColor: "#e0e0e0", height: "100px" }}
+                ></Card>
+              </Grid>
+            </Grid> */}
+          </Grid>
+        </CardActionArea>
+      </Paper>
     </Box>
   );
-}
+};
+
+export default ChooseLayout;
+export const LayoutSelector = ChooseLayout;
