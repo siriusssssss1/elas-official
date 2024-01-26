@@ -111,16 +111,29 @@ export default function NoteCard({
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title">
-            {"Delete this Note?"}
-          </DialogTitle>
+          <DialogTitle id="alert-dialog-title"></DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
               Do you really want to delete this note?
             </DialogContentText>
             <DialogActions>
-              <Button onClick={handleClose}>Disagree</Button>
-              <Button onClick={handleDeleteConfirm} autoFocus>
+              <Button
+                onClick={handleClose}
+                sx={{
+                  color: "white",
+                  bgcolor: "gray"
+                }}
+              >
+                Disagree
+              </Button>
+              <Button
+                onClick={handleDeleteConfirm}
+                sx={{
+                  color: "white",
+                  bgcolor: "red",
+                }}
+                autoFocus
+              >
                 Agree
               </Button>
             </DialogActions>
