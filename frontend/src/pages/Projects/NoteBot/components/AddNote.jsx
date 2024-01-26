@@ -21,6 +21,7 @@ import IconButton from "@mui/material/IconButton";
 import ChooseLayout from "./Notes/chooseLayout.jsx";
 import { LayoutSelector } from "./Notes/chooseLayout.jsx";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import EditNote from "./Notes/editNote.jsx";
 
 //import { createCourse } from "../../../../../../backend/7-notebot/src/controllers/courseController.js";
 //import { useNavigate } from "react-router-dom";
@@ -34,29 +35,35 @@ const top100Films = [
 
 function AddNote() {
   const [newSection, setNewSection] = useState(false);
-  const [showLayoutOptions, setShowLayoutOptions] = useState(false);
+  //const [showLayoutOptions, setShowLayoutOptions] = useState(false);
+  const [selectedLayout, setSelectedLayout] = useState(null);
+  //const [showTextField, setShowTextField] = useState(false);
+  const [showEditNote, setShowEditNote] = useState(false);
 
   // const handleAddSectionClick = () => {
   //   setNewSection((prevState) => !prevState);
   //   setShowLayoutOptions(false); // Hide layout options when adding a new section
   // };
-  const handleLayoutOptionsClick = () => {
-    setShowLayoutOptions(true);
-  };
-  const handleHideClick = () => {
-    setShowLayoutOptions(false);
-    setNewSection(false);
-  };
-  const handleHideAndReset = () => {
-    //hiermit kann man wieder zwischen den modi switchen ()
-    setShowLayoutOptions(false); // Versteckt die Layout-Optionen
-    setNewSection(false); // Setzt newSection zurück auf false
-  };
+  // const handleLayoutOptionsClick = () => {
+  //   setShowLayoutOptions(true);
+  // };
+  // const handleHideClick = () => {
+  //   setShowLayoutOptions(false);
+  //   setNewSection(false);
+  // };
+  // const handleHideAndReset = () => {
+  //   //hiermit kann man wieder zwischen den modi switchen ()
+  //   setShowLayoutOptions(false); // Versteckt die Layout-Optionen
+  //   setNewSection(false); // Setzt newSection zurück auf false
+  // };
 
   const handleLayoutSelect = (layout) => {
     console.log("Ausgewähltes Layout:", layout);
-    setShowLayoutOptions(false);
+    setSelectedLayout(layout);
+    setNewSection(false); // Versteckt die Layout-Optionen
+    setShowEditNote(true); // Zeigt das neue Interface an
   };
+
   const [openDialog, setOpenDialog] = useState(false);
   const handleClickOpen = () => {
     setOpenDialog(true);
@@ -135,6 +142,16 @@ function AddNote() {
           Save
         </Button>
       </Box>
+
+      {/* Button zum Umschalten der Layout-Optionen */}
+      {/* <Button onClick={() => setNewSection(prevState => !prevState)}>
+        {newSection ? "Layout ausblenden" : "Layout wählen"}
+      </Button>
+
+      {newSection && (
+        <ChooseLayout onLayoutSelect={handleLayoutSelect} />
+      )} */}
+
       <Dialog onClose={handleClose} open={openDialog} sx={{ height: "800px" }}>
         <DialogTitle sx={{ m: 0, p: 2 }}>
           Add note to course
@@ -227,6 +244,9 @@ function AddNote() {
         // Anstatt eines "Hide"-Buttons, zeigen Sie die ChooseLayout-Komponente
         <ChooseLayout onLayoutSelect={handleLayoutSelect} />
       )}
+
+      {showEditNote && <EditNote />}
+
       {!newSection && (
         <Paper
           variant="outlined"
@@ -296,7 +316,7 @@ function AddNote() {
           </div>
         </Paper>
       )}
-      {showLayoutOptions && (
+      {/* {showLayoutOptions && (
         <LayoutSelector onLayoutSelect={handleLayoutSelect} />
       )}
       {/* {showLayoutOptions && <LayoutSelector />}{" "}

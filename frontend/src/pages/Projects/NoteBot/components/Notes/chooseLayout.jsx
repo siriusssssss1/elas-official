@@ -38,31 +38,32 @@ const ChooseLayout = ({ onLayoutSelect }) => {
         >
           CHOOSE A LAYOUT
         </Typography>
-        <CardActionArea
-          sx={{ width: "100%" }}
-          onClick={() => handleLayoutClick("Ihr gewähltes Layout")}
-        >
-          <Grid container spacing={1} justifyContent="center">
-            {/* Erster Grid-Container als Grid-Item */}
-            {/* <Grid item xs={1}>
+
+        <Grid container spacing={1} justifyContent="center">
+          {/* Erster Grid-Container als Grid-Item */}
+          {/* <Grid item xs={1}>
               <Card sx={{ backgroundColor: "#e0e0e0", height: "100px" }}></Card>
             </Grid> */}
 
-            {/* Zweiter Grid-Container als Grid-Item */}
-            <Grid item container spacing={1.5} justifyContent="center">
-              <Grid item xs={1.6}>
+          {/* Zweiter Grid-Container als Grid-Item */}
+          <Grid item container spacing={1.5} justifyContent="center">
+            <Grid item xs={1.6}>
+              <CardActionArea onClick={() => handleLayoutClick("layout1")}>
                 <Card
                   sx={{ backgroundColor: "#e0e0e0", height: "100px" }}
                 ></Card>
-              </Grid>
-              <Grid item xs={1.6}>
-                <Card
-                  sx={{ backgroundColor: "#e0e0e0", height: "100px" }}
-                ></Card>
-              </Grid>
+              </CardActionArea>
             </Grid>
-            {/* Dritter Grid-Container als Grid-Item */}
-            {/* <Grid item container spacing={1.5} justifyContent="center">
+            <Grid item xs={1.6}>
+              <CardActionArea onClick={() => handleLayoutClick("layout2")}>
+                <Card
+                  sx={{ backgroundColor: "#e0e0e0", height: "100px" }}
+                ></Card>
+              </CardActionArea>
+            </Grid>
+          </Grid>
+          {/* Dritter Grid-Container als Grid-Item */}
+          {/* <Grid item container spacing={1.5} justifyContent="center">
               <Grid item xs={1.4}>
                 <Card
                   sx={{ backgroundColor: "#e0e0e0", height: "100px" }}
@@ -79,8 +80,7 @@ const ChooseLayout = ({ onLayoutSelect }) => {
                 ></Card>
               </Grid>
             </Grid> */}
-          </Grid>
-        </CardActionArea>
+        </Grid>
       </Paper>
     </Box>
   );
