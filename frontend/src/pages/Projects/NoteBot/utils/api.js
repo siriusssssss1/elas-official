@@ -114,10 +114,12 @@ export const getNotesByCourseAndNoteTitle = async (keyword) => {
     return { message: 'Server not connected' };
   }
 };
+
+//für die Funktion müsst ihr das fortmat von oben nehmen, damit es funktioniert!
 export const createCourse = async (title, user_id) => { 
   try {
-    const response = await fetch(`notebot/courses/new`, {
-      method: "POST",
+    const response = await fetch(`notebot/courses/new`, { 
+      method: "POST",  
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({
         title: title,
