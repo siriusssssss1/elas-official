@@ -15,16 +15,14 @@ const toggetFavoriteNote = async (req, res, next) => {
   };
   try {
     const favorite = await favoriteModel.findOne(payload);
+    console.log(favorite);
 
-    if (favorite) {
-      await favoriteModel.deleteOne(payload);
-    } else {
-      const favorite = new favoriteModel(payload);
-      await favorite.save();
-    }
-
-    // await session.commitTransaction();
-    // await session.endSession();
+    // if (favorite) {
+    //   await favoriteModel.deleteOne(payload);
+    // } else {
+      const newFavorite = new favoriteModel(payload);
+      await newFavorite.save();
+    //}
 
     res.status(201).json({
       message: "Updated successfully !",
@@ -32,8 +30,6 @@ const toggetFavoriteNote = async (req, res, next) => {
   } catch (err) {
     console.log(err);
     const error = new HttpError(" Please try again later.", 500);
-    // await session.abortTransaction();
-    // await session.endSession();
 
     return next(error);
   }
@@ -75,8 +71,6 @@ const getFavNoteByUserId = async (req, res, next) => {
 };
 
 const toggetFavoriteCourse = async (req, res, next) => {
-  // const session = await mongoose.startSession();
-  // session.startTransaction();
   const user_id = req.body.user_id;
   const { course_id } = req.params;
 
@@ -86,13 +80,14 @@ const toggetFavoriteCourse = async (req, res, next) => {
   };
   try {
     const favorite = await favoriteCourseModel.findOne(payload);
+    console.log(favorite);
 
-    if (favorite) {
-      await favoriteModelCourses.deleteOne(payload);
-    } else {
-      const favorite = new favoriteCourseModel(payload);
-      await favorite.save();
-    }
+    // if (favorite) {
+    //   await favoriteCourseModel.deleteOne(payload);
+    // } else {
+      const newFavorite = new favoriteCourseModel(payload);
+      await newFavorite.save();
+    //}
 
 
     res.status(201).json({
