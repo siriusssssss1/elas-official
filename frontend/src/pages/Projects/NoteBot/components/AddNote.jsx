@@ -57,6 +57,8 @@ function AddNote() {
   //   setNewSection(false); // Setzt newSection zurück auf false
   // };
 
+  const navigate = useNavigate();
+
   const handleLayoutSelect = (layout) => {
     console.log("Ausgewähltes Layout:", layout);
     setSelectedLayout(layout);
@@ -89,39 +91,36 @@ function AddNote() {
     // Weitere Logik für "Create New Course"
   }; 
 
+
   const handleSaveNote = async () => {
     if (addToDrafts) {
-      // Logik, um die Notiz zu den Entwürfen hinzuzufügen
       try {
-        const response = await fetch('/api/drafts', {
+        const response = await fetch('api/notebot/drafts/users/notes/save', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            // Fügen Sie hier weitere Header hinzu, wie z.B. Authorization für Authentifizierung, falls benötigt
           },
-          body: JSON.stringify({
-            title: /* Ihr Notiztitel hier */
-            content /* Ihr Notizinhalt hier */
-            // Weitere Notizdaten hier
-          }),
+          body: JSON.stringify(noteData),
         });
-  
+    
         if (!response.ok) {
-          throw new Error('Failed to add the note to drafts');
+          throw new Error(`Failed to save the note to drafts: ${response.statusText}`);
         }
-  
-        // Optional: Zustandsaktualisierung und Navigation zu "My Drafts"
-        // navigate('/my-drafts');
+    
+        const responseData = await response.json();
+        console.log('Note saved to drafts:', responseData);
+        // Weiterer Code nach erfolgreichem Speichern, z.B. Benutzerfeedback oder Navigation
       } catch (error) {
-        console.error('Error:', error);
+        console.error('Error saving note to drafts:', error);
+        // Fehlerbehandlung, z.B. Anzeigen einer Fehlermeldung
       }
-    }
-  
-    // Weitere Logik für den "ASSIGN AND SAVE" Button
-  };
-  
-  
 
-  //const navigate = useNavigate();
+      navigate('/my-drafts');
+  }
+};
+    
+
 
   return (
     <Container maxWidth="lg" sx={{ position: "relative", bgcolor: "#FFFFFF" }}>
