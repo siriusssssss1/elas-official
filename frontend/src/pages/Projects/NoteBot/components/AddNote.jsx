@@ -25,6 +25,7 @@ import EditNote from "./Notes/editNote.jsx";
 
 //import { createCourse } from "../../../../../../backend/7-notebot/src/controllers/courseController.js";
 import { useNavigate } from "react-router-dom";
+import { getCourses } from '../utils/api.js';
 
 const top100Films = [
   // Courses list aus backend
@@ -203,7 +204,8 @@ function AddNote() {
           <Autocomplete
             disablePortal
             id="combo-box-demo"
-            options={top100Films}
+            options={getCourses}
+            getOptionLabel={(option) => option} 
             sx={{ width: 300 }}
             renderInput={(params) => (
               <TextField {...params} label="Courses List" />

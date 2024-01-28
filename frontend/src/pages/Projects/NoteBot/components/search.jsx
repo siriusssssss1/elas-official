@@ -1,29 +1,42 @@
 import React, { useState } from 'react';
 import Toolbar from '@mui/material/Toolbar';
-import InputBase from '@mui/material/InputBase';
+//import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
-import Autocomplete from '@mui/material/Autocomplete';
+//import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
 import Divider from '@mui/material/Divider';
 import { getNotesByCourseAndNoteTitle } from "../utils/api"
 
-const SearchPage = () => {
-   const [showLatestSearches, setShowLatestSearches] = useState(false);
-   const [searchValue, setSearchValue] = useState('');
-   const latestSearches = ["Search 1", "Search 2", "Search 3"];
+const SearchComponent = () => {
+  const [searchValue, setSearchValue] = useState('');
 
-  const handleSearchClick = () => {
-    setShowLatestSearches(!showLatestSearches);
+  const handleInputChange = (event) => {
+    setSearchValue(event.target.value);
   };
 
-  const handleInputChange = (event, value) => {
-    setSearchValue(value);
-  };
-
-  const handleKeyPress = (event) => {
-    if (event.key === 'Enter') {
-      handleSearch();
+  const handleSearchClick = async () => {
+    // Make sure searchValue is defined before making the API call
+    if (searchValue) {
+      //const userId = 'a19d4fd7-2052-42e4-8ab2-56db09944363';  // Replace with the actual user ID
+      try {
+        const result = await getNotesByCourseAndNoteTitle(searchValue);
+        console.log(result);
+        // Handle the result as needed
+      } catch (error) {
+        console.error('Error fetching notes:', error);
+        // Handle the error
+      }
+    } else {
+      console.error('Search value is undefined or empty.');
     }
   };
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleSearchClick();
+    }
+  };
+
 
   return (
     <div>
@@ -41,7 +54,7 @@ const SearchPage = () => {
           >
             <SearchIcon style={{ color: "#ED7D31" }} />
           </div>
-          <Autocomplete
+          {/* <Autocomplete
             freeSolo
             options={latestSearches}
             inputValue={searchValue}
@@ -52,12 +65,25 @@ const SearchPage = () => {
                 placeholder="SEARCH…"
                 style={{ padding: '8px 48px', width: '100%' }}
                 inputProps={{ 'aria-label': 'search' }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    handleSearchClick();
+                  }}
+                }
               />
             )}
-          />
+          /> */}
+           <TextField
+              placeholder="SEARCH…"
+              style={{ padding: '8px 48px', width: '100%', color: "transparent" }}
+              inputProps={{ 'aria-label': 'search' }}
+              value={searchValue}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
+            />
         </div>
       </Toolbar>
-      {showLatestSearches && (
+      {/* {showLatestSearches && (
         <div style={{ padding: '8px', marginLeft: '80px' }}>
           <h4>Latest Searches:</h4>
           <ul>
@@ -66,11 +92,16 @@ const SearchPage = () => {
             ))}
           </ul>
         </div>
-      )}
+      )} */}
       <Divider style={{ backgroundColor: '#ED7D31', marginTop: '-26px', marginLeft: '80px', width: '60%' }} />
       {/* Your content goes here */}
+      {/* <ul>
+        {searchResults.map((result) => (
+          <li key={result._id}>{result.title}</li>
+        ))}
+      </ul> */}
     </div>
   );
 };
 
-export default SearchPage;
+export default SearchComponent;

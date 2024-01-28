@@ -106,9 +106,13 @@ export const deleteNoteFromServer = async (noteId) => {
 
 export const getNotesByCourseAndNoteTitle = async (keyword) => {
   try {
-    const response = await Backend.get(`notebot/notes/search/${keyword}/`);
+    const response = await Backend.get(`notebot/notes/search/${keyword}/`, {
+      headers: {
+        'user_id': "a19d4fd7-2052-42e4-8ab2-56db09944363",
+      },
+    });
     console.log(response.data); // Message from the server
-    return response.data;
+    return {cards: response.data}; 
   } catch (err) {
     console.log(err);
     return { message: 'Server not connected' };
@@ -137,5 +141,18 @@ export const createCourse = async (title, user_id) => {
   } catch (error) {
     console.error('Error creating course:', error);
     throw new Error('Server not connected'); // Re-throw the error for handling in the calling function
+  }
+};
+
+export const getCourses = async () => {
+  try {
+    const response = await Backend.get(`notebot/courses/all`);
+    console.log(response.data); 
+    //const courses = response.data.map(course => course.title); // Extract course titles
+
+    return response.data.courses;
+  } catch (err) {
+    console.log(err);
+    return { message: 'Server not connected' };
   }
 };
