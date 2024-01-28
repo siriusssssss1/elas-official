@@ -26,6 +26,7 @@ import EditNote from "./Notes/editNote.jsx";
 //import { createCourse } from "../../../../../../backend/7-notebot/src/controllers/courseController.js";
 import { useNavigate } from "react-router-dom";
 import { getCourses } from '../utils/api.js';
+import { addNoteToDrafts } from "../utils/api.js";
 
 const top100Films = [
   // Courses list aus backend
@@ -93,31 +94,44 @@ function AddNote() {
   }; 
 
 
-  const handleSaveNote = async () => {
-    if (addToDrafts) {
-      try {
-        const response = await fetch('api/notebot/drafts/users/notes/save', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            // Fügen Sie hier weitere Header hinzu, wie z.B. Authorization für Authentifizierung, falls benötigt
-          },
-          body: JSON.stringify(noteData),
-        });
+  // const handleSaveNote = async () => {
+  //   if (addToDrafts) {
+  //     try {
+  //       const response = await fetch('api/notebot/drafts/users/notes/save', {
+  //         method: 'POST',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //           // Fügen Sie hier weitere Header hinzu, wie z.B. Authorization für Authentifizierung, falls benötigt
+  //         },
+  //         body: JSON.stringify(noteData),
+  //       });
     
-        if (!response.ok) {
-          throw new Error(`Failed to save the note to drafts: ${response.statusText}`);
-        }
+  //       if (!response.ok) {
+  //         throw new Error(`Failed to save the note to drafts: ${response.statusText}`);
+  //       }
     
-        const responseData = await response.json();
-        console.log('Note saved to drafts:', responseData);
-        // Weiterer Code nach erfolgreichem Speichern, z.B. Benutzerfeedback oder Navigation
-      } catch (error) {
-        console.error('Error saving note to drafts:', error);
-        // Fehlerbehandlung, z.B. Anzeigen einer Fehlermeldung
-      }
+  //       const responseData = await response.json();
+  //       console.log('Note saved to drafts:', responseData);
+  //       // Weiterer Code nach erfolgreichem Speichern, z.B. Benutzerfeedback oder Navigation
+  //     } catch (error) {
+  //       console.error('Error saving note to drafts:', error);
+  //       // Fehlerbehandlung, z.B. Anzeigen einer Fehlermeldung
+  //     }
 
-      navigate('/my-drafts');
+  //     navigate('../Drafts'); //right path
+  // }
+//};
+const handleSaveNote = async () => {
+  if (addToDrafts) {
+    try {
+      const result = await addNoteToDrafts(); // Assuming noteData is available
+      console.log('Note saved to drafts:', result);
+
+      navigate('/Drafts'); //get right path
+    } catch (error) {
+      console.error('Error saving note to drafts:', error);
+      // Fehlerbehandlung, z.B. Anzeigen einer Fehlermeldung
+    }
   }
 };
     

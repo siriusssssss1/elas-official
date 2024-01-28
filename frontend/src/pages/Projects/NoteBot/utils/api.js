@@ -156,3 +156,23 @@ export const getCourses = async () => {
     return { message: 'Server not connected' };
   }
 };
+
+
+//function does not work, does not get the data
+export const addNoteToDrafts = async () => {
+  try {
+
+   const response = await Backend.patch(`notebot/drafts/users/notes/save`); 
+   console.log(response.data)
+   
+  return {cards: response.data.notes}; 
+  } catch (err) {
+    console.log(err);
+    return {
+      message: "Server not connected",
+      courses: undefined
+    };
+  }
+};
+
+
