@@ -19,12 +19,12 @@ import Checkbox from "@mui/material/Checkbox";
 import CloseIcon from "@mui/icons-material/Close";
 import IconButton from "@mui/material/IconButton";
 import ChooseLayout from "./Notes/chooseLayout.jsx";
-import { LayoutSelector } from "./Notes/chooseLayout.jsx";
+//import { LayoutSelector } from "./Notes/chooseLayout.jsx";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import EditNote from "./Notes/editNote.jsx";
 
 //import { createCourse } from "../../../../../../backend/7-notebot/src/controllers/courseController.js";
-//import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const top100Films = [
   // Courses list aus backend
@@ -87,7 +87,39 @@ function AddNote() {
   const handleCreateNewCourseChange = (event) => {
     setCreateNewCourse(event.target.checked);
     // Weitere Logik für "Create New Course"
+  }; 
+
+  const handleSaveNote = async () => {
+    if (addToDrafts) {
+      // Logik, um die Notiz zu den Entwürfen hinzuzufügen
+      try {
+        const response = await fetch('/api/drafts', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            title: /* Ihr Notiztitel hier */
+            content /* Ihr Notizinhalt hier */
+            // Weitere Notizdaten hier
+          }),
+        });
+  
+        if (!response.ok) {
+          throw new Error('Failed to add the note to drafts');
+        }
+  
+        // Optional: Zustandsaktualisierung und Navigation zu "My Drafts"
+        // navigate('/my-drafts');
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+  
+    // Weitere Logik für den "ASSIGN AND SAVE" Button
   };
+  
+  
 
   //const navigate = useNavigate();
 
@@ -221,6 +253,7 @@ function AddNote() {
             </Box>
             <Button
               //onClick={createCourse}
+              onClick={handleSaveNote}
               variant="contained"
               sx={{
                 bgcolor: "#ED7D31", // Farbe des Buttons

@@ -38,13 +38,13 @@ function EditNote() {
         </Box>
       </Paper>
       {/* Button zum Hinzufügen neuer Abschnitte */}
-      <Button
+      {/* <Button
         variant="outlined"
         startIcon={<AddCircleOutlineIcon />}
         onClick={handleAddSection}
       >
         ADD A SECTION
-      </Button>
+      </Button> */}
     </Box>
   );
 }
