@@ -6,10 +6,19 @@ import SearchIcon from '@mui/icons-material/Search';
 import TextField from '@mui/material/TextField';
 //import Divider from '@mui/material/Divider';
 import { getNotesByCourseAndNoteTitle } from "../utils/api"
+import {
+  Routes,
+  Route,
+  Navigate,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 
 
 const SearchComponent = () => {
   const [searchValue, setSearchValue] = useState('');
+  const navigate = useNavigate();
+
 
   const handleInputChange = (event) => {
     setSearchValue(event.target.value);
@@ -22,6 +31,10 @@ const SearchComponent = () => {
       try {
         const result = await getNotesByCourseAndNoteTitle(searchValue);
         console.log(result);
+        navigate('/projects/notebot/search',
+          {
+          state: { searchResults: result.cards },
+        });
         // Handle the result as needed
       } catch (error) {
         console.error('Error fetching notes:', error);

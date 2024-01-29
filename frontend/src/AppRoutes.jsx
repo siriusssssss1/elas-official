@@ -62,6 +62,7 @@ import NoteBot from "./pages/Projects/NoteBot/NoteBot";
 import CourseDetail from "./pages/Projects/StudyCompassCopy/components/CoueseDetail";
 import StudyCompassNew from "./pages/Projects/StudyCompassCopy/StudyCompassNew";
 import AddNote from "./pages/Projects/NoteBot/components/AddNote.jsx";
+import SearchResultsPage from "./pages/Projects/NoteBot/components/SearchPage";
 
 export default function AppRoutes() {
   const isAuthenticated = !!sessionStorage.getItem("elas-token");
@@ -106,6 +107,7 @@ export default function AppRoutes() {
         <Route path="notebot">
           <Route index element={<NoteBot />} />
           <Route path="notes/create" element={<AddNote />} /> //Route erstellen
+          <Route path="search" element={<SearchResultsPage />} />
         </Route>
       </Route>
       <Route path="settings" element={<Settings />} />
