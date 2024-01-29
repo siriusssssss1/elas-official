@@ -12,15 +12,40 @@ import TextFieldsIcon from "@mui/icons-material/TextFields";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import PlayCircleFilledIcon from "@mui/icons-material/PlayCircleFilled";
 import TextField from "@mui/material/TextField";
+import { useState } from "react";
+
 
 function EditNote() {
   const handleAddSection = () => {
     console.log("Add Section Clicked");
   };
 
+  const [selectedWidget, setSelectedWidget] = useState(null);
+
   const handleAddWidget = (widgetType) => {
+    setSelectedWidget(widgetType);
     console.log("Add Widget:", widgetType);
   };
+
+  // Komponente für das Text-Widget
+  const TextWidget = () => (
+    <TextField fullWidth label="Your Text" variant="outlined" />
+  );
+
+  // Komponente für das PDF-Widget
+  const PdfWidget = () => (
+    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+      <PictureAsPdf sx={{ fontSize: 60, color: 'orange' }} />
+    </Box>
+  );
+
+  // Komponente für das Video-Widget
+  const VideoWidget = () => (
+    <TextField fullWidth label="YouTube Video Link" variant="outlined" />
+  );
+
+
+  
 
   return (
     <Box sx={{ padding: 2 }}>
@@ -29,8 +54,10 @@ function EditNote() {
           {/* Texteditor Bereich */}
           <Grid item xs={12} md={6}>
             <Box
-              sx={{ border: "1px solid #ccc", minHeight: "150px", padding: 1 }}
-            >
+              sx={{ border: "1px solid #ccc", minHeight: "150px", padding: 1 }}>
+              {selectedWidget === "text" && <TextWidget />}
+              {selectedWidget === "pdf" && <PdfWidget />}
+              {selectedWidget === "video" && <VideoWidget />}
               <TextField fullWidth label="Edit This  Note" id="fullWidth" />
             </Box>
           </Grid>
