@@ -75,6 +75,8 @@ function AddNote() {
     setShowEditNote(true); // Zeigt das neue Interface an
   };
 
+  const [noteTitle, setNoteTitle] = useState(""); // Zustandsvariable für den Titel der Notiz
+  const [titleError, setTitleError] = useState(""); // Zustandsvariable für die Fehlermeldung
   const [openDialog, setOpenDialog] = useState(false);
   const handleClickOpen = () => {
     setOpenDialog(true);
@@ -100,17 +102,28 @@ function AddNote() {
     // Weitere Logik für "Create New Course"
   }; 
 
-  const handleSaveButtonClick = async () => {
-    try {
-      // Call createNotes function
-      const createdNote = await createNotes(dynamicNoteData);
+  // const handleSaveButtonClick = async () => {
+  //   try {
+  //     // Call createNotes function
+  //     const createdNote = await createNotes(dynamicNoteData);
 
-      // Handle success, e.g., show a success message
-      console.log('Note created successfully:', createdNote);
-    } catch (error) {
-      // Handle errors, e.g., show an error message
-      console.error('Error creating note:', error);
+  //     // Handle success, e.g., show a success message
+  //     console.log('Note created successfully:', createdNote);
+  //   } catch (error) {
+  //     // Handle errors, e.g., show an error message
+  //     console.error('Error creating note:', error);
+  //   }
+  // };
+  const handleSaveButtonClick = () => {
+    // Titelvalidierung
+    if (!noteTitle.trim()) {
+      setTitleError("You forgot to add a title to your note!");
+      return; // Beenden, wenn kein Titel vorhanden ist
     }
+
+    // Zurücksetzen der Fehlermeldung und Öffnen des Dialogs, wenn der Titel vorhanden ist
+    setTitleError("");
+    handleClickOpen();
   };
 
 
@@ -142,7 +155,19 @@ function AddNote() {
   //     navigate('../Drafts'); //right path
   // }
 //};
+
+
+
 const handleSaveNote = async () => {
+  if (!noteTitle.trim()) {
+    // Setzen der Fehlermeldung, wenn kein Titel vorhanden ist
+    setTitleError("You forgot to add a title to your note!");
+    return; // Beenden der Funktion, um das Speichern zu verhindern
+  }
+
+  // Zurücksetzen der Fehlermeldung, wenn der Titel vorhanden ist
+  setTitleError("");
+
   if (addToDrafts) {
     try {
       const result = await addNoteToDrafts(); // Assuming noteData is available
@@ -173,6 +198,10 @@ const handleSaveNote = async () => {
         <TextField
           variant="outlined"
           placeholder="Add Note Title"
+          value={noteTitle}
+          onChange={(e) => setNoteTitle(e.target.value)}
+          error={!!titleError} // Zeigt einen Fehlerstatus an, wenn titleError einen Wert hat
+          helperText={titleError} // Zeigt die Fehlermeldung als Hilfetext an
           sx={{
             width: "224px",
             height: "60px",
@@ -205,7 +234,8 @@ const handleSaveNote = async () => {
           }}
           startIcon={<SaveIcon />}
           //onClick={handleSaveButtonClick}
-          onClick={handleClickOpen}
+          //onClick={handleClickOpen}
+          onClick={handleSaveButtonClick}
         >
           Save
         </Button>
