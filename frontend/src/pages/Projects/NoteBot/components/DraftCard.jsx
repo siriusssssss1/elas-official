@@ -85,26 +85,39 @@ export default function DraftCard({ card, handleDeleteNote}) {
           onClick = {handleClickOpen}
         />
         <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {"Delete this Note?"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Do you really want to delete this note?
-          </DialogContentText>
-          <DialogActions>
-          <Button onClick={handleClose}>Disagree</Button>
-          <Button onClick={handleDeleteConfirm} autoFocus>
-            Agree
-          </Button>
-        </DialogActions>
-        </DialogContent>
-      </Dialog>
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title"></DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Do you really want to delete this note?
+            </DialogContentText>
+            <DialogActions>
+              <Button
+                onClick={handleClose}
+                sx={{
+                  color: "white",
+                  bgcolor: "gray"
+                }}
+              >
+                Disagree
+              </Button>
+              <Button
+                onClick={handleDeleteConfirm}
+                sx={{
+                  color: "white",
+                  bgcolor: "red",
+                }}
+                autoFocus
+              >
+                Agree
+              </Button>
+            </DialogActions>
+          </DialogContent>
+        </Dialog>
       </CardContent>
     </Card>
   );

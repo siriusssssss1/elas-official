@@ -29,12 +29,12 @@ import { getCourses } from '../utils/api.js';
 import { addNoteToDrafts } from "../utils/api.js";
 import { createNotes } from "../utils/api.js";
 
-// const top100Films = [
-//   // Courses list aus backend
-//   { label: "The Shawshank Redemption", year: 1994 },
-//   { label: "The Godfather", year: 1972 },
-//   { label: "The Godfather: Part II", year: 1974 },
-// ];
+const top100Films = [
+   // Courses list aus backend
+   { label: "Sozialpsychologie", year: 1994 },
+   { label: "Interactive Systems", year: 1972 },
+   { label: "IDEA Project", year: 1974 },
+ ];
 
 function AddNote() {
   const [newSection, setNewSection] = useState(false);
@@ -240,8 +240,7 @@ const handleSaveNote = async () => {
           <Autocomplete
             disablePortal
             id="combo-box-demo"
-            options={getCourses}
-            getOptionLabel={(option) => option} 
+            options={top100Films}
             sx={{ width: 300 }}
             renderInput={(params) => (
               <TextField {...params} label="Courses List" />

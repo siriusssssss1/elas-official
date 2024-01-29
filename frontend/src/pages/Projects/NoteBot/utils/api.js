@@ -94,6 +94,7 @@ export const toggleFavNote = async (noteId) => {
 
 export const deleteNoteFromServer = async (noteId) => {
   try {
+    // Assuming Backend is an Axios instance
     const response = await Backend.delete(`/notebot/notes/${noteId}`);
     console.log(response.data); // Message from the server
     return response.data;
