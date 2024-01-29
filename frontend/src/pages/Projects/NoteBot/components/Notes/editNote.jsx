@@ -1,5 +1,12 @@
 import React from "react";
-import { Box, Paper, IconButton, Typography, Button } from "@mui/material";
+import {
+  Box,
+  Paper,
+  IconButton,
+  Typography,
+  Button,
+  Grid,
+} from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import TextFieldsIcon from "@mui/icons-material/TextFields";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
@@ -11,47 +18,63 @@ function EditNote() {
     console.log("Add Section Clicked");
   };
 
-  // Diese Funktion könnte für das Hinzufügen von Widgets verwendet werden
   const handleAddWidget = (widgetType) => {
     console.log("Add Widget:", widgetType);
   };
 
-  //raw code
   return (
     <Box sx={{ padding: 2 }}>
       <Paper elevation={3} sx={{ padding: 2, marginBottom: 2 }}>
-        {/* Texteditor Bereich */}
-        <Box sx={{ border: "1px solid #ccc", minHeight: "150px", padding: 1 }}>
-          {/* Hier könnten Sie einen echten Texteditor wie 'react-quill' integrieren */}
-          <Box
-            sx={{
-              maxWidth: "100%",
-            }}
-          >
-            <TextField fullWidth label="Edit This  Note" id="fullWidth" />
-          </Box>
-        </Box>
-        {/* Widget Auswahl Bereich */}
-        <Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: 2 }}>
-          <IconButton onClick={() => handleAddWidget("text")}>
-            <TextFieldsIcon />
-          </IconButton>
-          <IconButton onClick={() => handleAddWidget("pdf")}>
-            <PictureAsPdfIcon />
-          </IconButton>
-          <IconButton onClick={() => handleAddWidget("video")}>
-            <PlayCircleFilledIcon />
-          </IconButton>
-        </Box>
+        <Grid container spacing={2}>
+          {/* Texteditor Bereich */}
+          <Grid item xs={12} md={6}>
+            <Box
+              sx={{ border: "1px solid #ccc", minHeight: "150px", padding: 1 }}
+            >
+              <TextField fullWidth label="Edit This  Note" id="fullWidth" />
+            </Box>
+          </Grid>
+          {/* Widget Auswahl Bereich */}
+          <Grid item xs={12} md={6}>
+            {/* Hier können Sie die rechte Seite mit Inhalten füllen */}
+            <Box sx={{ height: "150px", padding: 1, border: "1px solid #ccc" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column", // Stapelt die Elemente vertikal
+                  alignItems: "center", // Zentriert die Elemente horizontal
+                  justifyContent: "center", // Zentriert die Elemente vertikal, wenn es zusätzlichen Platz gibt
+                  marginTop: 2,
+                }}
+              >
+                <Typography variant="subtitle2" sx={{ marginBottom: 2 }}>
+                  Choose a widget
+                </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row", // Ordnet die Icons horizontal an
+                    alignItems: "center", // Zentriert die Icons vertikal
+                    justifyContent: "center", // Zentriert die Icons horizontal
+                  }}
+                >
+                  <IconButton onClick={() => handleAddWidget("text")}>
+                    <TextFieldsIcon />
+                  </IconButton>
+                  <IconButton onClick={() => handleAddWidget("pdf")}>
+                    <PictureAsPdfIcon />
+                  </IconButton>
+                  <IconButton onClick={() => handleAddWidget("video")}>
+                    <PlayCircleFilledIcon />
+                  </IconButton>
+                </Box>
+              </Box>
+
+              {/* Hier können Sie die Widgets hinzufügen */}
+            </Box>
+          </Grid>
+        </Grid>
       </Paper>
-      {/* Button zum Hinzufügen neuer Abschnitte */}
-      {/* <Button
-        variant="outlined"
-        startIcon={<AddCircleOutlineIcon />}
-        onClick={handleAddSection}
-      >
-        ADD A SECTION
-      </Button> */}
     </Box>
   );
 }
