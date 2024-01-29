@@ -4,8 +4,9 @@ import Toolbar from '@mui/material/Toolbar';
 import SearchIcon from '@mui/icons-material/Search';
 //import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-import Divider from '@mui/material/Divider';
+//import Divider from '@mui/material/Divider';
 import { getNotesByCourseAndNoteTitle } from "../utils/api"
+
 
 const SearchComponent = () => {
   const [searchValue, setSearchValue] = useState('');
@@ -36,6 +37,8 @@ const SearchComponent = () => {
       handleSearchClick();
     }
   };
+
+  // <Divider style={{ backgroundColor: '#ED7D31', marginTop: '-26px', marginLeft: '80px', width: '60%' }} />
 
 
   return (
@@ -75,11 +78,12 @@ const SearchComponent = () => {
           /> */}
            <TextField
               placeholder="SEARCH…"
-              style={{ padding: '8px 48px', width: '100%', color: "transparent" }}
+              style={{ padding: '8px 48px', width: '100%', color: 'transparent' }}
               inputProps={{ 'aria-label': 'search' }}
               value={searchValue}
               onChange={handleInputChange}
               onKeyDown={handleKeyDown}
+              variant="standard"
             />
         </div>
       </Toolbar>
@@ -93,7 +97,6 @@ const SearchComponent = () => {
           </ul>
         </div>
       )} */}
-      <Divider style={{ backgroundColor: '#ED7D31', marginTop: '-26px', marginLeft: '80px', width: '60%' }} />
       {/* Your content goes here */}
       {/* <ul>
         {searchResults.map((result) => (
