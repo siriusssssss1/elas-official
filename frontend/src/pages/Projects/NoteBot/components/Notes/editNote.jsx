@@ -13,8 +13,9 @@ import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import PlayCircleFilledIcon from "@mui/icons-material/PlayCircleFilled";
 import TextField from "@mui/material/TextField";
 import { useState } from "react";
-import UploadFileIcon from '@mui/icons-material/UploadFile';
-
+import UploadFileIcon from "@mui/icons-material/UploadFile";
+import OpenInFullIcon from "@mui/icons-material/OpenInFull";
+import CloseIcon from "@mui/icons-material/Close";
 
 function EditNote() {
   const handleAddSection = () => {
@@ -39,8 +40,15 @@ function EditNote() {
 
   // Komponente für das PDF-Widget
   const PdfWidget = () => (
-    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-      <UploadFileIcon sx={{ fontSize: 60, color: 'orange' }} />
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100%",
+      }}
+    >
+      <UploadFileIcon sx={{ fontSize: 60, color: "orange" }} />
     </Box>
   );
 
@@ -49,20 +57,97 @@ function EditNote() {
     <TextField fullWidth label="YouTube Video Link" variant="outlined" />
   );
 
-
   const WidgetArea = ({ onAddWidget, selectedWidget }) => (
     <Box sx={{ height: "150px", padding: 1, border: "1px solid #ccc" }}>
       {!selectedWidget && (
-        <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-          <Typography variant="subtitle2" sx={{ marginBottom: 2 }}>Choose a widget</Typography>
-          <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
-            <IconButton onClick={() => onAddWidget("text")} sx={{ color: "white", bgcolor: "blue", "&:hover": { bgcolor: "darkblue" }, borderRadius: "50%" }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          {/* Box-Container für den Text und die Icons */}
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+              marginBottom: 2,
+            }}
+          ></Box>
+
+          <Typography
+            variant="subtitle2"
+            sx={{ marginBottom: 2, color: "#767676" }}
+          >
+            CHOOSE A WIDGET
+          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row", // Icons horizontal anordnen
+              marginLeft: "auto", // Schiebt die Icons nach rechts
+            }}
+          >
+            <OpenInFullIcon
+              sx={{
+                fontSize: 18,
+                color: "#767676",
+                marginLeft: 1, // Abstand zwischen Text und erstem Icon
+              }}
+            />
+            <CloseIcon
+              sx={{
+                fontSize: 22,
+                color: "#767676",
+                marginLeft: 1, // Abstand zwischen den Icons
+              }}
+            />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <IconButton
+              onClick={() => onAddWidget("text")}
+              sx={{
+                color: "white",
+                bgcolor: "#4472C4",
+                "&:hover": { bgcolor: "darkblue" },
+                borderRadius: "50%",
+              }}
+            >
               <TextFieldsIcon />
             </IconButton>
-            <IconButton onClick={() => onAddWidget("pdf")} sx={{ color: "white", bgcolor: "orange", "&:hover": { bgcolor: "darkorange" }, borderRadius: "50%", marginLeft: 1 }}>
+            <IconButton
+              onClick={() => onAddWidget("pdf")}
+              sx={{
+                color: "white",
+                bgcolor: "#ED7D31",
+                "&:hover": { bgcolor: "darkorange" },
+                borderRadius: "50%",
+                marginLeft: 1,
+              }}
+            >
               <PictureAsPdfIcon />
             </IconButton>
-            <IconButton onClick={() => onAddWidget("video")} sx={{ color: "white", bgcolor: "red", "&:hover": { bgcolor: "darkred" }, borderRadius: "50%", marginLeft: 1 }}>
+            <IconButton
+              onClick={() => onAddWidget("video")}
+              sx={{
+                color: "white",
+                bgcolor: "#F91313",
+                "&:hover": { bgcolor: "darkred" },
+                borderRadius: "50%",
+                marginLeft: 1,
+              }}
+            >
               <PlayCircleFilledIcon />
             </IconButton>
           </Box>
@@ -80,12 +165,18 @@ function EditNote() {
         <Grid container spacing={2}>
           {/* Linke Seite */}
           <Grid item xs={12} md={6}>
-            <WidgetArea onAddWidget={handleAddWidgetLeft} selectedWidget={selectedWidgetLeft} />
+            <WidgetArea
+              onAddWidget={handleAddWidgetLeft}
+              selectedWidget={selectedWidgetLeft}
+            />
           </Grid>
 
           {/* Rechte Seite */}
           <Grid item xs={12} md={6}>
-            <WidgetArea onAddWidget={handleAddWidgetRight} selectedWidget={selectedWidgetRight} />
+            <WidgetArea
+              onAddWidget={handleAddWidgetRight}
+              selectedWidget={selectedWidgetRight}
+            />
           </Grid>
         </Grid>
       </Paper>
@@ -94,9 +185,6 @@ function EditNote() {
 }
 
 export default EditNote;
-
-
-  
 
 //   return (
 //     <Box sx={{ padding: 2 }}>
@@ -137,7 +225,7 @@ export default EditNote;
 //                     justifyContent: "center", // Zentriert die Icons horizontal
 //                   }}
 //                 >
-//                   <IconButton onClick={() => handleAddWidget("text")} 
+//                   <IconButton onClick={() => handleAddWidget("text")}
 //                   sx={{
 //                     color: "white",
 //                     bgcolor: "blue", // Blauer Hintergrund für das Text-Widget
@@ -186,7 +274,7 @@ export default EditNote;
 //               {/* Hier können Sie die Widgets hinzufügen */}
 //             </Box>
 //           </Grid>
-          
+
 //         </Grid>
 //       </Paper>
 //     </Box>
