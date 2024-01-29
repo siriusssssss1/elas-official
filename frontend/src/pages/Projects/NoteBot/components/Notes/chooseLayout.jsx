@@ -8,6 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 
+
 // Layout12 Komponente
 const Layout12 = () => (
   <Box sx={{ display: 'flex', width: '100%', height: '100px', backgroundColor: '#e0e0e0' }} />
@@ -62,33 +63,35 @@ const ChooseLayout = ({ onLayoutSelect }) => {
           CHOOSE A LAYOUT
         </Typography>
 
-        <Grid container spacing={1} justifyContent="center">
-          {/* Erster Grid-Container als Grid-Item */}
+        <Grid container spacing={2} justifyContent="center">
+          {/* Layout 1 */}
           {/* <Grid item xs={1}>
               <Card sx={{ backgroundColor: "#e0e0e0", height: "100px" }}></Card>
             </Grid> */}
 
           {/* Zweiter Grid-Container als Grid-Item */}
           <Grid item container spacing={1.5} justifyContent="center">
-            <Grid item xs={1.6}>
+            <Grid item xs={4}>
             
               <CardActionArea onClick={() => handleLayoutClick("layout1")}>
                 <Card
                   sx={{ backgroundColor: "#e0e0e0", display: 'flex', justifyContent: 'center', alignItems: 'center', height: "100px" }}>
-                  <Layout12 />
+                  {/* <Layout12 /> */}
                 </Card>
               </CardActionArea>
             </Grid>
-            <Grid item xs={1.6}>
+            {/* //Layout 2  */}
+            <Grid item xs={4}>
             
               <CardActionArea onClick={() => handleLayoutClick("layout2")}>
                 <Card
                   sx={{ backgroundColor: "#e0e0e0", display: 'flex', justifyContent: 'center', alignItems: 'center', height: "100px" }}>
-                  <Layout66 />
+                  {/* <Layout66 /> */}
                 </Card>
               </CardActionArea>
             </Grid>
-            <Grid item xs={1.6}>
+            {/* Layout 3 */}
+            <Grid item xs={4}>
 
               <CardActionArea onClick={() => handleLayoutClick("layout3")}>
                 <Card
@@ -124,4 +127,4 @@ const ChooseLayout = ({ onLayoutSelect }) => {
 };
 
 export default ChooseLayout;
-export const LayoutSelector = ChooseLayout;
+//export const LayoutSelector = ChooseLayout;

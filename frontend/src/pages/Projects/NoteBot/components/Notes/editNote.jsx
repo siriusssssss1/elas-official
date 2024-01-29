@@ -14,6 +14,7 @@ import PlayCircleFilledIcon from "@mui/icons-material/PlayCircleFilled";
 import TextField from "@mui/material/TextField";
 import { useState } from "react";
 import UploadFileIcon from '@mui/icons-material/UploadFile';
+import ChooseLayout from './chooseLayout';
 
 
 function EditNote() {
@@ -21,15 +22,45 @@ function EditNote() {
     console.log("Add Section Clicked");
   };
 
-  const [selectedWidgetLeft, setSelectedWidgetLeft] = useState(null);
-  const [selectedWidgetRight, setSelectedWidgetRight] = useState(null);
+  const [selectedLayout, setSelectedLayout] = useState(null);
+  const [selectedWidget, setSelectedWidget] = useState(null);
 
-  const handleAddWidgetLeft = (widgetType) => {
-    setSelectedWidgetLeft(widgetType);
+  const renderContentBasedOnLayout = () => {
+    switch (selectedLayout) {
+      case 'layout1':
+        return <TextField fullWidth label="Ein Bereich" />;
+      case 'layout2':
+        return (
+          <Box sx={{ display: 'flex', gap: 1 }}>
+            <TextField fullWidth label="Bereich 1" />
+            <TextField fullWidth label="Bereich 2" />
+          </Box>
+        );
+      case 'layout3':
+        return (
+          <Box sx={{ display: 'flex', gap: 1 }}>
+            <TextField fullWidth label="Bereich 1" />
+            <TextField fullWidth label="Bereich 2" />
+            <TextField fullWidth label="Bereich 3" />
+          </Box>
+        );
+      default:
+        return <Typography>Wählen Sie ein Layout</Typography>;
+    }
   };
 
-  const handleAddWidgetRight = (widgetType) => {
-    setSelectedWidgetRight(widgetType);
+  // const [selectedWidgetLeft, setSelectedWidgetLeft] = useState(null);
+  // const [selectedWidgetRight, setSelectedWidgetRight] = useState(null);
+
+  // const handleAddWidgetLeft = (widgetType) => {
+  //   setSelectedWidgetLeft(widgetType);
+  // };
+
+  // const handleAddWidgetRight = (widgetType) => {
+  //   setSelectedWidgetRight(widgetType);
+  // };
+  const handleAddWidget = (widgetType) => {
+    setSelectedWidget(widgetType);
   };
 
   // Komponente für das Text-Widget
@@ -50,47 +81,91 @@ function EditNote() {
   );
 
 
-  const WidgetArea = ({ onAddWidget, selectedWidget }) => (
-    <Box sx={{ height: "150px", padding: 1, border: "1px solid #ccc" }}>
-      {!selectedWidget && (
-        <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-          <Typography variant="subtitle2" sx={{ marginBottom: 2 }}>Choose a widget</Typography>
-          <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
-            <IconButton onClick={() => onAddWidget("text")} sx={{ color: "white", bgcolor: "blue", "&:hover": { bgcolor: "darkblue" }, borderRadius: "50%" }}>
-              <TextFieldsIcon />
-            </IconButton>
-            <IconButton onClick={() => onAddWidget("pdf")} sx={{ color: "white", bgcolor: "orange", "&:hover": { bgcolor: "darkorange" }, borderRadius: "50%", marginLeft: 1 }}>
-              <PictureAsPdfIcon />
-            </IconButton>
-            <IconButton onClick={() => onAddWidget("video")} sx={{ color: "white", bgcolor: "red", "&:hover": { bgcolor: "darkred" }, borderRadius: "50%", marginLeft: 1 }}>
-              <PlayCircleFilledIcon />
-            </IconButton>
-          </Box>
-        </Box>
-      )}
+  // const WidgetArea = ({ onAddWidget, selectedWidget }) => (
+  //   <Box sx={{ height: "150px", padding: 1, border: "1px solid #ccc" }}>
+  //     {!selectedWidget && (
+  //       <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+  //         <Typography variant="subtitle2" sx={{ marginBottom: 2 }}>Choose a widget</Typography>
+  //         <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+  //           <IconButton onClick={() => onAddWidget("text")} sx={{ color: "white", bgcolor: "blue", "&:hover": { bgcolor: "darkblue" }, borderRadius: "50%" }}>
+  //             <TextFieldsIcon />
+  //           </IconButton>
+  //           <IconButton onClick={() => onAddWidget("pdf")} sx={{ color: "white", bgcolor: "orange", "&:hover": { bgcolor: "darkorange" }, borderRadius: "50%", marginLeft: 1 }}>
+  //             <PictureAsPdfIcon />
+  //           </IconButton>
+  //           <IconButton onClick={() => onAddWidget("video")} sx={{ color: "white", bgcolor: "red", "&:hover": { bgcolor: "darkred" }, borderRadius: "50%", marginLeft: 1 }}>
+  //             <PlayCircleFilledIcon />
+  //           </IconButton>
+  //         </Box>
+  //       </Box>
+  //     )}
+  //     {selectedWidget === "text" && <TextWidget />}
+  //     {selectedWidget === "pdf" && <PdfWidget />}
+  //     {selectedWidget === "video" && <VideoWidget />}
+  //   </Box>
+  // );
+
+
+  const renderWidgets = () => (
+    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "100%" }}>
+      <Typography variant="subtitle2" sx={{ marginBottom: 2 }}>Choose a widget</Typography>
+      <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+        <IconButton onClick={() => handleAddWidget("text")} sx={{ color: "white", bgcolor: "blue", "&:hover": { bgcolor: "darkblue" }, borderRadius: "50%" }}>
+          <TextFieldsIcon />
+        </IconButton>
+        <IconButton onClick={() => handleAddWidget("pdf")} sx={{ color: "white", bgcolor: "orange", "&:hover": { bgcolor: "darkorange" }, borderRadius: "50%", marginLeft: 1 }}>
+          <PictureAsPdfIcon />
+        </IconButton>
+        <IconButton onClick={() => handleAddWidget("video")} sx={{ color: "white", bgcolor: "red", "&:hover": { bgcolor: "darkred" }, borderRadius: "50%", marginLeft: 1 }}>
+          <PlayCircleFilledIcon />
+        </IconButton>
+      </Box>
       {selectedWidget === "text" && <TextWidget />}
       {selectedWidget === "pdf" && <PdfWidget />}
       {selectedWidget === "video" && <VideoWidget />}
     </Box>
   );
 
-  return (
-    <Box sx={{ padding: 2 }}>
+
+//   return (
+//     <Box sx={{ padding: 2 }}>
+//       <ChooseLayout onLayoutSelect={setSelectedLayout} />
+//       <Paper elevation={3} sx={{ padding: 2, marginBottom: 2 }}>
+//         <Grid container spacing={2}>
+//           {/* Linke Seite */}
+//           <Grid item xs={12} md={6}>
+//             <WidgetArea onAddWidget={handleAddWidgetLeft} selectedWidget={selectedWidgetLeft} />
+//           </Grid>
+
+//           {/* Rechte Seite */}
+//           <Grid item xs={12} md={6}>
+//             <WidgetArea onAddWidget={handleAddWidgetRight} selectedWidget={selectedWidgetRight} />
+//             {renderContentBasedOnLayout()}
+//           </Grid>
+//         </Grid>
+//       </Paper>
+//     </Box>
+    
+//   );
+  
+// }
+
+return (
+  <Box sx={{ padding: 2 }}>
+    {!selectedLayout && <ChooseLayout onLayoutSelect={setSelectedLayout} />}
+    {selectedLayout && (
       <Paper elevation={3} sx={{ padding: 2, marginBottom: 2 }}>
         <Grid container spacing={2}>
-          {/* Linke Seite */}
-          <Grid item xs={12} md={6}>
-            <WidgetArea onAddWidget={handleAddWidgetLeft} selectedWidget={selectedWidgetLeft} />
-          </Grid>
-
-          {/* Rechte Seite */}
-          <Grid item xs={12} md={6}>
-            <WidgetArea onAddWidget={handleAddWidgetRight} selectedWidget={selectedWidgetRight} />
-          </Grid>
+          {Array.from({ length: parseInt(selectedLayout[selectedLayout.length - 1]) }, (_, i) => (
+            <Grid key={i} item xs={12} md={4}>
+              {renderWidgets()}
+            </Grid>
+          ))}
         </Grid>
       </Paper>
-    </Box>
-  );
+    )}
+  </Box>
+);
 }
 
 export default EditNote;
