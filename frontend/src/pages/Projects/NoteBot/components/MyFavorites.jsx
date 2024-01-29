@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Grid, Typography } from "@mui/material";
 import { getFavNotes } from "../utils/api";
 import NoteCard from "./NoteCard";
+import { toggleFavNote } from "../utils/api";
 
 export default function MyFavorites() {
   const [favoriteCards, setFavoriteCards] = useState({
@@ -9,14 +10,15 @@ export default function MyFavorites() {
     cards: [],
   });
 
+  // Zustandsvariable für das Tracking von Änderungen
+  const [favoritesChanged, setFavoritesChanged] = useState(false);
+
   useEffect(() => {
     async function getFavoriteCards() {
       const cardsInfo = await getFavNotes();
 
       if (cardsInfo.cards !== undefined) {
-        const favorites = cardsInfo.cards.filter((card) => card.isFavorite);
-        setFavoriteCards({ cards: favorites });
-        console.log(favorites);
+        setFavoriteCards({ cards: cardsInfo.cards });
       } else {
         setFavoriteCards((prevState) => ({
           ...prevState,
@@ -25,7 +27,36 @@ export default function MyFavorites() {
       }
     }
     getFavoriteCards();
-  }, []);
+  }, [favoritesChanged]); // Abhängigkeit hinzugefügt
+
+  const handleToggleFavorite = async (id) => {
+    try {
+      // Der API-Aufruf zum Umschalten des Favoritenstatus, der die Notiz-ID erwartet
+      await toggleFavNote(id);
+  
+      // Aktualisieren Sie favoritesChanged, um den useEffect-Hook zu triggern
+      setFavoritesChanged(!favoritesChanged);
+    } catch (error) {
+      // Fehlerbehandlung, falls der API-Aufruf fehlschlägt
+      console.error("Error toggling favorite status:", error);
+    }
+  };
+  
+
+
+      // if (cardsInfo.cards !== undefined) {
+      //   const favorites = cardsInfo.cards.filter((card) => card.isFavorite);
+      //   setFavoriteCards({ cards: favorites });
+      //   console.log(favorites);
+      // } else {
+      //   setFavoriteCards((prevState) => ({
+      //     ...prevState,
+      //     message: cardsInfo.message,
+      //   }));
+      // }
+  //   }
+  //   getFavoriteCards();
+  // }, []);
 
   const handleDeleteNote = (id) => {
     const confirmDelete = window.confirm(
@@ -104,7 +135,8 @@ export default function MyFavorites() {
               .fill(favoriteCards.cards)
               .flat()
               .map((card) => (
-                <NoteCard key={card.id} card={card} />
+                <NoteCard key={card.id} card={card} handleDeleteNote={handleDeleteNote}
+                handleToggleFavorite={handleToggleFavorite} />
               ))}
           </Grid>
         </Grid>
