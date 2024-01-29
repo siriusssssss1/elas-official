@@ -45,7 +45,7 @@ export const getCards = async () => {
 export const getDrafts = async () => {
   try {
 
-   const responseNr2 = await Backend.get(`/notebot/drafts/users/11ececb0-e1b5-4554-a2b5-7a96ce20bbf3/favorite`); // wenn man hier ${userId} eingibt, funktioniert es noch nicht
+   const responseNr2 = await Backend.get(`/notebot/drafts/users/a19d4fd7-2052-42e4-8ab2-56db09944363/`); // wenn man hier ${userId} eingibt, funktioniert es noch nicht
    console.log(responseNr2.data)
    
   return {cards: responseNr2.data.notes}; 
@@ -66,7 +66,7 @@ export const getDrafts = async () => {
 export const getFavNotes = async () => {
   try {
 
-   const responseNr2 = await Backend.get(`/notebot/notes/users/11ececb0-e1b5-4554-a2b5-7a96ce20bbf3/favorite`); // wenn man hier ${userId} eingibt, funktioniert es noch nicht
+   const responseNr2 = await Backend.get(`/notebot/notes/users/a19d4fd7-2052-42e4-8ab2-56db09944363/favorite`); // wenn man hier ${userId} eingibt, funktioniert es noch nicht
    console.log(responseNr2.data)
    
   return {cards: responseNr2.data.notes}; 
@@ -157,6 +157,22 @@ export const getCourses = async () => {
   }
 };
 
+export const createNotes = async (noteData) => {
+  try {
+
+   const response = await Backend.post(`notebot/notebot/notes/new`, noteData); 
+   console.log(response.data)
+   
+  return response.data; 
+  } catch (err) {
+    console.log(err);
+    return {
+      message: "Server not connected",
+      courses: undefined
+    };
+  }
+};
+
 
 //function does not work, does not get the data
 export const addNoteToDrafts = async () => {
@@ -174,5 +190,7 @@ export const addNoteToDrafts = async () => {
     };
   }
 };
+
+
 
 

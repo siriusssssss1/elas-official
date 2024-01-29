@@ -27,13 +27,14 @@ import EditNote from "./Notes/editNote.jsx";
 import { useNavigate } from "react-router-dom";
 import { getCourses } from '../utils/api.js';
 import { addNoteToDrafts } from "../utils/api.js";
+import { createNotes } from "../utils/api.js";
 
-const top100Films = [
-  // Courses list aus backend
-  { label: "The Shawshank Redemption", year: 1994 },
-  { label: "The Godfather", year: 1972 },
-  { label: "The Godfather: Part II", year: 1974 },
-];
+// const top100Films = [
+//   // Courses list aus backend
+//   { label: "The Shawshank Redemption", year: 1994 },
+//   { label: "The Godfather", year: 1972 },
+//   { label: "The Godfather: Part II", year: 1974 },
+// ];
 
 function AddNote() {
   const [newSection, setNewSection] = useState(false);
@@ -41,6 +42,12 @@ function AddNote() {
   const [selectedLayout, setSelectedLayout] = useState(null);
   //const [showTextField, setShowTextField] = useState(false);
   const [showEditNote, setShowEditNote] = useState(false);
+  const [dynamicNoteData, setDynamicNoteData] = useState({
+    title: "Sozialpsychologie Draft",
+    user_id: "a19d4fd7-2052-42e4-8ab2-56db09944363",
+    sections: [],
+    widgets: []
+  });
 
   // const handleAddSectionClick = () => {
   //   setNewSection((prevState) => !prevState);
@@ -92,6 +99,20 @@ function AddNote() {
     setCreateNewCourse(event.target.checked);
     // Weitere Logik für "Create New Course"
   }; 
+
+  const handleSaveButtonClick = async () => {
+    try {
+      // Call createNotes function
+      const createdNote = await createNotes(dynamicNoteData);
+
+      // Handle success, e.g., show a success message
+      console.log('Note created successfully:', createdNote);
+    } catch (error) {
+      // Handle errors, e.g., show an error message
+      console.error('Error creating note:', error);
+    }
+  };
+
 
 
   // const handleSaveNote = async () => {
@@ -183,6 +204,7 @@ const handleSaveNote = async () => {
             },
           }}
           startIcon={<SaveIcon />}
+          //onClick={handleSaveButtonClick}
           onClick={handleClickOpen}
         >
           Save
