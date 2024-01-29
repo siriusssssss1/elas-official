@@ -11,7 +11,6 @@ import {
   DialogActions,
   Autocomplete,
   DialogContent,
-  DialogContentText,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CheckIcon from "@mui/icons-material/Check";
@@ -77,22 +76,12 @@ function AddNote() {
   };
 
   const [noteTitle, setNoteTitle] = useState(""); // Zustandsvariable für den Titel der Notiz
-  // const [titleError, setTitleError] = useState(""); // Zustandsvariable für die Fehlermeldung
-  // const [openDialog, setOpenDialog] = useState(false);
-  // const handleClickOpen = () => {
-  //   setOpenDialog(true);
-  // };
-  const [showErrorDialog, setShowErrorDialog] = useState(false);
-
-  const handleOpenErrorDialog = () => {
-  setShowErrorDialog(true);
-};
-
-  // Funktion zum Schließen des Fehlerdialogs
-  const handleCloseErrorDialog = () => {
-    setShowErrorDialog(false);
+  const [titleError, setTitleError] = useState(""); // Zustandsvariable für die Fehlermeldung
+  const [openDialog, setOpenDialog] = useState(false);
+  const handleClickOpen = () => {
+    setOpenDialog(true);
   };
-  
+
   const handleClose = (value) => {
     setOpenDialog(false);
   };
@@ -128,8 +117,7 @@ function AddNote() {
   const handleSaveButtonClick = () => {
     // Titelvalidierung
     if (!noteTitle.trim()) {
-      //setTitleError("You forgot to add a title to your note!");
-      handleOpenErrorDialog();
+      setTitleError("You forgot to add a title to your note!");
       return; // Beenden, wenn kein Titel vorhanden ist
     }
 
@@ -329,33 +317,6 @@ const handleSaveNote = async () => {
                 label="Or create new course"
               />
             </Box>
-            {/* Dialog für Fehlermeldung, wenn kein Titel vorhanden ist */}
-            <Dialog open={openErrorDialog} onClose={handleCloseErrorDialog}>
-              <DialogTitle>{"Missing Note Title"}</DialogTitle>
-              <DialogContent>
-                <DialogContentText>
-                  You forgot to name your note! Please provide a title to continue.
-                </DialogContentText>
-                <TextField
-                  autoFocus
-                  margin="dense"
-                  id="name"
-                  label="Note Title"
-                  type="text"
-                  fullWidth
-                  variant="standard"
-                  value={noteTitle}
-                  onChange={(e) => setNoteTitle(e.target.value)}
-                />
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={handleCloseErrorDialog}>Cancel</Button>
-                <Button onClick={() => {
-                  handleCloseErrorDialog();
-                  // Optional: Fügen Sie hier Logik ein, um die Notiz zu speichern, sobald der Benutzer einen Titel eingibt und auf Speichern klickt
-                }}>Save</Button>
-              </DialogActions>
-            </Dialog>
             <Button
               //onClick={createCourse}
               onClick={handleSaveNote}
