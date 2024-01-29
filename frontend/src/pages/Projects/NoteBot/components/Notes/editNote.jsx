@@ -51,27 +51,28 @@ function EditNote() {
     <Box sx={{ padding: 2 }}>
       <Paper elevation={3} sx={{ padding: 2, marginBottom: 2 }}>
         <Grid container spacing={2}>
-          {/* Texteditor Bereich */}
+          {/* Texteditor Bereich (Links)*/}
           <Grid item xs={12} md={6}>
             <Box
               sx={{ border: "1px solid #ccc", minHeight: "150px", padding: 1 }}>
-              {selectedWidget === "text" && <TextWidget />}
+              {/* {selectedWidget === "text" && <TextWidget />}
               {selectedWidget === "pdf" && <PdfWidget />}
-              {selectedWidget === "video" && <VideoWidget />}
+              {selectedWidget === "video" && <VideoWidget />} */}
               <TextField fullWidth label="Edit This  Note" id="fullWidth" />
             </Box>
           </Grid>
-          {/* Widget Auswahl Bereich */}
+          {/* Widget Auswahl Bereich (Rechts)- wird nur angezeigt, wenn kein Widget ausgewählt ist*/}
           <Grid item xs={12} md={6}>
             {/* Hier können Sie die rechte Seite mit Inhalten füllen */}
             <Box sx={{ height: "150px", padding: 1, border: "1px solid #ccc" }}>
+            {!selectedWidget && (
               <Box
                 sx={{
                   display: "flex",
                   flexDirection: "column", // Stapelt die Elemente vertikal
                   alignItems: "center", // Zentriert die Elemente horizontal
                   justifyContent: "center", // Zentriert die Elemente vertikal, wenn es zusätzlichen Platz gibt
-                  marginTop: 2,
+                  //marginTop: 2,
                 }}
               >
                 <Typography variant="subtitle2" sx={{ marginBottom: 2 }}>
@@ -125,10 +126,16 @@ function EditNote() {
                   </IconButton>
                 </Box>
               </Box>
+            )}
+            {/* Anzeigen des ausgewählten Widgets */}
+              {selectedWidget === "text" && <TextWidget />}
+              {selectedWidget === "pdf" && <PdfWidget />}
+              {selectedWidget === "video" && <VideoWidget />}
 
               {/* Hier können Sie die Widgets hinzufügen */}
             </Box>
           </Grid>
+          
         </Grid>
       </Paper>
     </Box>
