@@ -1,5 +1,8 @@
 {
   "dependencies": {
+    "@tiptap/extension-color": "^2.1.16",
+    "@tiptap/react": "^2.1.16",
+    "@tiptap/starter-kit": "^2.1.16",
     "openai": "^4.24.1"
   }
 }

@@ -4,6 +4,7 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import TextFieldsIcon from "@mui/icons-material/TextFields";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import PlayCircleFilledIcon from "@mui/icons-material/PlayCircleFilled";
+import TextField from "@mui/material/TextField";
 
 function EditNote() {
   const handleAddSection = () => {
@@ -15,14 +16,20 @@ function EditNote() {
     console.log("Add Widget:", widgetType);
   };
 
-//raw code
+  //raw code
   return (
     <Box sx={{ padding: 2 }}>
       <Paper elevation={3} sx={{ padding: 2, marginBottom: 2 }}>
         {/* Texteditor Bereich */}
         <Box sx={{ border: "1px solid #ccc", minHeight: "150px", padding: 1 }}>
           {/* Hier könnten Sie einen echten Texteditor wie 'react-quill' integrieren */}
-          <Typography variant="body1">Texteditor</Typography>
+          <Box
+            sx={{
+              maxWidth: "100%",
+            }}
+          >
+            <TextField fullWidth label="Edit This  Note" id="fullWidth" />
+          </Box>
         </Box>
         {/* Widget Auswahl Bereich */}
         <Box sx={{ display: "flex", justifyContent: "flex-end", marginTop: 2 }}>
