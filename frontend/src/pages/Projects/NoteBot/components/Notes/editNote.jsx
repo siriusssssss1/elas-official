@@ -13,6 +13,7 @@ import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import PlayCircleFilledIcon from "@mui/icons-material/PlayCircleFilled";
 import TextField from "@mui/material/TextField";
 import { useState } from "react";
+import UploadFileIcon from '@mui/icons-material/UploadFile';
 
 
 function EditNote() {
@@ -39,7 +40,7 @@ function EditNote() {
   // Komponente für das PDF-Widget
   const PdfWidget = () => (
     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-      <PictureAsPdf sx={{ fontSize: 60, color: 'orange' }} />
+      <UploadFileIcon sx={{ fontSize: 60, color: 'orange' }} />
     </Box>
   );
 
