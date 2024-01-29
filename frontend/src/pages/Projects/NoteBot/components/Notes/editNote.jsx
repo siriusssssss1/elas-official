@@ -58,13 +58,42 @@ function EditNote() {
                     justifyContent: "center", // Zentriert die Icons horizontal
                   }}
                 >
-                  <IconButton onClick={() => handleAddWidget("text")}>
+                  <IconButton onClick={() => handleAddWidget("text")} 
+                  sx={{
+                    color: "white",
+                    bgcolor: "blue", // Blauer Hintergrund für das Text-Widget
+                    "&:hover": {
+                      bgcolor: "darkblue", // Dunkleres Blau beim Hover
+                    },
+                    borderRadius: "50%",
+                  }}
+                >
                     <TextFieldsIcon />
                   </IconButton>
-                  <IconButton onClick={() => handleAddWidget("pdf")}>
+                  <IconButton onClick={() => handleAddWidget("pdf")}
+                  sx={{
+                    color: "white",
+                    bgcolor: "orange", // Orangener Hintergrund für das PDF-Widget
+                    "&:hover": {
+                      bgcolor: "darkorange", // Dunkleres Orange beim Hover
+                    },
+                    borderRadius: "50%",
+                    marginLeft: 1, // Fügt Abstand zwischen den Icons hinzu
+                  }}
+                  >
                     <PictureAsPdfIcon />
                   </IconButton>
-                  <IconButton onClick={() => handleAddWidget("video")}>
+                  <IconButton onClick={() => handleAddWidget("video")}
+                  sx={{
+                    color: "white",
+                    bgcolor: "red", // Roter Hintergrund für das Video-Widget
+                    "&:hover": {
+                      bgcolor: "darkred", // Dunkleres Rot beim Hover
+                    },
+                    borderRadius: "50%",
+                    marginLeft: 1, // Fügt Abstand zwischen den Icons hinzu
+                  }}
+                  >
                     <PlayCircleFilledIcon />
                   </IconButton>
                 </Box>
