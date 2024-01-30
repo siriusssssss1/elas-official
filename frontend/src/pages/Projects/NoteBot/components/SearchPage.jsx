@@ -1,30 +1,35 @@
 // SearchResultsPage.js
-import React from 'react';
-import { useLocation } from 'react-router-dom';
+import React from "react";
+import { useLocation } from "react-router-dom";
 import { Grid, Typography, Divider, Box } from "@mui/material";
 import NoteCard from "./NoteCard";
 import noteBotLogo from "../../../../assets/images/noteBot-logo.png";
-import SearchComponent from './search.jsx';
-
-
+import SearchComponent from "./search.jsx";
 
 const SearchResultsPage = () => {
-    const location = useLocation();
+  const location = useLocation();
   const searchResults = location.state.searchResults || [];
-  const keyword = location.state.keyword || '';
-  console.log("Search Results:", searchResults)
+  const keyword = location.state.keyword || "";
+  console.log("Search Results:", searchResults);
 
   return (
     <Box textAlign="center" p={3}>
-      <Grid container spacing={2} alignItems="center">
-        <Grid item xs={6} sm={3} md={2}>
+      <Grid
+        container
+        spacing={2}
+        alignItems="center"
+        justifyContent="space-between"
+      >
+        <Grid item>
           <img
             src={noteBotLogo}
             alt="NoteBot Logo"
-            style={{ width: "100%", paddingBottom: 5 }}
+            style={{ width: "100%", maxWidth: "120px", paddingBottom: 5 }} // Adjust logo size and ensure it's responsive
           />
         </Grid>
+        <Grid item>
           <SearchComponent />
+        </Grid>
       </Grid>
       <Divider />
 
@@ -61,5 +66,3 @@ const SearchResultsPage = () => {
 };
 
 export default SearchResultsPage;
-    
-
