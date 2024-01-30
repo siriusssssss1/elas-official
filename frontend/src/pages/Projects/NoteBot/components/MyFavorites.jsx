@@ -41,7 +41,11 @@ export default function MyFavorites() {
       console.error("Error toggling favorite status:", error);
     }
   };
+
   
+  
+
+
       // if (cardsInfo.cards !== undefined) {
       //   const favorites = cardsInfo.cards.filter((card) => card.isFavorite);
       //   setFavoriteCards({ cards: favorites });

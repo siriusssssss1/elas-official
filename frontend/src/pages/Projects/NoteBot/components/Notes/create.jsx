@@ -30,6 +30,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
 
 
 export default createNote = async() => {
@@ -142,6 +143,12 @@ export default createNote = async() => {
     console.log("RES", res);
     navigate(`/notes/${res.note._id}`);
   };
+
+  const handleDownloadAsPdf = () => {
+    console.log("Download as PDF logic goes here");
+    // Implementieren Sie hier die Logik für das Herunterladen der Notiz als PDF
+  };
+
   // const [selectedLocation, setSelectedLocation] = useState('course'); // 'course' oder 'drafts'
   // const [saveDialogOpen, setSaveDialogOpen] = useState(false);
   // const openSaveDialog = () => {
@@ -191,6 +198,12 @@ export default createNote = async() => {
         variant={"outlined"}
         actions={[
           {
+            label: "Download as PDF",
+            startIcon: <FileDownloadIcon />,
+            onClick: handleDownloadAsPdf,
+            disableElevation: true,
+          },
+          {
             label: "Save",
             startIcon: <SaveIcon />,
             onClick: () => onSubmit(), // Aufruf von onSubmit beim Klicken
@@ -198,6 +211,7 @@ export default createNote = async() => {
             disableElevation: true,
             disabled: !hasWidgets,
           },
+          
       //     <SaveDialog
       //   open={saveDialogOpen}
       //   onClose={closeSaveDialog}
