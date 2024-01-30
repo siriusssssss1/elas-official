@@ -182,7 +182,7 @@ const getNotesByCourseAndNoteTitle = async (req, res, next) => {
 
     // Get all notes that match the course ids
     const notes = await noteModel
-      .find({$or: [{course_id: { $in: courseIds }},{title: { $regex: escapeKeyword, $options: "i" }}]})
+      .find({$or: [{course_id: { $in: courseIds }},{title: { $regex: escapeKeyword, $options: "i" }, isPublic: true }]})
       .populate("course_id", "title")
       .populate("user_id", "user_name")
       .select("note_id title");
