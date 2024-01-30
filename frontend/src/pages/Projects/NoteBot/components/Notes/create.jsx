@@ -143,6 +143,12 @@ export default createNote = async() => {
     console.log("RES", res);
     navigate(`/notes/${res.note._id}`);
   };
+
+  const handleDownloadAsPdf = () => {
+    console.log("Download as PDF logic goes here");
+    // Implementieren Sie hier die Logik für das Herunterladen der Notiz als PDF
+  };
+
   // const [selectedLocation, setSelectedLocation] = useState('course'); // 'course' oder 'drafts'
   // const [saveDialogOpen, setSaveDialogOpen] = useState(false);
   // const openSaveDialog = () => {
@@ -194,10 +200,7 @@ export default createNote = async() => {
           {
             label: "Download as PDF",
             startIcon: <FileDownloadIcon />,
-            onClick: () => {
-              console.log ("Herunterladen")
-              // Hier die Logik für das Herunterladen als PDF einfügen
-            },
+            onClick: handleDownloadAsPdf,
             disableElevation: true,
           },
           {
