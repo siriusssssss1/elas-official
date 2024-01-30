@@ -52,7 +52,7 @@ function EditNote() {
 
   // Komponente für das Video-Widget
   const VideoWidget = () => (
-    <TextField fullWidth label="YouTube Video Link" variant="outlined" />
+    <TextField fullWidth label="Video Link" variant="outlined" />
   );
 
   const WidgetArea = ({ onAddWidget, selectedWidget }) => (
