@@ -1,7 +1,7 @@
 // SearchResultsPage.js
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { Grid } from "@mui/material";
+import { Grid, Typography, Divider, Box } from "@mui/material";
 import NoteCard from "./NoteCard";
 
 
@@ -12,12 +12,23 @@ const SearchResultsPage = () => {
   console.log("Search Results:", searchResults)
 
   return (
-    
-    <div>
+    <Box textAlign="center" p={3}>
+      <Divider />
+      {searchResults.length === 0 ? (
+      <>
+        <Typography variant="h4" mt={2} mb={1}>
+            No results found for '{keyword}'
+          </Typography>
+          <Typography variant="h5" color="black" mb={2} >
+            Try another search term.
+        </Typography>
+        <Divider />
+        </>
+      ) : (
+        <>
       <h1>Search Results for: {keyword} </h1>
       <Grid item container spacing={2}>
         {searchResults.map((card) => (
-
           <NoteCard 
           key={card.id} 
           card={card} 
@@ -25,10 +36,11 @@ const SearchResultsPage = () => {
         //   handleDeleteNote={handleDeleteNote}
         //   handleToggleFavorite={handleToggleFavorite}
         />
-
         ))}
       </Grid>
-    </div>
+      </>
+      )}
+    </Box>
   );
 };
 
