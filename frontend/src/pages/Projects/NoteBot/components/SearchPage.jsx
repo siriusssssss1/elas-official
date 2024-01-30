@@ -8,11 +8,13 @@ import NoteCard from "./NoteCard";
 const SearchResultsPage = () => {
     const location = useLocation();
   const searchResults = location.state.searchResults || [];
+  const keyword = location.state.keyword || '';
   console.log("Search Results:", searchResults)
 
   return (
+    
     <div>
-      <h1>Search Results</h1>
+      <h1>Search Results for: {keyword} </h1>
       <Grid item container spacing={2}>
         {searchResults.map((card) => (
 

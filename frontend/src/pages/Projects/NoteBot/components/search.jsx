@@ -33,7 +33,7 @@ const SearchComponent = () => {
         console.log(result);
         navigate('/projects/notebot/search',
           {
-          state: { searchResults: result.cards },
+          state: { searchResults: result.cards, keyword: searchValue },
         });
         // Handle the result as needed
       } catch (error) {
