@@ -30,6 +30,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
 
 
 export default createNote = async() => {
@@ -191,6 +192,15 @@ export default createNote = async() => {
         variant={"outlined"}
         actions={[
           {
+            label: "Download as PDF",
+            startIcon: <FileDownloadIcon />,
+            onClick: () => {
+              console.log ("Herunterladen")
+              // Hier die Logik für das Herunterladen als PDF einfügen
+            },
+            disableElevation: true,
+          },
+          {
             label: "Save",
             startIcon: <SaveIcon />,
             onClick: () => onSubmit(), // Aufruf von onSubmit beim Klicken
@@ -198,6 +208,7 @@ export default createNote = async() => {
             disableElevation: true,
             disabled: !hasWidgets,
           },
+          
       //     <SaveDialog
       //   open={saveDialogOpen}
       //   onClose={closeSaveDialog}
