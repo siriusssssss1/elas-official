@@ -24,12 +24,12 @@ const SearchResultsPage = () => {
           <img
             src={noteBotLogo}
             alt="NoteBot Logo"
-            style={{ width: "100%", maxWidth: "120px", paddingBottom: 5 }} // Adjust logo size and ensure it's responsive
+            style={{ width: "100%", maxWidth: "200px", paddingBottom: 20, paddingTop: 6 }} // Adjust logo size and ensure it's responsive
           />
         </Grid>
-        <Grid item>
-          <SearchComponent />
-        </Grid>
+        <Grid item >
+  <SearchComponent />
+</Grid>
       </Grid>
       <Divider />
 
