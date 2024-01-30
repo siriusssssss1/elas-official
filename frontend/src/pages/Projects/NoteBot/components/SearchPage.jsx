@@ -3,6 +3,9 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { Grid, Typography, Divider, Box } from "@mui/material";
 import NoteCard from "./NoteCard";
+import noteBotLogo from "../../../../assets/images/noteBot-logo.png";
+import SearchComponent from './search.jsx';
+
 
 
 const SearchResultsPage = () => {
@@ -13,36 +16,50 @@ const SearchResultsPage = () => {
 
   return (
     <Box textAlign="center" p={3}>
+      <Grid container spacing={2} alignItems="center">
+        <Grid item xs={6} sm={3} md={2}>
+          <img
+            src={noteBotLogo}
+            alt="NoteBot Logo"
+            style={{ width: "100%", paddingBottom: 5 }}
+          />
+        </Grid>
+          <SearchComponent />
+      </Grid>
       <Divider />
+
       {searchResults.length === 0 ? (
-      <>
-        <Typography variant="h4" mt={2} mb={1}>
+        <>
+          <Typography variant="h4" mt={2} mb={1}>
             No results found for '{keyword}'
           </Typography>
-          <Typography variant="h5" color="black" mb={2} >
+          <Typography variant="h5" color="black" mb={2}>
             Try another search term.
-        </Typography>
-        <Divider />
+          </Typography>
+          <Divider />
         </>
       ) : (
         <>
-      <h1>Search Results for: {keyword} </h1>
-      <Grid item container spacing={2}>
-        {searchResults.map((card) => (
-          <NoteCard 
-          key={card.id} 
-          card={card} 
-          style={{ marginBottom: "20px" }}
-        //   handleDeleteNote={handleDeleteNote}
-        //   handleToggleFavorite={handleToggleFavorite}
-        />
-        ))}
-      </Grid>
-      </>
+          <Typography variant="h4" mt={2} mb={2} align="left">
+            Search Results for: {keyword}
+          </Typography>
+          <Grid container spacing={2}>
+            {searchResults.map((card) => (
+              <NoteCard
+                key={card.id}
+                card={card}
+                style={{ marginBottom: "20px" }}
+                //   handleDeleteNote={handleDeleteNote}
+                //   handleToggleFavorite={handleToggleFavorite}
+              />
+            ))}
+          </Grid>
+        </>
       )}
     </Box>
   );
 };
 
 export default SearchResultsPage;
+    
 
