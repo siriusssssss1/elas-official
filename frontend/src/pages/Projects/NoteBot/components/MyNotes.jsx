@@ -44,13 +44,30 @@ export default function MyNotes() {
   // };
 
 
-  const handleToggleFavorite = (id) => {
-    setCards((prevCards) => {
-      const updatedCards = prevCards.cards.map((card) =>
-        card.id === id ? { ...card, isFavorite: !card.isFavorite } : card
-      );
-      return { message: prevCards.message, cards: updatedCards };
-    });
+  // const handleToggleFavorite = (id) => {
+  //   setCards((prevCards) => {
+  //     const updatedCards = prevCards.cards.map((card) =>
+  //       card.id === id ? { ...card, isFavorite: !card.isFavorite } : card
+  //     );
+  //     return { message: prevCards.message, cards: updatedCards };
+  //   });
+  // };
+  const handleToggleFavorite = async (id) => {
+    try {
+      await toggleFavNote(id);
+      // Aktualisieren Sie hier den lokalen Zustand, um die Änderung sofort anzuzeigen
+      setFavoriteCards(prevCards => {
+        const updatedCards = prevCards.cards.map(card => {
+          if (card.id === id) {
+            return { ...card, isFavorite: !card.isFavorite };
+          }
+          return card;
+        });
+        return { ...prevCards, cards: updatedCards };
+      });
+    } catch (error) {
+      console.error("Fehler beim Umschalten des Favoritenstatus:", error);
+    }
   };
 
   const handleDeleteNote = async (noteId) => {
