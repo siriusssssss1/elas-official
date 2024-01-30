@@ -33,7 +33,7 @@ function EditNote() {
 
   // Komponente für das Text-Widget
   const TextWidget = () => (
-    <TextField fullWidth label="Your Text" variant="outlined" />
+    <TextField fullWidth label="Your Text" variant="outlined" multiline />
   );
 
   // Komponente für das PDF-Widget
@@ -46,8 +46,14 @@ function EditNote() {
         height: "100%",
       }}
     >
-      <UploadFileIcon sx={{ fontSize: 60, color: "orange" }} />
-    </Box>
+     <div style={{ textAlign: "center" }}>
+  <UploadFileIcon sx={{ fontSize: 60, color: "#ED7D31" }} />
+  <div style={{ color: "#ED7D31" }}>
+    UPLOAD FILE
+  </div>
+</div>
+
+          </Box>
   );
 
   // Komponente für das Video-Widget
