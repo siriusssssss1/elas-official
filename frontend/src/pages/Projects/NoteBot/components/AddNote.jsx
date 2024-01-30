@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Container,
   TextField,
@@ -25,18 +25,27 @@ import EditNote from "./Notes/editNote.jsx";
 
 //import { createCourse } from "../../../../../../backend/7-notebot/src/controllers/courseController.js";
 import { useNavigate } from "react-router-dom";
-import { getCourses } from '../utils/api.js';
+import { getCourses } from "../utils/api.js";
 import { addNoteToDrafts } from "../utils/api.js";
 import { createNotes } from "../utils/api.js";
 
-const top100Films = [
-   // Courses list aus backend
-   { label: "Sozialpsychologie", year: 1994 },
-   { label: "Interactive Systems", year: 1972 },
-   { label: "IDEA Project", year: 1974 },
- ];
-
 function AddNote() {
+  useEffect(() => {
+    getCourses().then((courses) => {
+      // Key "message" indicates faulty course fetch
+      if (courses && "message" in courses) {
+        // Error in api call
+        setDropDownOptions([]);
+      } else {
+        // Parse course names
+        const courseTitles = courses.map((course) => course.title);
+        setDropDownOptions(courseTitles);
+      }
+    });
+  }, []);
+
+  const [dropDownOptions, setDropDownOptions] = useState([]);
+
   const [newSection, setNewSection] = useState(false);
   //const [showLayoutOptions, setShowLayoutOptions] = useState(false);
   const [selectedLayout, setSelectedLayout] = useState(null);
@@ -46,7 +55,7 @@ function AddNote() {
     title: "Sozialpsychologie Draft",
     user_id: "a19d4fd7-2052-42e4-8ab2-56db09944363",
     sections: [],
-    widgets: []
+    widgets: [],
   });
 
   // const handleAddSectionClick = () => {
@@ -100,7 +109,7 @@ function AddNote() {
   const handleCreateNewCourseChange = (event) => {
     setCreateNewCourse(event.target.checked);
     // Weitere Logik für "Create New Course"
-  }; 
+  };
 
   // const handleSaveButtonClick = async () => {
   //   try {
@@ -126,8 +135,6 @@ function AddNote() {
     handleClickOpen();
   };
 
-
-
   // const handleSaveNote = async () => {
   //   if (addToDrafts) {
   //     try {
@@ -139,11 +146,11 @@ function AddNote() {
   //         },
   //         body: JSON.stringify(noteData),
   //       });
-    
+
   //       if (!response.ok) {
   //         throw new Error(`Failed to save the note to drafts: ${response.statusText}`);
   //       }
-    
+
   //       const responseData = await response.json();
   //       console.log('Note saved to drafts:', responseData);
   //       // Weiterer Code nach erfolgreichem Speichern, z.B. Benutzerfeedback oder Navigation
@@ -154,34 +161,30 @@ function AddNote() {
 
   //     navigate('../Drafts'); //right path
   // }
-//};
+  //};
 
-
-
-const handleSaveNote = async () => {
-  if (!noteTitle.trim()) {
-    // Setzen der Fehlermeldung, wenn kein Titel vorhanden ist
-    setTitleError("You forgot to add a title to your note!");
-    return; // Beenden der Funktion, um das Speichern zu verhindern
-  }
-
-  // Zurücksetzen der Fehlermeldung, wenn der Titel vorhanden ist
-  setTitleError("");
-
-  if (addToDrafts) {
-    try {
-      const result = await addNoteToDrafts(); // Assuming noteData is available
-      console.log('Note saved to drafts:', result);
-
-      navigate('/Drafts'); //get right path
-    } catch (error) {
-      console.error('Error saving note to drafts:', error);
-      // Fehlerbehandlung, z.B. Anzeigen einer Fehlermeldung
+  const handleSaveNote = async () => {
+    if (!noteTitle.trim()) {
+      // Setzen der Fehlermeldung, wenn kein Titel vorhanden ist
+      setTitleError("You forgot to add a title to your note!");
+      return; // Beenden der Funktion, um das Speichern zu verhindern
     }
-  }
-};
-    
 
+    // Zurücksetzen der Fehlermeldung, wenn der Titel vorhanden ist
+    setTitleError("");
+
+    if (addToDrafts) {
+      try {
+        const result = await addNoteToDrafts(); // Assuming noteData is available
+        console.log("Note saved to drafts:", result);
+
+        navigate("/Drafts"); //get right path
+      } catch (error) {
+        console.error("Error saving note to drafts:", error);
+        // Fehlerbehandlung, z.B. Anzeigen einer Fehlermeldung
+      }
+    }
+  };
 
   return (
     <Container maxWidth="lg" sx={{ position: "relative", bgcolor: "#FFFFFF" }}>
@@ -270,7 +273,7 @@ const handleSaveNote = async () => {
           <Autocomplete
             disablePortal
             id="combo-box-demo"
-            options={top100Films}
+            options={dropDownOptions}
             sx={{ width: 300 }}
             renderInput={(params) => (
               <TextField {...params} label="Courses List" />

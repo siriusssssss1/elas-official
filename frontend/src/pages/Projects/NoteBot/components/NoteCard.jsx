@@ -81,12 +81,7 @@ export default function NoteCard({
           justifyContent="flex-start"
           style={{ position: "absolute", bottom: "8px", left: "8px" }}
         >
-          <Rating
-            name={`rating-${card.id}`}
-            value={card.rating}
-            precision={0.5}
-            readOnly
-          />
+          <Rating name="half-rating" defaultValue={2.5} precision={0.5} />
         </Stack>
       </CardContent>
       <CardContent style={{ position: "absolute", top: 0, right: 0 }}>
@@ -121,7 +116,7 @@ export default function NoteCard({
                 onClick={handleClose}
                 sx={{
                   color: "white",
-                  bgcolor: "gray"
+                  bgcolor: "gray",
                 }}
               >
                 Disagree

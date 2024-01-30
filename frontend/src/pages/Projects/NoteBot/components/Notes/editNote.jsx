@@ -14,8 +14,6 @@ import PlayCircleFilledIcon from "@mui/icons-material/PlayCircleFilled";
 import TextField from "@mui/material/TextField";
 import { useState } from "react";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
-import OpenInFullIcon from "@mui/icons-material/OpenInFull";
-import CloseIcon from "@mui/icons-material/Close";
 
 function EditNote() {
   const handleAddSection = () => {
@@ -91,22 +89,7 @@ function EditNote() {
               flexDirection: "row", // Icons horizontal anordnen
               marginLeft: "auto", // Schiebt die Icons nach rechts
             }}
-          >
-            <OpenInFullIcon
-              sx={{
-                fontSize: 18,
-                color: "#767676",
-                marginLeft: 1, // Abstand zwischen Text und erstem Icon
-              }}
-            />
-            <CloseIcon
-              sx={{
-                fontSize: 22,
-                color: "#767676",
-                marginLeft: 1, // Abstand zwischen den Icons
-              }}
-            />
-          </Box>
+          ></Box>
           <Box
             sx={{
               display: "flex",
