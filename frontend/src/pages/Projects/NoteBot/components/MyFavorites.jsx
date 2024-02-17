@@ -42,10 +42,6 @@ export default function MyFavorites() {
     }
   };
 
-  
-  
-
-
       // if (cardsInfo.cards !== undefined) {
       //   const favorites = cardsInfo.cards.filter((card) => card.isFavorite);
       //   setFavoriteCards({ cards: favorites });

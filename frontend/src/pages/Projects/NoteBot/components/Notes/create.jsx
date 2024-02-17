@@ -25,26 +25,24 @@ import { Section } from "./Section";
 import { createNote, getCourses } from "./api";
 import { useNavigate } from "react-router-dom";
 import { useNoteWidgets } from "../hooks/useNoteWidgets";
-import { Chatbot } from "./../../chatbot";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 
-
-export default createNote = async() => {
+export default createNote = async () => {
   const {
     sections,
     widgets,
-    onSectionChange,
-    onWidgetSelect,
-    onWidgetUpdate,
-    hasWidgets,
-    addSection,
-    onDelete,
-    onAddAfter,
-    onDuplicate,
+    // onSectionChange,
+    // onWidgetSelect,
+    // onWidgetUpdate,
+    // hasWidgets,
+    // addSection,
+    // onDelete,
+    // onAddAfter,
+    // onDuplicate,
   } = useNoteWidgets();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
@@ -100,7 +98,8 @@ export default createNote = async() => {
     fetchCourses();
   }, [fetchCourses]);
 
-  const onSubmit = async (data = {}) => { //verwendet die createNote-Funktion, um eine neue Notiz zu erstellen, und navigiert dann zur neu erstellten Notiz
+  const onSubmit = async (data = {}) => {
+    //uses createNote-function, to create a note and navigates to the new note
     if (!title) {
       alert("Title is empty");
       return;
@@ -112,124 +111,103 @@ export default createNote = async() => {
       //user,
       sections: sections,
       widgets: widgets,
-      isDrafts: true // Markiere als Entwurf
-    }
+      isDrafts: true,
+    };
 
     try {
-      // Sende die POST-Anfrage an das Backend
-      const res = await createNote(
-        token,
-        user,
-        noteData
-      );
+      // sends POST-request to the Backend
+      const res = await createNote(token, user, noteData);
 
-       // Hier könntest du den Navigationsbefehl ändern, um zur Draft-Liste zu navigieren
-    navigate(`/drafts`);
-  } catch (error) {
-    console.error("Fehler beim Speichern der Notiz", error);
-    // Handle Fehler, z.B. mit einer Benachrichtigung
-  }
+      navigate(`/drafts`);
+    } catch (error) {
+      console.error("Fehler beim Speichern der Notiz", error);
+    }
+  };
+
+  const res = await createNote(
+    token,
+    title,
+    data.courseId || course,
+    user,
+    sections,
+    widgets
+  );
+
+  console.log("RES", res);
+  navigate(`/notes/${res.note._id}`);
 };
 
-    const res = await createNote(
-      token,
-      title,
-      data.courseId || course,
-      user,
-      sections,
-      widgets
-    );
+// const [selectedLocation, setSelectedLocation] = useState('course'); // 'course' oder 'drafts'
+// const [saveDialogOpen, setSaveDialogOpen] = useState(false);
+// const openSaveDialog = () => {
+//   setSaveDialogOpen(true);
+// };
 
-    console.log("RES", res);
-    navigate(`/notes/${res.note._id}`);
-  };
+// const closeSaveDialog = () => {
+//   setSaveDialogOpen(false);
+// };
 
-  const handleDownloadAsPdf = () => {
-    console.log("Download as PDF logic goes here");
-    // Implementieren Sie hier die Logik für das Herunterladen der Notiz als PDF
-  };
+// const handleSave = async () => {
+//   if (selectedLocation === 'course') {
+//     // Speichern in Kurs
+//     try {
+//       // Fügen Sie hier den Code für das Speichern in Kursen hinzu
+//       const response = await saveNoteInCourse(courseId, noteData);
+//     } catch (error) {
+//       console.error('Error saving note in course:', error);
+//       // Hier können Sie geeignete Fehlerbehandlung hinzufügen
+//       let errorMessage = 'An error occurred while saving the note. Please try again.';
 
-  // const [selectedLocation, setSelectedLocation] = useState('course'); // 'course' oder 'drafts'
-  // const [saveDialogOpen, setSaveDialogOpen] = useState(false);
-  // const openSaveDialog = () => {
-  //   setSaveDialogOpen(true);
-  // };
+//     }
+//   } else {
+//     // Speichern in Entwürfen
 
-  // const closeSaveDialog = () => {
-  //   setSaveDialogOpen(false);
-  // };
+//     try {
+//       // Fügen Sie hier den Code für das Speichern in Entwürfen hinzu
+//       const response = await saveNoteInDrafts(noteData);
+//     } catch (error) {
+//       console.error('Error saving note in drafts:', error);
+//       let errorMessage = 'An error occurred while saving the note. Please try again.';
+//     }
+//   }
 
-  // const handleSave = async () => {
-  //   if (selectedLocation === 'course') {
-  //     // Speichern in Kurs
-  //     try {
-  //       // Fügen Sie hier den Code für das Speichern in Kursen hinzu
-  //       const response = await saveNoteInCourse(courseId, noteData);
-  //     } catch (error) {
-  //       console.error('Error saving note in course:', error);
-  //       // Hier können Sie geeignete Fehlerbehandlung hinzufügen
-  //       let errorMessage = 'An error occurred while saving the note. Please try again.';
+//   // Schließen Sie das Popup-Fenster
+//   closeSaveDialog();
+// };
 
-  //     }
-  //   } else {
-  //     // Speichern in Entwürfen
+return (
+  <Container sx={{ flexGrow: 1, padding: 6 }}>
+    <PageHeader
+      // title={title}
+      label={"Add Note Title"}
+      onChange={(title) => setTitle(title)}
+      isEditable={true}
+      sx={{ width: "100%" }}
+      variant={"outlined"}
+      actions={[
+        {
+          label: "Download as PDF",
+          startIcon: <FileDownloadIcon />,
+          onClick: handleDownloadAsPdf,
+          disableElevation: true,
+        },
+        {
+          label: "Save",
+          startIcon: <SaveIcon />,
+          onClick: () => onSubmit(),
+          //onClick: openAddCourse,
+          disableElevation: true,
+          disabled: !hasWidgets,
+        },
 
-  //     try {
-  //       // Fügen Sie hier den Code für das Speichern in Entwürfen hinzu
-  //       const response = await saveNoteInDrafts(noteData);
-  //     } catch (error) {
-  //       console.error('Error saving note in drafts:', error);
-  //       let errorMessage = 'An error occurred while saving the note. Please try again.';
-  //     }
-  //   }
   
-  //   // Schließen Sie das Popup-Fenster
-  //   closeSaveDialog();
-  // };
-
-  return (
-    <Container sx={{ flexGrow: 1, padding: 6 }}>
-      <PageHeader
-        // title={title}
-        label={"Add Note Title"}
-        onChange={(title) => setTitle(title)}
-        isEditable={true}
-        sx={{ width: "100%" }}
-        variant={"outlined"}
-        actions={[
-          {
-            label: "Download as PDF",
-            startIcon: <FileDownloadIcon />,
-            onClick: handleDownloadAsPdf,
-            disableElevation: true,
-          },
-          {
-            label: "Save",
-            startIcon: <SaveIcon />,
-            onClick: () => onSubmit(), // Aufruf von onSubmit beim Klicken
-            //onClick: openAddCourse,
-            disableElevation: true,
-            disabled: !hasWidgets,
-          },
-          
-      //     <SaveDialog
-      //   open={saveDialogOpen}
-      //   onClose={closeSaveDialog}
-      //   onSave={handleSave}
-      //   selectedLocation={selectedLocation}
-      //   onLocationChange={(location) => setSelectedLocation(location)}
-      // />
-
-          // {
-          //   label: "Add to course",
-          //   startIcon: <SaveIcon />,
-          //   onClick: openAddCourse,
-          //   disableElevation: true,
-          //   disabled: !hasWidgets,
-          // },
-        ]}
-      />
-      {sections.map((section, index) => ( //Hier wird über eine Liste von sections (Abschnitten) gemappt
+      ]}
+    />
+    {sections.map(
+      (
+        section,
+        index //Hier wird über eine Liste von sections (Abschnitten) gemappt
+      ) => (
         <>
           {index > 0 && <Box sx={{ height: 16, width: "100%" }} />}
           <Section
@@ -245,59 +223,57 @@ export default createNote = async() => {
             onDuplicate={onDuplicate}
           />
         </>
-      ))}
-      {sections.length > 0 && ( //horizontaler Trennstrich
-        <Divider
-          sx={{
-            margin: 4,
-          }}
-        />
-      )}
-
-      <Stack
-        alignItems={"center"}
-        justifyContent={"center"}
+      )
+    )}
+    {sections.length > 0 && (
+      <Divider
         sx={{
-          // marginTop: 2,
-          // padding: 5,
-          height: 150,
-          borderRadius: "5px",
-          border: "1px dashed #000",
-          background: "#FFF",
-        }}
-      >
-        <Button
-          color="primary"
-          onClick={addSection} //Ein Stapel mit Button ("+") wird gerendert, um einen neuen Abschnitt hinzuzufügen
-          variant="contained"
-          sx={{
-            borderRadius: "50%",
-            width: 70,
-            height: 70,
-            ":hover": {
-              background: "#ed955a",
-              color: "#FFFFFF",
-            },
-          }}
-        >
-          <AddIcon />
-        </Button>
-      </Stack>
-
-      <AddCourseDialog //Popup-Dialog für Hinzufügen von Kursen ?
-        onClose={closeAddCourse}
-        isOpen={isAddCourseActive}
-        courses={courses}
-        course={course}
-        onSave={onSubmit}
-        onChange={(course) => {
-          setCourse(course);
-          fetchCourses();
+          margin: 4,
         }}
       />
+    )}
 
-    </Container>
-  );
+    <Stack
+      alignItems={"center"}
+      justifyContent={"center"}
+      sx={{
+        height: 150,
+        borderRadius: "5px",
+        border: "1px dashed #000",
+        background: "#FFF",
+      }}
+    >
+      <Button
+        color="primary"
+        onClick={addSection}
+        variant="contained"
+        sx={{
+          borderRadius: "50%",
+          width: 70,
+          height: 70,
+          ":hover": {
+            background: "#ed955a",
+            color: "#FFFFFF",
+          },
+        }}
+      >
+        <AddIcon />
+      </Button>
+    </Stack>
+
+    <AddCourseDialog
+      onClose={closeAddCourse}
+      isOpen={isAddCourseActive}
+      courses={courses}
+      course={course}
+      onSave={onSubmit}
+      onChange={(course) => {
+        setCourse(course);
+        fetchCourses();
+      }}
+    />
+  </Container>
+);
 
 // const SaveDialog = ({ open, onClose, onSave, selectedLocation, onLocationChange }) => {
 //   return (

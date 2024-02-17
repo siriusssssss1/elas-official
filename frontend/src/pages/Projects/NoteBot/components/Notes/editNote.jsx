@@ -31,12 +31,10 @@ function EditNote() {
     setSelectedWidgetRight(widgetType);
   };
 
-  // Komponente für das Text-Widget
   const TextWidget = () => (
     <TextField fullWidth label="Your Text" variant="outlined" multiline />
   );
 
-  // Komponente für das PDF-Widget
   const PdfWidget = () => (
     <Box
       sx={{
@@ -56,7 +54,7 @@ function EditNote() {
           </Box>
   );
 
-  // Komponente für das Video-Widget
+
   const VideoWidget = () => (
     <TextField fullWidth label="Video Link" variant="outlined" />
   );
@@ -92,8 +90,8 @@ function EditNote() {
           <Box
             sx={{
               display: "flex",
-              flexDirection: "row", // Icons horizontal anordnen
-              marginLeft: "auto", // Schiebt die Icons nach rechts
+              flexDirection: "row", 
+              marginLeft: "auto", 
             }}
           ></Box>
           <Box

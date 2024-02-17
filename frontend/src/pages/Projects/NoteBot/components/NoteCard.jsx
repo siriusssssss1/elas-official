@@ -19,31 +19,38 @@ import {
 //import handleDeleteNote2 from "./MyNotes";
 //import handleToggleFavorite from "./MyNotes";
 
+// prop represents the note data that the card will display: id, title, content
 export default function NoteCard({
   card,
   handleDeleteNote,
   handleToggleFavorite,
+  handleRatingNote,
 }) {
   const [open, setOpen] = React.useState(false);
 
+  // open a dialog
   const handleClickOpen = () => {
     setOpen(true);
   };
-
+  // closes dialog
   const handleClose = () => {
     setOpen(false);
   };
 
   const handleDeleteConfirm = () => {
-    handleClose(); // Schließt den Dialog
-    handleDeleteNote(card.id); // Ruft die Löschfunktion mit der ID der Notiz auf
+    handleClose(); // closes dialog
+    handleDeleteNote(card.id); // Ruft die Löschfunktion mit der ID der Notiz auf, function passed down from the parent component
   };
 
   const handleFavoriteClick = () => {
     console.log(`Favorite clicked for note id: ${card.id}`);
     // Assuming handleToggleFavorite requires the id of the note to toggle its favorite status
-    handleToggleFavorite(card.id);
+    handleToggleFavorite(card.id); //fuction passed down from the parent
   };
+
+  // const handleRatingNote = () {
+
+  // }; hier weiter machen!!!
 
   return (
     <Card
@@ -54,7 +61,7 @@ export default function NoteCard({
         backgroundColor: "#d9d9d9",
         margin: "8px",
       }}
-      key={card.id}
+      key={card.id} // to efficiently update the list of cards
     >
       <CardContent
         style={{
@@ -65,7 +72,7 @@ export default function NoteCard({
           height: "100%",
         }}
       >
-        <Typography
+        <Typography //displays note title
           color="textSecondary"
           variant="h6"
           gutterBottom
