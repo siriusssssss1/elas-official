@@ -10,8 +10,6 @@ userRouter.use(function (req, res, next) {
   next();
 });
 
-// User routes
-
 /**
  * @route GET /users/:userId
  * @description Get user by ID.

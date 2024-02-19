@@ -1,13 +1,12 @@
 var express = require("express");
+var router = express.Router();
 var chatbotController = require("../controllers/chatbotController");
 
-const router = express.Router();
-
 /**
- * @route POST /chatbot/chatgpt
+ * @route POST /chat/chatbot
  * @description Perform chat completion using the ChatGPT controller.
  */
-router.post("/chatgpt", chatbotController.chatCompletion);
+router.post("/chatbot", chatbotController.chatCompletion);
 
 // Export the router
 module.exports = router;

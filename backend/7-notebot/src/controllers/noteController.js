@@ -6,8 +6,8 @@ const widgetModel = require("../models/widgetModel");
 const mongoose = require("mongoose");
 const HttpError = require("../models/http-error");
 const favoriteModel = require("../models/favoriteModel");
-const draftModel = require("../models/draftModel");
-const { search } = require("../routes/notes");
+// const draftModel = require("../models/draftModel");
+// const { search } = require("../routes/notes");
 const searchModel = require("../models/searchModel");
 
 
@@ -759,6 +759,7 @@ exports.getNotes = getNotes;
 exports.saveNote = saveNote;
 exports.getSavedNotesByUserId = getSavedNotesByUserId;
 
+exports.getNoteByNoteId = getNoteByNoteId;
 exports.getNoteByNoteID = getNoteByNoteID;
 exports.createNoteWithEmptySections = createNote;
 exports.pushSectionsToNote = pushSectionsToNote;

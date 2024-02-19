@@ -1,8 +1,14 @@
+var express = require('express');
+var router = express.Router();
 const sectionController = require('../controllers/sectionController');
-const express = require('express');
-const router = express.Router();
 
 // Registering sections route
+
+/**
+ * @route GET /sections/test
+ * @description Test route to get all sections.
+ */
+router.get('/test', sectionController.getSections);
 
 /**
  * @route GET /sections/note/:note_id
@@ -46,13 +52,6 @@ router.patch('/:section_id/widgets', sectionController.updateSectionWidgets);
  */
 router.delete('/:note_id/:section_id', sectionController.deleteSection);
 
-// Test route
-
-/**
- * @route GET /sections/test
- * @description Test route to get all sections.
- */
-router.get('/test', sectionController.getSections);
 
 // Export the router
 module.exports = router;

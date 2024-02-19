@@ -1,11 +1,8 @@
-const express = require("express");
+var express = require("express");
+var router = express.Router();
 const noteController = require("../controllers/noteController");
 const favController = require("../controllers/favoriteController");
 
-// Creating a router instance
-const router = express.Router();
-
-// Registering notes route
 
 /**
  * @route GET /notes/:note_id/widgets
@@ -71,7 +68,7 @@ router.patch("/push_sections", noteController.pushSectionsToNote);
  * @route GET /notes/note/:note_id
  * @description Get a note by its ID - Get details of a specific note.
  */
-router.get("/note/:note_id", noteController.getNoteByNoteID);
+router.get("/note/:note_id", noteController.getNoteByNoteId);
 
 /**
  * @route POST /notes/:note_id/favorite

@@ -1,6 +1,6 @@
+var express = require('express');
+var router = express.Router();
 const widgetController = require("../controllers/widgetController.js");
-const express = require('express');
-const router = express.Router();
 
 // Registering widgets route
 
@@ -29,10 +29,10 @@ router.patch('/:widget_id', widgetController.updateWidget);
 router.delete('/:section_id/:widget_id', widgetController.deleteWidget);
 
 /**
- * @route POST /widgets
+ * @route POST /widgets/new
  * @description Create widget - Create a new widget.
  */
-router.post('/', widgetController.createWidget);
+router.post('/new', widgetController.createWidget);
 
 // Test route
 /**
