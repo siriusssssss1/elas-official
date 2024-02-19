@@ -4,7 +4,7 @@ var chatbotController = require("../controllers/chatbotController");
 
 /**
  * @route POST /chat/chatbot
- * @description Perform chat completion using the ChatGPT controller.
+ * @description Perform chat completion using ChatGPT.
  */
 router.post("/chatbot", chatbotController.chatCompletion);
 

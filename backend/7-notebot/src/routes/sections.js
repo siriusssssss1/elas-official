@@ -2,8 +2,6 @@ var express = require('express');
 var router = express.Router();
 const sectionController = require('../controllers/sectionController');
 
-// Registering sections route
-
 /**
  * @route GET /sections/test
  * @description Test route to get all sections.

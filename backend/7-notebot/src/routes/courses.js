@@ -3,12 +3,11 @@ var router = express.Router();
 const courseController = require("../controllers/courseController");
 const favController = require("../controllers/favoriteController");
 
-
 /**
  * @route GET /courses/all
- * @description Get all courses - Show more link in the Courses page.
+ * @description Test route to get all courses.
  */
-router.get('/all', courseController.getAllCourses);
+router.get('/test', courseController.getAllCourses);
 
 /**
  * @route GET /courses/users/:user_id
@@ -36,7 +35,7 @@ router.post("/:course_id/favorite", favController.toggetFavoriteCourse);
 
 /**
  * @route GET /courses/:user_id/favorite
- * @description Get favorite courses by user ID.
+ * @description Get favorite courses by user ID - -  Grid view of the Favorites page.
  */
 router.get("/users/:user_id/favorite", favController.getFavCourseByUserId);
 
