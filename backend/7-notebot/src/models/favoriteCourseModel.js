@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-// Initialize parameters
 const collectionName_favoriteCourse = 'favoriteCourses';
 
 const favCoursesSchema = new mongoose.Schema({

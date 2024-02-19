@@ -132,8 +132,6 @@ const deleteCourseWithNotes = async (req, res, next) => {
       },
       { new: true }
     );
-      // console.log(noteIds);
-      // const note = await noteModel.findByIdAndDelete(noteIds);
     res.status(200).json({ message: "Course and associated notes deleted." });
     } catch (error) {
       console.log(err);

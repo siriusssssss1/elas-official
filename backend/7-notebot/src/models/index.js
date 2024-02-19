@@ -11,11 +11,5 @@ const db = {};
  */
 db.user = require("./userModel");
 /***************** END: EXPORT SCHEMA AS MODULE *****************/
-// db.adminCommand(
-//     {
-//        shutdown: 1,
-//        comment: "Convert to cluster"
-//     }
-//  )
 
 module.exports = db;

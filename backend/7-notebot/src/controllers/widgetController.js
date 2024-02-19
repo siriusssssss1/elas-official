@@ -25,8 +25,6 @@ const getWidgetsBySectionId = async (req, res, next) => {
     }
 };
 
-
-
 //Add a widget to a section
 const addWidgetToSection = async (req, res, next) => {
     const { section_id } = req.params;

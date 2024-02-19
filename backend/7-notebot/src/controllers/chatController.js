@@ -1,6 +1,4 @@
 const {Configuration , OpenAIApi} = require("openai");
-//const backoff = require('backoff');
-// const HttpError = require("../model/http-error");
 
 const configuration = new Configuration({
     apiKey: process.env.OPENAI_API_KEY

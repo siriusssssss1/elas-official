@@ -212,21 +212,6 @@ const deleteSection = async (req, res, next) => {
     }
 
 };
-//const session = await mongoose.startSession();
-//session.startTransaction();
-
-
-// await section.remove();
-
-//Remove the section from the note's sections array
-//section.note_id.sections.pull(section);
-
-//Delete the section's widgets
-//await Promise.all(section.widgets.map(widget => widget.remove()));
-
-//await section.note_id.save();
-
-//await session.commitTransaction();
 
 //Add a section to a note
 const addSectionToNote = async (req, res, next) => {

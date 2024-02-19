@@ -75,44 +75,6 @@ const updateUser = async (req, res) => {
   }
 };
 
-// const getLatestSearches = async (req, res) => {
-//   try {
-//     const user_id = req.params.userId;
-
-//     // Create and save the latest search record
-//     const latestSearches = await searchModel.find({
-//       user_id: user_id,
-//     });
-
-//     const latestSearchQueryMap = new Map();
-
-//     // Update the Map with the latest occurrence of each search query
-//     latestSearches.forEach((latestSearch) => {
-//       const searchQuery = latestSearch.search_query;
-//       if (!latestSearchQueryMap.has(searchQuery) || latestSearch.timestamp > latestSearchQueryMap.get(searchQuery).timestamp) {
-//         latestSearchQueryMap.set(searchQuery, latestSearch);
-//       }
-//     });
-
-//     // Convert Map values back to an array for the response
-//     const uniqueLatestSearches = Array.from(latestSearchQueryMap.values());
-
-//     // Sort the searches by timestamp in descending order
-//     const sortedLatestSearches = uniqueLatestSearches.sort((a, b) => b.timestamp - a.timestamp);
-
-//     // Keep only the first 6 entries
-//     const latestSearchesToKeep = sortedLatestSearches.slice(0, 6);
-
-//     res.json({
-//       latestSearches: latestSearchesToKeep.map((latestSearch) => latestSearch.search_query),
-//     });
-
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).json({ message: 'Internal server error' });
-//   }
-// };
-
 
 const getLatestSearches = async (req, res) => {
   try {
@@ -177,10 +139,6 @@ const deleteLatestSearches =  async (req, res, next) => {
       return next(httpError);
     } 
 };
-
-
-
-
 
 exports.getUserById = getUserById;
 exports.createNewUser = createNewUser;

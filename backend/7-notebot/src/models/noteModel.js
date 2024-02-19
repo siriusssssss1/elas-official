@@ -17,29 +17,22 @@ const noteSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  // avg_rate: {
-  //   type: String,
-  //   required: false,
-  // },
+
   isPublic: {
     type: Boolean,
     required: true,
   },
   course_id: {
     type: String,
-    //required: true,
     ref:'courses'
   },
   sections: [{
     type: mongoose.Types.ObjectId,
     ref:'sections'
   }],
-  // isDraft: {
-  //   type: Boolean,
-  //   //default: false
-  // },
+ 
   saved_by: [{
-    type: String, //mongoose.Types.ObjectId
+    type: String, 
     ref: 'users'
   }],
   ratings: [

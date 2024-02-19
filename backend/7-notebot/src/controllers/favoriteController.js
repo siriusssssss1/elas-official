@@ -17,12 +17,9 @@ const toggetFavoriteNote = async (req, res, next) => {
     const favorite = await favoriteModel.findOne(payload);
     console.log(favorite);
 
-    // if (favorite) {
-    //   await favoriteModel.deleteOne(payload);
-    // } else {
       const newFavorite = new favoriteModel(payload);
       await newFavorite.save();
-    //}
+   
 
     res.status(201).json({
       message: "Updated successfully !",
@@ -82,12 +79,8 @@ const toggetFavoriteCourse = async (req, res, next) => {
     const favorite = await favoriteCourseModel.findOne(payload);
     console.log(favorite);
 
-    // if (favorite) {
-    //   await favoriteCourseModel.deleteOne(payload);
-    // } else {
       const newFavorite = new favoriteCourseModel(payload);
       await newFavorite.save();
-    //}
 
 
     res.status(201).json({
@@ -107,11 +100,9 @@ const getFavCourseByUserId = async (req, res, next) => {
   console.log("user_id", user_id);
 
   try {
-    //const groupedNotes = [];
 
     let favorites = await favoriteCourseModel.find({
       user_id: user_id,
-      // course_id: { $in: user.courses },
     });
 
     const courses = await courseModel.find({
