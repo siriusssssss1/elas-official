@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const collectionName_favoriteCourse = 'favoriteCourses';
 
 const favCoursesSchema = new mongoose.Schema({
 
@@ -7,16 +6,16 @@ const favCoursesSchema = new mongoose.Schema({
   course_id: [{ 
     type: mongoose.Types.ObjectId,
     required: true,
-    ref:'courses'
+    ref:'Course'
   }],
   user_id: {
     type: String,
     required: true,
-    ref:'users'
+    ref:'User'
   },
 
 });
 
-const favoriteCourseModel = mongoose.model(collectionName_favoriteCourse, favCoursesSchema);
+const FavoriteCourse = mongoose.model('FavoriteCourse', favCoursesSchema);
 
-module.exports = favoriteCourseModel; 
+module.exports = FavoriteCourse; 

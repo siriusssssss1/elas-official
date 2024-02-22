@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const collectionName_courses = 'courses';
 
 const courseSchema = new mongoose.Schema({
 
@@ -9,16 +8,16 @@ const courseSchema = new mongoose.Schema({
   },
   notes: [{ 
     type: mongoose.Types.ObjectId,
-    ref:'notes'
+    ref:'Note'
   }],
   user_id: {
     type: String,
     required: true,
-    ref:'users'
+    ref:'User'
   },
 
 });
 
-const courseModel = mongoose.model(collectionName_courses, courseSchema);
+const Course = mongoose.model('Course', courseSchema);
 
-module.exports = courseModel;
+module.exports = Course;

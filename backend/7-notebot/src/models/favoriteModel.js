@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const collectionName_favorite = 'favoriteNotes';
 
 const favNotesSchema = new mongoose.Schema({
 
@@ -7,16 +6,16 @@ const favNotesSchema = new mongoose.Schema({
   note_id: [{ 
     type: mongoose.Types.ObjectId,
     required: true,
-    ref:'notes'
+    ref:'Note'
   }],
   user_id: {
     type: String,
     required: true,
-    ref:'users'
+    ref:'User'
   },
 
 });
 
-const favoriteModel = mongoose.model(collectionName_favorite, favNotesSchema);
+const FavoriteNote = mongoose.model('FavoriteNote', favNotesSchema);
 
-module.exports = favoriteModel;
+module.exports = FavoriteNote;

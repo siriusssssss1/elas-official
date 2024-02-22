@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const collectionName_sections = 'sections';
 
 const sectionSchema = new mongoose.Schema({
   layout_field: {
@@ -8,16 +7,16 @@ const sectionSchema = new mongoose.Schema({
   note_id: {
     type: mongoose.Types.ObjectId,
     required: true,
-    ref: "notes",
+    ref: 'Note',
   },
   widgets: [
     {
       type: mongoose.Types.ObjectId,
-      ref: "widgets",
+      ref: 'Widget',
     },
   ],
 });
 
-const sectionModel = mongoose.model(collectionName_sections, sectionSchema);
+const Section = mongoose.model('Section', sectionSchema);
 
-module.exports = sectionModel;
+module.exports = Section;

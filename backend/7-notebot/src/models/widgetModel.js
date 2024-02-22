@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const WIDGET_TYPES = require("./widgetTypes");
-const collectionName_widgets = "widgets";
 
 const widgetSchema = new mongoose.Schema({
   type: {
@@ -18,10 +17,10 @@ const widgetSchema = new mongoose.Schema({
   section_id: {
     type: mongoose.Types.ObjectId,
     required: true,
-    ref: "sections",
+    ref: 'Widget',
   },
 });
 
-const widgetModel = mongoose.model(collectionName_widgets, widgetSchema);
+const Widget = mongoose.model('Widget', widgetSchema);
 
-module.exports = widgetModel;
+module.exports = Widget;

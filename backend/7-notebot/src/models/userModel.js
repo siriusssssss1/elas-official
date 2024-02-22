@@ -5,13 +5,12 @@
  */
 
 const mongoose = require("mongoose");
-const collectionName_user = 'user';
 
 /***************** START: DEFINE A SCHEMA *****************
  * @documentation
  * A user schema for MongoDB.
  */
-const User = new mongoose.Schema({
+const userModel = new mongoose.Schema({
   uid: {
     type: String, 
     required: true 
@@ -27,16 +26,18 @@ const User = new mongoose.Schema({
   notes: [
     {
       type: mongoose.Types.ObjectId, 
-      ref: 'notes'
+      ref: 'Note'
     }
   ], 
   courses: [
     {
       type: mongoose.Types.ObjectId, 
-      ref: 'courses'
+      ref: 'Course'
     }
   ]
 });
 /***************** END: DEFINE A SCHEMA *****************/
 
-module.exports = mongoose.model(collectionName_user, User);
+const User = mongoose.model('User', widgetSchema);
+
+module.exports = User;

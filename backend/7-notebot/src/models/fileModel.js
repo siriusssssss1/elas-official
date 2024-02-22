@@ -1,5 +1,4 @@
 const mongoose = require("./dbconnection.js");
-const collectionName_file = 'file';
 
 const fileSchema = new mongoose.Schema({
   filename: String,
@@ -7,6 +6,6 @@ const fileSchema = new mongoose.Schema({
   size: Number,
 });
 
-const fileModel = mongoose.model(collectionName_file, fileSchema);
+const File = mongoose.model('File', fileSchema);
 
-module.exports = fileModel;
+module.exports = File;

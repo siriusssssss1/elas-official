@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const collectionName_notes = 'notes';
 
 const noteSchema = new mongoose.Schema({
 
@@ -21,20 +20,20 @@ const noteSchema = new mongoose.Schema({
   },
   course_id: {
     type: String,
-    ref:'courses'
+    ref:'Course'
   },
   sections: [{
     type: mongoose.Types.ObjectId,
-    ref:'sections'
+    ref:'Section'
   }],
  
   saved_by: [{
     type: String, 
-    ref: 'users'
+    ref: 'User'
   }],
   ratings: [
     {
-      userId: { type: String, ref: "users" }, 
+      userId: { type: String, ref: 'User' }, 
       rating: { type: Number, min: 1, max: 5, required: true },
     },
   ],
@@ -42,6 +41,6 @@ const noteSchema = new mongoose.Schema({
 { timestamps: true }
 );
 
-const noteModel = mongoose.model(collectionName_notes, noteSchema);
+const Note = mongoose.model('Note', noteSchema);
 
-module.exports = noteModel;
+module.exports = Note;

@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const collectionName_drafts = 'drafts';
 
 const draftSchema = new mongoose.Schema({
 
@@ -7,15 +6,15 @@ const draftSchema = new mongoose.Schema({
     note_id: [{ 
         type: mongoose.Types.ObjectId,
         required: true,
-        ref:'notes'
+        ref:'Note'
       }],
       user_id: {
         type: String,
         required: true,
-        ref:'users'
+        ref:'User'
       },
 });
 
-const Draft = mongoose.model(collectionName_drafts, draftSchema);
+const Draft = mongoose.model('Draft', draftSchema);
 
 module.exports = Draft;

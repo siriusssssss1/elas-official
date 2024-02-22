@@ -17,7 +17,7 @@ const latestSearchSchema = new mongoose.Schema({
 });
 latestSearchSchema.index({ timestamp: 1 }, { expireAfterSeconds: 0 });
 
-const LatestSearch = mongoose.model('LatestSearch', latestSearchSchema);
+const Search = mongoose.model('Search', latestSearchSchema);
 
-module.exports = LatestSearch;
+module.exports = Search;
 
