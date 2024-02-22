@@ -67,7 +67,7 @@ const chatCompletion = async (req, res)=>{
             }
             res.write(`data: ${content}`);
           } catch (error) {
-            // console.error('Could not JSON parse stream message', message, error)
+            
           }
         }
       });
@@ -77,12 +77,12 @@ const chatCompletion = async (req, res)=>{
       res.on("close", close);
     } catch (error) {
       console.error("Error in ChatGPT route:", error);
-      //res.status(500).json({ 'Something went wrong' })
+      
       return next(error);
     }
   } catch (error) {
     console.error("Error in request:", error);
-    //res.status(500).json({ 'Something went wrong' });
+    
     return next(error);
   }
 };
