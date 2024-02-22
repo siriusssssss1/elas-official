@@ -85,14 +85,12 @@ const getNoteByUserId = async (req, res, next) => {
         .status(404)
         .json({ message: "Could not find user for the provided user id." });
     }
-    console.log(user.notes); 
     
     if (!user.notes || user.notes.length === 0) {
         res.json({ notes: [] });
         return;
     }
 
-    // Group notes by course ID
     const groupedNotes = {};
 
     let favorites = await favoriteModel.find({
@@ -136,7 +134,6 @@ const getNoteByUserId = async (req, res, next) => {
       });
     }
 
-    // Convert the grouped notes object to an array
     const groupedNotesArray = Object.values(groupedNotes);
 
     res.json({ notes: groupedNotesArray });
@@ -159,14 +156,12 @@ const getNotesByCourseAndNoteTitle = async (req, res, next) => {
   const escapeKeyword = escapeRegExp(searchKeyword);
 
   try {
-    // Get all courses that match the search keyword
     const courses = await courseModel.find({
-      title: { $regex: escapeKeyword, $options: "i" }, //Form String beschreiben (z.B. email)
+      title: { $regex: escapeKeyword, $options: "i" }, 
     });
 
     const courseIds = courses.map((course) => course._id);
 
-    // Get all notes that match the course ids
     const notes = await noteModel
       .find({$or: [{course_id: { $in: courseIds }},{title: { $regex: escapeKeyword, $options: "i" }, isPublic: true }]})
       .populate("course_id", "title")
@@ -185,7 +180,7 @@ const getNotesByCourseAndNoteTitle = async (req, res, next) => {
       note_id: { $in: notes.map((note) => note._id.toString()) },
     });
 
-    favorites = favorites.reduce( //was macht das?
+    favorites = favorites.reduce( 
       (acc, fav) => ({
         ...acc,
         [fav.note_id]: true,
@@ -213,7 +208,6 @@ const createNoteWithEmptySections = async (req, res, next) => {
   const { user_id, title, isPublic, course_id } = req.body;
 
   try {
-    // Input validation and error handling...
 
     const createdNote = new noteModel({
       user_id,
@@ -240,7 +234,6 @@ const pushSectionsToNote = async (req, res, next) => {
   const { note_id, section_ids } = req.body;
 
   try {
-    // Input validation and error handling...
     const note = await noteModel.findById(note_id);
 
     if (!note) {
@@ -267,12 +260,10 @@ const createNote = async (req, res, next) => {
   
 
   const user_id = req.body.user_id;
-  console.log(user_id);
 
   const { title, isPublic, sections, widgets } = req.body;
 
   try {
-    // Input validation
     if (!user_id || !title  || !sections || !widgets) {
       return res.status(400).json({ message: "Missing required fields." });
       
@@ -394,13 +385,10 @@ const deleteNote = async (req, res, next) => {
     const sectionIds = note.sections;
 
     for (const sectionId of sectionIds) {
-      // Find and delete the section
         const section = await sectionModel.findByIdAndDelete(sectionId);
 
         if (section) {
-          // Delete widgets associated with the section
             const widgetIds = section.widgets;
-            console.log(widgetIds);
 
             for (const widgetId of widgetIds) {
               const widget = await widgetModel.findByIdAndDelete(widgetId);
@@ -424,7 +412,6 @@ const saveNote = async (req, res, next) => {
   const { user_id, note_id } = req.params;
 
   try {
-    // Find the user by user_id
     const user = await userModel.findOne({uid:user_id});
 
     if (!user) {
@@ -433,7 +420,6 @@ const saveNote = async (req, res, next) => {
         .json({ message: "Could not find user for the provided id." });
     }
 
-    // Find the note by note_id
     const note = await noteModel.findById(note_id);
 
     if (!note) {
@@ -442,14 +428,12 @@ const saveNote = async (req, res, next) => {
         .json({ message: "Could not find note for the provided id." });
     }
 
-    // Check if the user who wrote the note is different from the user trying to save it
     if (note.user_id.toString() === user._id.toString()) {
       return res
         .status(400)
         .json({ message: "Cannot save a note written by yourself." });
     }
 
-    // Check if the user has already saved the note
     const isNoteSaved = note.saved_by.includes(user.uid);
 
     if (isNoteSaved) {
@@ -458,7 +442,6 @@ const saveNote = async (req, res, next) => {
         .json({ message: "Note is already saved by the user." });
     }
 
-    // Save the note for the user
     note.saved_by.push(user.uid);
     await note.save();
 
@@ -484,7 +467,6 @@ const getSavedNotesByUserId = async (req, res, next) => {
       .populate("user_id", "user_name")
       .select("note_id title");
     
-    console.log(notes);
 
     res.json(notes);
   } catch (err) {
@@ -670,7 +652,6 @@ const updateRating = async (req, res, next) => {
   try {
     let updatedNote;
 
-    // Check if the user has rated before for this note
     const existingRating = await noteModel.findOne({
       _id: noteId,
       "ratings.userId": userId,
@@ -678,7 +659,6 @@ const updateRating = async (req, res, next) => {
 
     if (existingRating) {
 
-      // Update the existing rating
       updatedNote = await noteModel.findOneAndUpdate(
         { _id: noteId, "ratings.userId": userId },
         { $set: { "ratings.$.rating": rating } },
@@ -686,14 +666,12 @@ const updateRating = async (req, res, next) => {
       );
     } else {
       
-      // Add a new rating if the user is rating for the first time
       updatedNote = await noteModel.findOneAndUpdate(
         { _id: noteId },
         { $push: { ratings: { userId, rating } } },
         { new: true }
       );
     }
-    console.log("Updated note:", updatedNote);
     if (!updatedNote) {
       return res
         .status(404)
@@ -720,7 +698,6 @@ const addNoteToCourse = async (req, res, next) => {
   try {
     const course = await courseModel.findById(course_id);
     const note = await noteModel.findById(req.body.note_id);
-    console.log(note);
 
 
     if (!course) {
@@ -729,10 +706,8 @@ const addNoteToCourse = async (req, res, next) => {
 
     note.isPublic = true;
 
-    // Save the new section
     await note.save();
 
-    // Update the note's sections array with the newly created section
     course.notes.push(note._id);
     await course.save();
 

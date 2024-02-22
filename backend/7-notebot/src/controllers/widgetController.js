@@ -28,7 +28,7 @@ const getWidgetsBySectionId = async (req, res, next) => {
 //Add a widget to a section
 const addWidgetToSection = async (req, res, next) => {
     const { section_id } = req.params;
-    const { type, data, layout_index } = req.body; // Assuming the type and data for the widget are available in the request body
+    const { type, data, layout_index } = req.body; 
   
     try {
       const section = await sectionModel.findById(section_id);
@@ -37,7 +37,6 @@ const addWidgetToSection = async (req, res, next) => {
         return res.status(404).json({ message: "Section not found." });
       }
   
-      // Create a new widget object
       const widget = new widgetModel({
         type,
         data,
@@ -45,10 +44,8 @@ const addWidgetToSection = async (req, res, next) => {
         section_id: section._id,
       });
   
-      // Save the new widget
       await widget.save();
   
-      // Update the section's widgets array with the newly created widget
       section.widgets.push(widget._id);
       await section.save();
   
@@ -65,7 +62,6 @@ const createWidget = async (req, res, next) => {
   const { type, data, layout_index, section_id } = req.body;
 
   try {
-    // Input validation and error handling...
 
     const createdWidget = new widgetModel({
       type,
@@ -142,7 +138,6 @@ const updateWidget = async (req, res, next) => {
     const { layout_index, data } = req.body;
 
     try {
-        // Input validation
         if (!layout_index || !data ) {
             return res.status(400).json({ message: "Invalid widget data." });
         }

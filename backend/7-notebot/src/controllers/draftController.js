@@ -11,15 +11,11 @@ const getDraftByUserId = async (req, res, next) => {
   
       let drafts = await draftModel.find({
         user_id: user_id,
-        //isDraft: true
       });
-      console.log(drafts);
   
       const notes = await noteModel.find({
         _id: { $in: drafts.map((draft) => draft.note_id) },
       });
-
-      console.log(notes);
 
   
       res.json({
@@ -48,7 +44,6 @@ const addNoteToDraft = async (req, res) => {
   };
 
   try {
-    // Find the existing note
     const note = await noteModel.findById(note_id);
 
     if (!note) {

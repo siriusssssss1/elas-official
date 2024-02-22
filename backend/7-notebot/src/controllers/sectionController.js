@@ -75,8 +75,7 @@ const createSection = async (req, res, next) => {
     const { note_id } = req.body;
   
     try {
-      // Input validation and error handling...
-  
+
       const createdSection = new sectionModel({
         note_id,
         widgets: [],
@@ -96,7 +95,6 @@ const createSection = async (req, res, next) => {
     const { section_id, widget_ids } = req.body;
   
     try {
-      // Input validation and error handling...
       if (!section_id || !Array.isArray(widget_ids)) {
         return res.status(400).json({ message: "Invalid request data." });
       }
@@ -121,11 +119,10 @@ const createSection = async (req, res, next) => {
 const updateSection = async (req, res, next) => {
     const { section_id } = req.params;
     const { layout_field } = req.body;
-    console.log(section_id);
 
     try {
-        // Input validation
-        if (!layout_field) {
+
+      if (!layout_field) {
             return res.status(400).json({ message: "Invalid section data." });
         }
 
@@ -153,8 +150,8 @@ const updateSectionWidgets = async (req, res, next) => {
     const { widgets } = req.body;
 
     try {
-        // Input validation
-        if (!widgets) {
+
+      if (!widgets) {
             return res.status(400).json({ message: "Invalid section data." });
         }
 
@@ -216,7 +213,7 @@ const deleteSection = async (req, res, next) => {
 //Add a section to a note
 const addSectionToNote = async (req, res, next) => {
     const { note_id } = req.params;
-  const { layout_field } = req.body; // Assuming the layout field and widgets are available in the request body
+  const { layout_field } = req.body; 
 
   try {
     const note = await noteModel.findById(note_id);
@@ -225,17 +222,14 @@ const addSectionToNote = async (req, res, next) => {
       return res.status(404).json({ message: "Note not found." });
     }
 
-    // Create a new section object
     const section = new sectionModel({
       layout_field,
       note_id: note._id,
       widgets: [],
     });
 
-    // Save the new section
     await section.save();
 
-    // Update the note's sections array with the newly created section
     note.sections.push(section._id);
     await note.save();
 

@@ -118,7 +118,6 @@ const getLatestSearches = async (req, res) => {
 
 const deleteLatestSearches =  async (req, res, next) => {
   const user_id = req.params.userId;
-  console.log(user_id);
 
     try {
       const latestSearch = await searchModel.deleteMany({ user_id });

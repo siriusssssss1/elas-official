@@ -27,10 +27,8 @@ const getAllCourses = async (req, res, next) => {
 //Get courses by user_id
 const getCoursesByUserId = async (req, res, next) => {
   const user_id = req.params.user_id;
-  console.log(user_id);
   try {
     const user = await userModel.findOne({uid: user_id}).populate("courses");
-    console.log(user);
 
     if (!user) {
       return res
@@ -86,7 +84,6 @@ const deleteCourseWithNotes = async (req, res, next) => {
   
     try {
       const course = await courseModel.findByIdAndDelete(course_id);
-      console.log(course);
       if (!course) {
         return res
           .status(404)
@@ -94,25 +91,18 @@ const deleteCourseWithNotes = async (req, res, next) => {
       }
 
       const noteIds = course.notes;
-      console.log(noteIds);
       for (const noteId of noteIds) {
-        // Find and delete the note
         const note = await noteModel.findByIdAndDelete(noteId);
         
 
         if (note) {
-        // Delete sections and widgets associated with the note
           const sectionIds = note.sections;
-          console.log(sectionIds);
 
           for (const sectionId of sectionIds) {
-          // Find and delete the section
             const section = await sectionModel.findByIdAndDelete(sectionId);
 
             if (section) {
-            // Delete widgets associated with the section
               const widgetIds = section.widgets;
-              console.log(widgetIds);
 
               for (const widgetId of widgetIds) {
                 const widget = await widgetModel.findByIdAndDelete(widgetId);

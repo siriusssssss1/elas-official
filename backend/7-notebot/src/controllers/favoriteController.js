@@ -15,7 +15,6 @@ const toggetFavoriteNote = async (req, res, next) => {
   };
   try {
     const favorite = await favoriteModel.findOne(payload);
-    console.log(favorite);
 
       const newFavorite = new favoriteModel(payload);
       await newFavorite.save();
@@ -41,15 +40,12 @@ const getFavNoteByUserId = async (req, res, next) => {
 
     let favorites = await favoriteModel.find({
       user_id: user_id,
-      // note_id: { $in: user.notes },
     });
-    console.log(favorites);
 
     const notes = await noteModel.find({
       _id: { $in: favorites.map((favorite) => favorite.note_id) },
     });
 
-    console.log(notes);
 
     res.json({
       notes: notes.map((note) => ({
@@ -77,7 +73,6 @@ const toggetFavoriteCourse = async (req, res, next) => {
   };
   try {
     const favorite = await favoriteCourseModel.findOne(payload);
-    console.log(favorite);
 
       const newFavorite = new favoriteCourseModel(payload);
       await newFavorite.save();
@@ -97,7 +92,6 @@ const toggetFavoriteCourse = async (req, res, next) => {
 const getFavCourseByUserId = async (req, res, next) => {
   const user_id = req.params.user_id;
 
-  console.log("user_id", user_id);
 
   try {
 
@@ -109,7 +103,6 @@ const getFavCourseByUserId = async (req, res, next) => {
       _id: { $in: favorites.map((favorite) => favorite.course_id) },
     });
 
-    console.log(courses)
 
     res.json({
       courses: courses.map((course) => ({
