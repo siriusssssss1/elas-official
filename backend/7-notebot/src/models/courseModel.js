@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const collectionName_courses = 'courses';
+
 const courseSchema = new mongoose.Schema({
 
   title: {

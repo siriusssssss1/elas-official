@@ -1,8 +1,6 @@
 const mongoose = require("mongoose");
-// Initialize parameters
 const collectionName_notes = 'notes';
 
-//define structure of the documents in a collection
 const noteSchema = new mongoose.Schema({
 
   archive_from_id: {
@@ -11,7 +9,6 @@ const noteSchema = new mongoose.Schema({
   user_id: {
     type: String,
     required: true,
-    //ref: 'user'
   },
   title: {
     type: String,
@@ -37,7 +34,7 @@ const noteSchema = new mongoose.Schema({
   }],
   ratings: [
     {
-      userId: { type: String, ref: "users" }, //probably better: type:String
+      userId: { type: String, ref: "users" }, 
       rating: { type: Number, min: 1, max: 5, required: true },
     },
   ],

@@ -1,8 +1,6 @@
 const mongoose = require("mongoose");
-// Initialize parameters
 const collectionName_favorite = 'favoriteNotes';
 
-//define structure of the documents in a collection
 const favNotesSchema = new mongoose.Schema({
 
 

@@ -5,20 +5,38 @@
  */
 
 const mongoose = require("mongoose");
-
-const Schema = mongoose.Schema;
+const collectionName_user = 'user';
 
 /***************** START: DEFINE A SCHEMA *****************
  * @documentation
  * A user schema for MongoDB.
  */
-const User = new Schema({
-  uid: { type: String, required: true },
-  name: { type: String, required: true },
-  username: { type: String, required: true },
-  notes: [{type: mongoose.Types.ObjectId, ref: 'notes'}], //notes inside of courses?
-  courses: [{type: mongoose.Types.ObjectId, ref: 'courses'}]
+const User = new mongoose.Schema({
+  uid: {
+    type: String, 
+    required: true 
+  },
+  name: { 
+    type: String, 
+    required: true 
+  },
+  username: { 
+    type: String, 
+    required: true 
+  },
+  notes: [
+    {
+      type: mongoose.Types.ObjectId, 
+      ref: 'notes'
+    }
+  ], 
+  courses: [
+    {
+      type: mongoose.Types.ObjectId, 
+      ref: 'courses'
+    }
+  ]
 });
 /***************** END: DEFINE A SCHEMA *****************/
 
-module.exports = mongoose.model("user", User);
+module.exports = mongoose.model(collectionName_user, User);

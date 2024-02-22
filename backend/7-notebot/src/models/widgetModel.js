@@ -1,9 +1,7 @@
 const mongoose = require("mongoose");
 const WIDGET_TYPES = require("./widgetTypes");
-// Initialize parameters
 const collectionName_widgets = "widgets";
 
-//define structure of the documents in a collection
 const widgetSchema = new mongoose.Schema({
   type: {
     type: String,

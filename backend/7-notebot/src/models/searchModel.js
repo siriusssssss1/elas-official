@@ -15,7 +15,6 @@ const latestSearchSchema = new mongoose.Schema({
         expires: 60 * 60 * 24 * 7
     },
 });
-// ttl index on timestamp
 latestSearchSchema.index({ timestamp: 1 }, { expireAfterSeconds: 0 });
 
 const LatestSearch = mongoose.model('LatestSearch', latestSearchSchema);

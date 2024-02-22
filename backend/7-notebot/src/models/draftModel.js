@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const collectionName_drafts = 'drafts';
 
 const draftSchema = new mongoose.Schema({
 
@@ -15,6 +16,6 @@ const draftSchema = new mongoose.Schema({
       },
 });
 
-const Draft = mongoose.model('Draft', draftSchema);
+const Draft = mongoose.model(collectionName_drafts, draftSchema);
 
 module.exports = Draft;

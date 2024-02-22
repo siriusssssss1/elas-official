@@ -1,8 +1,6 @@
 const mongoose = require("./dbconnection.js");
-// Initialize parameters
-const collectionName_file = "file";
+const collectionName_file = 'file';
 
-// Define a schema for the file
 const fileSchema = new mongoose.Schema({
   filename: String,
   url: String,
