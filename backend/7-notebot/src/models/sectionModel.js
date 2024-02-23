@@ -1,7 +1,9 @@
 const mongoose = require("mongoose");
+const {Schema} = mongoose;
 
 // Define the schema for sections
-const sectionSchema = new mongoose.Schema({
+const sectionSchema = new Schema({
+
   layout_field: {
     type: [Number],
   },
@@ -10,12 +12,10 @@ const sectionSchema = new mongoose.Schema({
     required: true,
     ref: 'Note',
   },
-  widgets: [
-    {
+  widgets: [{
       type: mongoose.Types.ObjectId,
       ref: 'Widget',
-    },
-  ],
+  }],
 });
 
 const Section = mongoose.model('Section', sectionSchema);

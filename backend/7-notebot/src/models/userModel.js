@@ -5,12 +5,14 @@
  */
 
 const mongoose = require("mongoose");
+const {Schema} = mongoose;
 
 /***************** START: DEFINE A SCHEMA *****************
  * @documentation
  * A user schema for MongoDB.
  */
-const userSchema = new mongoose.Schema({
+const userSchema = new Schema({
+
   uid: {
     type: String, 
     required: true 
@@ -23,18 +25,14 @@ const userSchema = new mongoose.Schema({
     type: String, 
     required: true 
   },
-  notes: [
-    {
+  notes: [{
       type: mongoose.Types.ObjectId, 
       ref: 'Note'
-    }
-  ], 
-  courses: [
-    {
+  }], 
+  courses: [{
       type: mongoose.Types.ObjectId, 
       ref: 'Course'
-    }
-  ]
+  }],
 });
 /***************** END: DEFINE A SCHEMA *****************/
 

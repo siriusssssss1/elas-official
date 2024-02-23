@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
+const {Schema} = mongoose;
 
 // Define the schema for favorite Notes
-const favNotesSchema = new mongoose.Schema({
-
+const favNotesSchema = new Schema({
 
   note_id: [{ 
     type: mongoose.Types.ObjectId,
@@ -14,7 +14,6 @@ const favNotesSchema = new mongoose.Schema({
     required: true,
     ref:'User'
   },
-
 });
 
 const FavoriteNote = mongoose.model('FavoriteNote', favNotesSchema);

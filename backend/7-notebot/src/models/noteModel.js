@@ -1,11 +1,13 @@
 const mongoose = require("mongoose");
 
-// Define the schema for notes
-const noteSchema = new mongoose.Schema({
+const {Schema} = mongoose;
 
-  archive_from_id: {
-    type: String,
-  },
+// Define the schema for notes
+const noteSchema = new Schema({
+
+  // archive_from_id: {
+  //   type: String,
+  // },
   user_id: {
     type: String,
     required: true,
@@ -14,7 +16,6 @@ const noteSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-
   isPublic: {
     type: Boolean,
     required: true,
@@ -24,20 +25,26 @@ const noteSchema = new mongoose.Schema({
     ref:'Course'
   },
   sections: [{
-    type: mongoose.Types.ObjectId,
+    type: mongoose.Types.ObjectId, //Schema.Types.ObjectId?
     ref:'Section'
   }],
- 
   saved_by: [{
     type: String, 
     ref: 'User'
   }],
-  ratings: [
-    {
-      userId: { type: String, ref: 'User' }, 
-      rating: { type: Number, min: 1, max: 5, required: true },
-    },
-  ],
+  ratings: [{
+      userId: { 
+        type: String, 
+        ref: 'User',
+        required: true
+      }, 
+      rating: { 
+        type: Number, 
+        min: 1, 
+        max: 5, 
+        required: true 
+      },
+  }],
 },
 { timestamps: true }
 );

@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
 // Define the schema for latest searches
-const latestSearchSchema = new mongoose.Schema({
+const latestSearchSchema = new Schema({
+    
     user_id: {
         type: String,
         required: true,
@@ -21,4 +23,3 @@ latestSearchSchema.index({ timestamp: 1 }, { expireAfterSeconds: 0 });
 const Search = mongoose.model('Search', latestSearchSchema);
 
 module.exports = Search;
-

@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
+const {Schema} = mongoose;
 
 // Define the schema for favorite courses
-const favCoursesSchema = new mongoose.Schema({
-
+const favCoursesSchema = new Schema({
 
   course_id: [{ 
     type: mongoose.Types.ObjectId,

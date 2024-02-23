@@ -1,7 +1,8 @@
 const mongoose = require("./dbconnection.js");
+const {Schema} = mongoose;
 
 // Define the schema for uploading files
-const fileSchema = new mongoose.Schema({
+const fileSchema = new Schema({
   filename: String,
   url: String,
   size: Number,
