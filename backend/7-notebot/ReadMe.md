@@ -19,17 +19,21 @@
 <br>
 
 ## 📸 Screenshots
-https://github.com/siriusssssss1/elas-official/blob/dev-notebot-frontend-link/backend/7-notebot/MyNotes.png
-https://github.com/siriusssssss1/elas-official/blob/dev-notebot-frontend-link/backend/7-notebot/MyFavorites.png
-https://github.com/siriusssssss1/elas-official/blob/dev-notebot-frontend-link/backend/7-notebot/MyDrafts.png
-https://github.com/siriusssssss1/elas-official/blob/dev-notebot-frontend-link/backend/7-notebot/SearchNote1.png
-https://github.com/siriusssssss1/elas-official/blob/dev-notebot-frontend-link/backend/7-notebot/SearchNote2.png
-https://github.com/siriusssssss1/elas-official/blob/dev-notebot-frontend-link/backend/7-notebot/AddSection.png
-https://github.com/siriusssssss1/elas-official/blob/dev-notebot-frontend-link/backend/7-notebot/ChooseLayout.png
-https://github.com/siriusssssss1/elas-official/blob/dev-notebot-frontend-link/backend/7-notebot/ChooseWidget.png
-https://github.com/siriusssssss1/elas-official/blob/dev-notebot-frontend-link/backend/7-notebot/WidgetOptions.png
-https://github.com/siriusssssss1/elas-official/blob/dev-notebot-frontend-link/backend/7-notebot/AddNoteToCourse.png
 
+<div style="display: flex;">
+  <img src="https://github.com/siriusssssss1/elas-official/blob/dev-notebot-frontend-link/backend/7-notebot/MyNotes.png" alt="Screenshot 1" width="350">
+  <img src="https://github.com/siriusssssss1/elas-official/blob/dev-notebot-frontend-link/backend/7-notebot/MyFavorites.png" alt="Screenshot 2" width="350">
+  <img src="https://github.com/siriusssssss1/elas-official/blob/dev-notebot-frontend-link/backend/7-notebot/MyDrafts.png" alt="Screenshot 3" width="350">
+  <img src="https://github.com/siriusssssss1/elas-official/blob/dev-notebot-frontend-link/backend/7-notebot/SearchNote1.png" alt="Screenshot 4" width="350">
+  <img src="https://github.com/siriusssssss1/elas-official/blob/dev-notebot-frontend-link/backend/7-notebot/SearchNote2.png" alt="Screenshot 5" width="350">
+  <img src="https://github.com/siriusssssss1/elas-official/blob/dev-notebot-frontend-link/backend/7-notebot/AddSection.png" alt="Screenshot 6" width="350">
+  <img src="https://github.com/siriusssssss1/elas-official/blob/dev-notebot-frontend-link/backend/7-notebot/ChooseLayout.png" alt="Screenshot 7" width="350">
+  <img src="https://github.com/siriusssssss1/elas-official/blob/dev-notebot-frontend-link/backend/7-notebot/ChooseWidget.png" alt="Screenshot 8" width="350">
+  <img src="https://github.com/siriusssssss1/elas-official/blob/dev-notebot-frontend-link/backend/7-notebot/WidgetOptions.png" alt="Screenshot 9" width="350">
+  <img src="https://github.com/siriusssssss1/elas-official/blob/dev-notebot-frontend-link/backend/7-notebot/AddNoteToCourse.png" alt="Screenshot 10" width="350">
+</div>
+
+<br><br>
 
 ## 🏗️ Technical Architecture
 <img align="right" src="https://github.com/siriusssssss1/elas-official/blob/dev-notebot-frontend-link/backend/7-notebot/TechnicalArcitecture.png" alt="Tech Used" width="450" style="max-width:100%;">
