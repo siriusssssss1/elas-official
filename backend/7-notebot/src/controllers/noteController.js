@@ -1,15 +1,15 @@
-const noteModel = require("../models/noteModel");
-const userModel = require("../models/userModel");
-const sectionModel = require("../models/sectionModel");
-const courseModel = require("../models/courseModel");
-const widgetModel = require("../models/widgetModel");
+const db = require("../models");
+const Note = db.note;
+const User = db.user;
+const Section = db.section;
+const Course = db.course;
+const Widget = db.widget;
+const Search = db.search;
+const FavoriteNote = db.favoriteNote;
 const mongoose = require("mongoose");
 const HttpError = require("../models/http-error");
-const favoriteModel = require("../models/favoriteModel");
 // const draftModel = require("../models/draftModel");
 // const { search } = require("../routes/notes");
-const searchModel = require("../models/searchModel");
-
 
 
 // Get user notes by user_id
@@ -17,7 +17,7 @@ const getNoteByNoteId = async (req, res, next) => {
   const { user_id, note_id } = req.params;
 
   try {
-    const note = await noteModel.findById(note_id);
+    const note = await Note.findById(note_id);
 
     if (!note) {
       return res
@@ -26,11 +26,11 @@ const getNoteByNoteId = async (req, res, next) => {
     }
 
     for (const section_id of note.sections) {
-      const section = await sectionModel.findById(section_id);
+      const section = await Section.findById(section_id);
 
       if (section) {
         for (let widget_ids of section) {
-          const widget = await widgetModel.findById(widget_ids);
+          const widget = await Widget.findById(widget_ids);
         }
       }
     }
@@ -50,7 +50,7 @@ const getNotesByUserIdAndCourseId = async (req, res, next) => {
   const { user_id, course_id } = req.params;
 
   try {
-    const user = await userModel.findOne({uid:user_id}).populate("notes");
+    const user = await User.findOne({uid:user_id}).populate("notes");
 
     if (!user.notes || user.notes.length === 0) {
       return res
@@ -77,8 +77,8 @@ const getNoteByUserId = async (req, res, next) => {
   const user_id = req.params.user_id;
   
   try {
-    const user = await userModel.findOne({uid: user_id}).populate('notes');
-    const notes = await noteModel.find({ uid: user_id, isPublic: true }); 
+    const user = await User.findOne({uid: user_id}).populate('notes');
+    const notes = await Note.find({ uid: user_id, isPublic: true }); 
 
     if (!user) {
       return res
@@ -93,7 +93,7 @@ const getNoteByUserId = async (req, res, next) => {
 
     const groupedNotes = {};
 
-    let favorites = await favoriteModel.find({
+    let favorites = await FavoriteNote.find({
       user_id: user_id,
       note_id: { $in: user.notes },
     });
@@ -110,7 +110,7 @@ const getNoteByUserId = async (req, res, next) => {
     
       let course;
       if (courseId) {
-        course = await courseModel.findOne({ _id: courseId });
+        course = await Course.findOne({ _id: courseId });
       }
   
       if (!course) {
@@ -156,13 +156,13 @@ const getNotesByCourseAndNoteTitle = async (req, res, next) => {
   const escapeKeyword = escapeRegExp(searchKeyword);
 
   try {
-    const courses = await courseModel.find({
+    const courses = await Course.find({
       title: { $regex: escapeKeyword, $options: "i" }, 
     });
 
     const courseIds = courses.map((course) => course._id);
 
-    const notes = await noteModel
+    const notes = await Note
       .find({$or: [{course_id: { $in: courseIds }},{title: { $regex: escapeKeyword, $options: "i" }, isPublic: true }]})
       .populate("course_id", "title")
       .populate("user_id", "user_name")
@@ -171,11 +171,11 @@ const getNotesByCourseAndNoteTitle = async (req, res, next) => {
 
     const user_id = req.headers.user_id;
 
-    const latestSearch = new searchModel({user_id, search_query:searchKeyword, timestamp:new Date()})
+    const latestSearch = new Search({user_id, search_query:searchKeyword, timestamp:new Date()})
 
     await latestSearch.save();
 
-    let favorites = await favoriteModel.find({
+    let favorites = await FavoriteNote.find({
       user_id,
       note_id: { $in: notes.map((note) => note._id.toString()) },
     });
@@ -209,7 +209,7 @@ const createNoteWithEmptySections = async (req, res, next) => {
 
   try {
 
-    const createdNote = new noteModel({
+    const createdNote = new Note({
       user_id,
       title,
       isPublic,
@@ -234,7 +234,7 @@ const pushSectionsToNote = async (req, res, next) => {
   const { note_id, section_ids } = req.body;
 
   try {
-    const note = await noteModel.findById(note_id);
+    const note = await Note.findById(note_id);
 
     if (!note) {
       return res.status(404).json({ message: "Note not found." });
@@ -268,7 +268,7 @@ const createNote = async (req, res, next) => {
       return res.status(400).json({ message: "Missing required fields." });
       
     }
-    const user = await userModel.findOne({ uid: user_id });
+    const user = await User.findOne({ uid: user_id });
 
 
     if (!user.notes) {
@@ -281,7 +281,7 @@ const createNote = async (req, res, next) => {
         .json({ message: "Could not find user for the provided id." });
     }
 
-    const createdNote = new noteModel({
+    const createdNote = new Note({
       title: title,
       isPublic: false,
       avg_rate: 4,
@@ -290,7 +290,7 @@ const createNote = async (req, res, next) => {
     await createdNote.save();
 
     for (const section of sections) {
-      const sectionObject = new sectionModel({
+      const sectionObject = new Section({
         layout_field: section.layout_field,
         note_id: createdNote._id,
       });
@@ -302,7 +302,7 @@ const createNote = async (req, res, next) => {
         for (let widgetIndex in widgets[section.id]) {
           const widget = widgets[section.id][widgetIndex];
 
-          const widgetObject = new widgetModel({
+          const widgetObject = new Widget({
             type: widget.type,
             data: widget.data,
             layout_index: parseInt(widgetIndex),
@@ -342,7 +342,7 @@ const deleteNote = async (req, res, next) => {
   const note_id = req.params.note_id;
 
   try {
-    const note = await noteModel.findByIdAndDelete(note_id);
+    const note = await Note.findByIdAndDelete(note_id);
 
     if (!note) {
       return res
@@ -356,10 +356,10 @@ const deleteNote = async (req, res, next) => {
         .json({ message: "You don't have permissions to delete this note." });
     }
 
-    const user = await userModel.findOne({uid:note.user_id}); 
-    const course = await courseModel.findOne({_id:note.course_id});
+    const user = await User.findOne({uid:note.user_id}); 
+    const course = await Course.findOne({_id:note.course_id});
 
-    await userModel.updateMany(
+    await User.updateMany(
       {uid: note.user_id},
       {
         $pull: {
@@ -371,7 +371,7 @@ const deleteNote = async (req, res, next) => {
   
     if (course) {
       const courseId2 = new mongoose.Types.ObjectId(note.course_id);
-      await courseModel.updateMany(
+      await Course.updateMany(
         {_id: courseId2 },
         {
           $pull: {
@@ -385,13 +385,13 @@ const deleteNote = async (req, res, next) => {
     const sectionIds = note.sections;
 
     for (const sectionId of sectionIds) {
-        const section = await sectionModel.findByIdAndDelete(sectionId);
+        const section = await Section.findByIdAndDelete(sectionId);
 
         if (section) {
             const widgetIds = section.widgets;
 
             for (const widgetId of widgetIds) {
-              const widget = await widgetModel.findByIdAndDelete(widgetId);
+              const widget = await Widget.findByIdAndDelete(widgetId);
             }
           }
         }  
@@ -412,7 +412,7 @@ const saveNote = async (req, res, next) => {
   const { user_id, note_id } = req.params;
 
   try {
-    const user = await userModel.findOne({uid:user_id});
+    const user = await User.findOne({uid:user_id});
 
     if (!user) {
       return res
@@ -420,7 +420,7 @@ const saveNote = async (req, res, next) => {
         .json({ message: "Could not find user for the provided id." });
     }
 
-    const note = await noteModel.findById(note_id);
+    const note = await Note.findById(note_id);
 
     if (!note) {
       return res
@@ -461,7 +461,7 @@ const getSavedNotesByUserId = async (req, res, next) => {
   const user_id = req.params.user_id;
 
   try {
-    const notes = await noteModel
+    const notes = await Note
       .find({ user_id: user_id })
       .populate("course_id", "title")
       .populate("user_id", "user_name")
@@ -479,7 +479,7 @@ const getSavedNotesByUserId = async (req, res, next) => {
 //get all notes
 const getNotes = async (req, res, next) => {
   try {
-    const notes = await noteModel.find({ isPublic: true });
+    const notes = await Note.find({ isPublic: true });
 
     if (!notes || notes.length === 0) {
       return res.status(404).json({ message: "No public notes found" });
@@ -501,7 +501,7 @@ const getNoteByNoteID = async (req, res, next) => {
   const { note_id } = req.params;
 
   try {
-    const note = await noteModel.findById(note_id);
+    const note = await Note.findById(note_id);
 
     if (!note) {
       return res
@@ -521,8 +521,8 @@ const getNoteByNoteID = async (req, res, next) => {
 
 const getNoteWidgets = async (req, res, next) => {
   try {
-    const note = await noteModel.findById(req.params.note_id);
-    const sections = await sectionModel.find({ _id: { $in: note.sections } });
+    const note = await Note.findById(req.params.note_id);
+    const sections = await Section.find({ _id: { $in: note.sections } });
 
     const indexDictionary = note.sections.reduce(
       (acc, id, index) => ({
@@ -544,7 +544,7 @@ const getNoteWidgets = async (req, res, next) => {
 
       return 0;
     });
-    const widgets = await widgetModel.find({
+    const widgets = await Widget.find({
       section_id: { $in: note.sections },
     });
 
@@ -565,8 +565,8 @@ const updateNote = async (req, res, next) => {
    
     const { title, sections, widgets, course_id } = req.body;
 
-    const note = await noteModel.findById(req.params.note_id);
-    const course = await courseModel.findById(course_id);
+    const note = await Note.findById(req.params.note_id);
+    const course = await Course.findById(course_id);
 
     if (!note) {
       return res
@@ -581,11 +581,11 @@ const updateNote = async (req, res, next) => {
 
     for (const section of sections) {
       let sectionObject =
-        section._id && (await sectionModel.findById(section._id));
+        section._id && (await Section.findById(section._id));
       
 
       if (!sectionObject) {
-        sectionObject = new sectionModel();
+        sectionObject = new Section();
       }
 
       sectionObject.layout_field = section.layout_field || undefined;
@@ -603,10 +603,10 @@ const updateNote = async (req, res, next) => {
           const widget = sectionWidgets[widgetIndex];
 
           let widgetObject =
-            widget._id && (await widgetModel.findById(widget._id));
+            widget._id && (await Widget.findById(widget._id));
 
           if (!widgetObject) {
-            widgetObject = new widgetModel();
+            widgetObject = new Widget();
           }
 
           widgetObject.type = widget.type;
@@ -652,21 +652,21 @@ const updateRating = async (req, res, next) => {
   try {
     let updatedNote;
 
-    const existingRating = await noteModel.findOne({
+    const existingRating = await Note.findOne({
       _id: noteId,
       "ratings.userId": userId,
     });
 
     if (existingRating) {
 
-      updatedNote = await noteModel.findOneAndUpdate(
+      updatedNote = await Note.findOneAndUpdate(
         { _id: noteId, "ratings.userId": userId },
         { $set: { "ratings.$.rating": rating } },
         { new: true }
       );
     } else {
       
-      updatedNote = await noteModel.findOneAndUpdate(
+      updatedNote = await Note.findOneAndUpdate(
         { _id: noteId },
         { $push: { ratings: { userId, rating } } },
         { new: true }
@@ -696,8 +696,8 @@ const addNoteToCourse = async (req, res, next) => {
   const { course_id } = req.params;
 
   try {
-    const course = await courseModel.findById(course_id);
-    const note = await noteModel.findById(req.body.note_id);
+    const course = await Course.findById(course_id);
+    const note = await Note.findById(req.body.note_id);
 
 
     if (!course) {

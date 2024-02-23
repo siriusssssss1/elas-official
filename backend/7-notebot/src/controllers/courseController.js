@@ -1,16 +1,14 @@
-const courseModel = require("../models/courseModel");
-const noteModel = require("../models/noteModel");
-const sectionModel = require("../models/sectionModel");
-const widgetModel = require("../models/widgetModel");
-const userModel = require("../models/userModel");
+const Course = db.course;
+const Note = require("../models/noteModel");
+const Section = require("../models/sectionModel");
+const Widget = require("../models/widgetModel");
+const User = require("../models/userModel");
 const HttpError = require("../models/http-error");
-const mongoose = require("mongoose");
-const { json } = require("body-parser");
 
 //get all courses : test
 const getAllCourses = async (req, res, next) => {
   try {
-    const courses = await courseModel.find();
+    const courses = await Course.find();
 
     res.json({
       courses: courses.map((course) => course.toObject({ getters: true })),
@@ -28,7 +26,7 @@ const getAllCourses = async (req, res, next) => {
 const getCoursesByUserId = async (req, res, next) => {
   const user_id = req.params.user_id;
   try {
-    const user = await userModel.findOne({uid: user_id}).populate("courses");
+    const user = await User.findOne({uid: user_id}).populate("courses");
 
     if (!user) {
       return res

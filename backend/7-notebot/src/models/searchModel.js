@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+// Define the schema for latest searches
 const latestSearchSchema = new mongoose.Schema({
     user_id: {
         type: String,

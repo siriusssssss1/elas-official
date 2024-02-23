@@ -1,27 +1,23 @@
-// Import the mongoose module
 const mongoose = require('mongoose');
 
-// Define the schema for the course
+// Define the schema for courses
 const courseSchema = new mongoose.Schema({
-  // Title of the course
+  
   title: {
     type: String,
-    required: true, // Title is required
+    required: true, 
   },
-  // Notes related to the course,
   notes: [{ 
     type: mongoose.Types.ObjectId, 
-    ref: 'Note' // Notes are referenced from the Note model
+    ref: 'Note' 
   }],
-  // User ID of the user who owns the course, a required field of type String
   user_id: {
     type: String,
     required: true, 
-    ref: 'User' // User is referenced from the User model
+    ref: 'User' 
   },
 });
 
-// Create the Course model using the defined schema
 const Course = mongoose.model('Course', courseSchema);
 
 module.exports = Course;

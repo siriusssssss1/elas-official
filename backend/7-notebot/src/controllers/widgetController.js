@@ -1,5 +1,6 @@
-const widgetModel = require("../models/widgetModel.js");
-const sectionModel = require("../models/sectionModel.js");
+const db = require("../models");
+const Widget = db.widget;
+const Section = db.section;
 const HttpError = require("../models/http-error.js");
 const mongoose = require("mongoose");
 
@@ -8,7 +9,7 @@ const getWidgetsBySectionId = async (req, res, next) => {
     const { section_id } = req.params;
 
     try {
-        const section = await sectionModel.findById(section_id).populate("widgets");
+        const section = await Section.findById(section_id).populate("Widget");
 
         if(!section) {
           return res.status(404).json({message: "Section not found."});
@@ -31,13 +32,13 @@ const addWidgetToSection = async (req, res, next) => {
     const { type, data, layout_index } = req.body; 
   
     try {
-      const section = await sectionModel.findById(section_id);
+      const section = await Section.findById(section_id);
   
       if (!section) {
         return res.status(404).json({ message: "Section not found." });
       }
   
-      const widget = new widgetModel({
+      const widget = new Widget({
         type,
         data,
         layout_index,
@@ -63,7 +64,7 @@ const createWidget = async (req, res, next) => {
 
   try {
 
-    const createdWidget = new widgetModel({
+    const createdWidget = new Widget({
       type,
       data,
       layout_index,
@@ -83,7 +84,7 @@ const createWidget = async (req, res, next) => {
 //test
 const getWidget = async (req, res, next) => {
   try {
-    const widgets = await widgetModel.find();
+    const widgets = await Widget.find();
     res.json({ widgets: widgets.map((widget) => widget.toObject({ getters: true })) });
   } catch (err) {
     const error = new HttpError(
@@ -100,7 +101,7 @@ const deleteWidget = async (req, res, next) => {
   const {section_id, widget_id} = req.params;
 
   try {
-    const widget = await widgetModel.findById(widget_id);
+    const widget = await Widget.findById(widget_id);
 
     if (!widget) {
       return res
@@ -108,7 +109,7 @@ const deleteWidget = async (req, res, next) => {
         .json({ message: "Could not find widget for the provided id." });
     }
     try {
-      await widgetModel.deleteOne({ _id: widget_id });
+      await Widget.deleteOne({ _id: widget_id });
 
       const sectionID = new mongoose.Types.ObjectId(widget.section_id);
         await sectionModel.updateMany(
@@ -142,7 +143,7 @@ const updateWidget = async (req, res, next) => {
             return res.status(400).json({ message: "Invalid widget data." });
         }
 
-        const widget = await widgetModel.findById(widget_id);
+        const widget = await Widget.findById(widget_id);
 
         if (!widget) {
             return res.status(404).json({ message: "Could not find widget for the provided id." });

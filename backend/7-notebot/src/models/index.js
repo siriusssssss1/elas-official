@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-mongoose.Promise = global.Promise;
+//mongoose.Promise = global.Promise;
 
 const db = {};
 
@@ -9,6 +9,14 @@ const db = {};
  * schema in other files.
  */
 db.user = require("./userModel");
+db.course = require("./courseModel");
+db.draft = require("./draftModel");
+db.note = require("./noteModel");
+db.favoriteCourse = require("./favoriteCourseModel");
+db.favoriteNote = require("./favoriteNoteModel");
+db.section = require("./sectionModel");
+db.widget = require("./widgetModel");
+db.search = require("./searchModel");
 /***************** END: EXPORT SCHEMA AS MODULE *****************/
 
 module.exports = db;

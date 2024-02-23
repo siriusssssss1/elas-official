@@ -10,7 +10,7 @@ const mongoose = require("mongoose");
  * @documentation
  * A user schema for MongoDB.
  */
-const userModel = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
   uid: {
     type: String, 
     required: true 
@@ -38,6 +38,6 @@ const userModel = new mongoose.Schema({
 });
 /***************** END: DEFINE A SCHEMA *****************/
 
-const User = mongoose.model('User', widgetSchema);
+const User = mongoose.model('User', userSchema);
 
 module.exports = User;

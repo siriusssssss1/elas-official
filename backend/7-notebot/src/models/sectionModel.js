@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+// Define the schema for sections
 const sectionSchema = new mongoose.Schema({
   layout_field: {
     type: [Number],

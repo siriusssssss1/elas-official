@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+// Define the schema for favorite Notes
 const favNotesSchema = new mongoose.Schema({
 
 

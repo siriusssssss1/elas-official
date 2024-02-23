@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+// Define the schema for notes
 const noteSchema = new mongoose.Schema({
 
   archive_from_id: {

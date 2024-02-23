@@ -1,5 +1,5 @@
 const db = require("../models");
-const searchModel = require("../models/searchModel");
+const Search = db.search;
 const User = db.user;
 
 /***************** START: GET USER INFO USING A CONTROLLER *****************
@@ -81,7 +81,7 @@ const getLatestSearches = async (req, res) => {
     const user_id = req.params.userId;
 
     // Create and save the latest search record
-    const latestSearches = await searchModel.find({
+    const latestSearches = await Search.find({
       user_id: user_id,
     });
 
@@ -120,7 +120,7 @@ const deleteLatestSearches =  async (req, res, next) => {
   const user_id = req.params.userId;
 
     try {
-      const latestSearch = await searchModel.deleteMany({ user_id });
+      const latestSearch = await Search.deleteMany({ user_id });
 
       if (latestSearch.deletedCount === 0) {
         return res

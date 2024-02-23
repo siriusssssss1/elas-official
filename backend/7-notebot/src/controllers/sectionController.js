@@ -1,6 +1,7 @@
-const sectionModel = require('../models/sectionModel')
-const noteModel = require('../models/noteModel');
-const widgetModel = require('../models/widgetModel');
+const db = require("../models");
+const Section = db.section;
+const Note = db.note;
+const Widget = db.widget;
 const HttpError = require('../models/http-error');
 const mongoose = require("mongoose");
 
@@ -9,7 +10,7 @@ const getSectionsByNoteId = async (req, res, next) => {
     const { note_id } = req.params;
 
     try {
-       const note = await noteModel.findById(note_id).populate('sections');
+       const note = await Note.findById(note_id).populate('sections');
 
          if (!note.sections || note.sections.length === 0) {
             return res.status(404).json({ message: "Could not find sections for the provided note id." });
@@ -76,7 +77,7 @@ const createSection = async (req, res, next) => {
   
     try {
 
-      const createdSection = new sectionModel({
+      const createdSection = new Section({
         note_id,
         widgets: [],
       });
@@ -99,7 +100,7 @@ const createSection = async (req, res, next) => {
         return res.status(400).json({ message: "Invalid request data." });
       }
   
-      const section = await sectionModel.findById(section_id);
+      const section = await Section.findById(section_id);
       if (!section) {
         return res.status(404).json({ message: "Section not found." });
       }
@@ -126,7 +127,7 @@ const updateSection = async (req, res, next) => {
             return res.status(400).json({ message: "Invalid section data." });
         }
 
-        const section = await sectionModel.findById(section_id);
+        const section = await Section.findById(section_id);
 
         if (!section) {
             return res.status(404).json({ message: "Could not find section for the provided id." });
@@ -155,7 +156,7 @@ const updateSectionWidgets = async (req, res, next) => {
             return res.status(400).json({ message: "Invalid section data." });
         }
 
-        const section = await sectionModel.findById(section_id);
+        const section = await Section.findById(section_id);
 
         if (!section) {
             return res.status(404).json({ message: "Could not find section for the provided id." });
@@ -179,7 +180,7 @@ const deleteSection = async (req, res, next) => {
     const { section_id } = req.params;
 
     try {
-        const section = await sectionModel.findByIdAndDelete(section_id);
+        const section = await Section.findByIdAndDelete(section_id);
         
         if (!section) {
             return res.status(404).json({ message: "Could not find section for the provided id." });
@@ -198,7 +199,7 @@ const deleteSection = async (req, res, next) => {
 
         const widgetIds = section.widgets;
         for (const widgetId of widgetIds) {
-          const widget = await widgetModel.findByIdAndDelete(widgetId);
+          const widget = await Widget.findByIdAndDelete(widgetId);
         }  
 
             res.status(200).json({ message: "Section deleted!" });
@@ -216,13 +217,13 @@ const addSectionToNote = async (req, res, next) => {
   const { layout_field } = req.body; 
 
   try {
-    const note = await noteModel.findById(note_id);
+    const note = await Note.findById(note_id);
 
     if (!note) {
       return res.status(404).json({ message: "Note not found." });
     }
 
-    const section = new sectionModel({
+    const section = new Section({
       layout_field,
       note_id: note._id,
       widgets: [],
@@ -243,7 +244,7 @@ const addSectionToNote = async (req, res, next) => {
 //get all sections
 const getSections = async (req, res, next) => {
   try {
-    const sections = await sectionModel.find();
+    const sections = await Section.find();
     res.json({ sections: sections.map((section) => section.toObject({ getters: true })) });
   } catch (err) {
     const error = new HttpError(
