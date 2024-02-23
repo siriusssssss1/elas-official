@@ -1,6 +1,7 @@
 const db = require("../models");
 const Search = db.search;
 const User = db.user;
+const HttpError = db.httpError;
 
 /***************** START: GET USER INFO USING A CONTROLLER *****************
  * @documentation
@@ -20,62 +21,74 @@ const User = db.user;
  * @returns a response object with a status code and a message. If a
  * user is found, it also includes the found user object in the response.
  */
+
+// Get user by Id
 const getUserById = async (req, res) => {
+  
   try {
     const userId = req.params.userId;
     let foundUser = await User.findOne({ uid: userId });
+
     if (foundUser) {
       return res.status(200).send({ message: `User found!`, user: foundUser });
     }
+
     return res.status(200).send({ message: `User not found!` });
+    
   } catch (err) {
-    res
-      .status(500)
-      .send({ message: `Error saving user to your MongoDB database` });
-    return;
+    console.log(err);
+    const error = new HttpError("Error saving user to your MongoDB database", 500);
+    return next(error);
   }
 };
 /***************** END: GET USER INFO USING A CONTROLLER ******************/
 
+//Create a new user
 const createNewUser = async (req, res) => {
+
   try {
     let user = new User({
       uid: req.body.uid,
       name: req.body.name,
       username: req.body.username,
     });
+
     await user.save();
-    res.status(200).send({
-      message: `User ${user.username} created successfully!`,
-    });
+
+    res.status(200).send({ message: `User ${user.username} created successfully!`,});
+
   } catch (err) {
-    res.status(500).send({ message: `Error saving user to DB` });
-    return;
-  }
+    console.log(err);
+    const error = new HttpError('Error saving user to DB', 500);
+    return next(error);
+  } 
 };
 
+//Update user information
 const updateUser = async (req, res) => {
+
   try {
     const userId = req.params.userId;
     let foundUser = await User.findOne({ uid: userId });
-    console.log(foundUser);
+
     if (foundUser) {
       foundUser.name = req.body.name;
       foundUser.username = req.body.username;
+
       await foundUser.save();
-      return res.status(200).send({
-        message: `User details updated!`,
-      });
+
+      return res.status(200).send({ message: `User details updated!`});
     }
     return res.status(200).send({ message: `User not found!` });
+
   } catch (err) {
     console.log(err);
-    res.status(500).send({ message: `Error saving user to DB.` });
-    return;
+    const error = new HttpError('Error saving user to DB', 500);
+    return next(error);
   }
 };
 
-
+//Get the latest searches for a user.
 const getLatestSearches = async (req, res) => {
   try {
     const user_id = req.params.userId;
@@ -110,12 +123,14 @@ const getLatestSearches = async (req, res) => {
     res.json({
       latestSearches: latestSearchesToKeep.map((latestSearch) => latestSearch.search_query),
     });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
+  } catch (err) {
+    console.log(err);
+    const error = new HttpError('Error getting latest searches', 500);
+    return next(error);
+  } 
 };
 
+//Delete the latest searches for a user.
 const deleteLatestSearches =  async (req, res, next) => {
   const user_id = req.params.userId;
 
@@ -129,13 +144,10 @@ const deleteLatestSearches =  async (req, res, next) => {
       }
 
       res.status(200).json({ message: "Latest searches deleted." });
-    } catch (error) {
+    } catch (err) {
       console.log(err);
-      const httpError = new httpError(
-        `An error occurred while deleting latest searches: ${error.message}`,
-        500
-      );
-      return next(httpError);
+      const error = new HttpError(`An error occurred while deleting latest searches: ${error.message}`, 500);
+      return next(error);
     } 
 };
 

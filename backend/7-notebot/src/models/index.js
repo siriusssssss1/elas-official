@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-//mongoose.Promise = global.Promise;
 
 const db = {};
 
@@ -17,6 +16,7 @@ db.favoriteNote = require("./favoriteNoteModel");
 db.section = require("./sectionModel");
 db.widget = require("./widgetModel");
 db.search = require("./searchModel");
+db.httpError = require("./http-error");
 /***************** END: EXPORT SCHEMA AS MODULE *****************/
 
 module.exports = db;

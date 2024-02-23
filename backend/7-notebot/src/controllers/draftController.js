@@ -1,8 +1,7 @@
 const db = require("../models");
 const Note = db.note;
 const Draft = db.draft;
-const mongoose = require("mongoose");
-const HttpError = require("../models/http-error");
+const HttpError = db.httpError;
 
 
 

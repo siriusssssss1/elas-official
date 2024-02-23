@@ -12,7 +12,7 @@ userRouter.use(function (req, res, next) {
 
 /**
  * @route GET /users/:userId
- * @description Get user by ID.
+ * @description Get user by Id.
  */
 userRouter.get("/:userId", userController.getUserById);
 

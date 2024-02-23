@@ -13,7 +13,7 @@ const sectionSchema = new Schema({
     ref: 'Note',
   },
   widgets: [{
-      type: mongoose.Types.ObjectId,
+      type: String,
       ref: 'Widget',
   }],
 });

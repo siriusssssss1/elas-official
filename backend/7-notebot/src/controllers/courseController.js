@@ -4,7 +4,7 @@ const Note = db.note;
 const Section = db.section;
 const Widget = db.widget;
 const User = db.user;
-const HttpError = require("../models/http-error");
+const HttpError = db.httpError;
 
 //get all courses : test
 const getAllCourses = async (req, res, next) => {

@@ -1,4 +1,5 @@
 const db = require("../models");
+const mongoose = require("mongoose");
 const Note = db.note;
 const User = db.user;
 const Section = db.section;
@@ -6,11 +7,7 @@ const Course = db.course;
 const Widget = db.widget;
 const Search = db.search;
 const FavoriteNote = db.favoriteNote;
-const mongoose = require("mongoose");
-const HttpError = require("../models/http-error");
-// const draftModel = require("../models/draftModel");
-// const { search } = require("../routes/notes");
-
+const HttpError = db.httpError;
 
 // Get user notes by user_id
 const getNoteByNoteId = async (req, res, next) => {

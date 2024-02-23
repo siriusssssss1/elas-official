@@ -3,8 +3,7 @@ const FavoriteNote = db.favoriteNote;
 const FavoriteCourse = db.favoriteCourse;
 const Note = db.note;
 const Course = db.course;
-const mongoose = require("mongoose");
-const HttpError = require("../models/http-error");
+const HttpError = db.httpError;
 
 const toggetFavoriteNote = async (req, res, next) => {
 
