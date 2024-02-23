@@ -24,7 +24,7 @@ export const getUserInfo = async (userId) => {
 export const getCards = async () => {
   try {
 
-   const responseNr2 = await Backend.get(`/notebot/notes/all`);
+   const responseNr2 = await Backend.get(`/notebot/notes/test`);
    console.log(responseNr2.data)
    
   return {cards: responseNr2.data.notes}; 
@@ -147,7 +147,7 @@ export const createCourse = async (title, user_id) => {
 
 export const getCourses = async () => {
   try {
-    const response = await Backend.get(`notebot/courses/all`);
+    const response = await Backend.get(`notebot/courses/test`);
     console.log(response.data); 
     //const courses = response.data.map(course => course.title); // Extract course titles
 
