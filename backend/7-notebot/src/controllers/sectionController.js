@@ -187,7 +187,7 @@ const deleteSection = async (req, res, next) => {
         }
 
         const noteID = new mongoose.Types.ObjectId(section.note_id);
-        await noteModel.updateMany(
+        await Note.updateMany(
           { _id: noteID },
           {
             $pull: {

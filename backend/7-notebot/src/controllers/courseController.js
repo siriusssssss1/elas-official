@@ -1,8 +1,9 @@
+const db = require("../models");
 const Course = db.course;
-const Note = require("../models/noteModel");
-const Section = require("../models/sectionModel");
-const Widget = require("../models/widgetModel");
-const User = require("../models/userModel");
+const Note = db.note;
+const Section = db.section;
+const Widget = db.widget;
+const User = db.user;
 const HttpError = require("../models/http-error");
 
 //get all courses : test
@@ -57,14 +58,14 @@ const createCourse = async (req, res, next) => {
   const { title, user_id } = req.body;
 
   try {
-    let course = new courseModel({
+    let course = new Course({
       title: title,
       user_id: user_id,
     });
     const savedCourse = await course.save();
     const course_id = savedCourse._id;
 
-    await userModel.updateMany({uid: user_id}, {$push: {courses:course_id}});
+    await User.updateMany({uid: user_id}, {$push: {courses:course_id}});
 
     res.status(201).json({ course: course });
     return;
@@ -81,7 +82,7 @@ const deleteCourseWithNotes = async (req, res, next) => {
   const { course_id } = req.params;
   
     try {
-      const course = await courseModel.findByIdAndDelete(course_id);
+      const course = await Course.findByIdAndDelete(course_id);
       if (!course) {
         return res
           .status(404)
@@ -90,27 +91,27 @@ const deleteCourseWithNotes = async (req, res, next) => {
 
       const noteIds = course.notes;
       for (const noteId of noteIds) {
-        const note = await noteModel.findByIdAndDelete(noteId);
+        const note = await Note.findByIdAndDelete(noteId);
         
 
         if (note) {
           const sectionIds = note.sections;
 
           for (const sectionId of sectionIds) {
-            const section = await sectionModel.findByIdAndDelete(sectionId);
+            const section = await Section.findByIdAndDelete(sectionId);
 
             if (section) {
               const widgetIds = section.widgets;
 
               for (const widgetId of widgetIds) {
-                const widget = await widgetModel.findByIdAndDelete(widgetId);
+                const widget = await Widget.findByIdAndDelete(widgetId);
             }
           }
         }
       }
     }
     
-    await userModel.updateMany(
+    await User.updateMany(
       {uid: course.user_id},
       {
         $pull: {

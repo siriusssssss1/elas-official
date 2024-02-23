@@ -1,9 +1,10 @@
-const favoriteModel = require("../models/favoriteModel");
-const favoriteCourseModel = require("../models/favoriteCourseModel");
+const db = require("../models");
+const FavoriteNote = db.favoriteNote;
+const FavoriteCourse = db.favoriteCourse;
+const Note = db.note;
+const Course = db.course;
 const mongoose = require("mongoose");
 const HttpError = require("../models/http-error");
-const noteModel = require("../models/noteModel");
-const courseModel = require("../models/courseModel");
 
 const toggetFavoriteNote = async (req, res, next) => {
 
@@ -14,9 +15,9 @@ const toggetFavoriteNote = async (req, res, next) => {
     user_id: user_id,
   };
   try {
-    const favorite = await favoriteModel.findOne(payload);
+    const favorite = await FavoriteNote.findOne(payload);
 
-      const newFavorite = new favoriteModel(payload);
+      const newFavorite = new FavoriteNote(payload);
       await newFavorite.save();
    
 
@@ -38,11 +39,11 @@ const getFavNoteByUserId = async (req, res, next) => {
   try {
     const groupedNotes = [];
 
-    let favorites = await favoriteModel.find({
+    let favorites = await FavoriteNote.find({
       user_id: user_id,
     });
 
-    const notes = await noteModel.find({
+    const notes = await Note.find({
       _id: { $in: favorites.map((favorite) => favorite.note_id) },
     });
 
@@ -72,9 +73,9 @@ const toggetFavoriteCourse = async (req, res, next) => {
     user_id: user_id,
   };
   try {
-    const favorite = await favoriteCourseModel.findOne(payload);
+    const favorite = await FavoriteCourse.findOne(payload);
 
-      const newFavorite = new favoriteCourseModel(payload);
+      const newFavorite = new FavoriteCourse(payload);
       await newFavorite.save();
 
 
@@ -95,11 +96,11 @@ const getFavCourseByUserId = async (req, res, next) => {
 
   try {
 
-    let favorites = await favoriteCourseModel.find({
+    let favorites = await FavoriteCourse.find({
       user_id: user_id,
     });
 
-    const courses = await courseModel.find({
+    const courses = await Course.find({
       _id: { $in: favorites.map((favorite) => favorite.course_id) },
     });
 

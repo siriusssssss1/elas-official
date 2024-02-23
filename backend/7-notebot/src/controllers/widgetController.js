@@ -112,7 +112,7 @@ const deleteWidget = async (req, res, next) => {
       await Widget.deleteOne({ _id: widget_id });
 
       const sectionID = new mongoose.Types.ObjectId(widget.section_id);
-        await sectionModel.updateMany(
+        await Section.updateMany(
           { _id: sectionID },
           {
             $pull: {

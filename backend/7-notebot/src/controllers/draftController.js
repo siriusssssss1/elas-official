@@ -1,7 +1,9 @@
+const db = require("../models");
+const Note = db.note;
+const Draft = db.draft;
 const mongoose = require("mongoose");
 const HttpError = require("../models/http-error");
-const noteModel = require("../models/noteModel");
-const draftModel = require("../models/draftModel");
+
 
 
 const getDraftByUserId = async (req, res, next) => {
@@ -9,11 +11,11 @@ const getDraftByUserId = async (req, res, next) => {
     
     try {
   
-      let drafts = await draftModel.find({
+      let drafts = await Draft.find({
         user_id: user_id,
       });
   
-      const notes = await noteModel.find({
+      const notes = await Note.find({
         _id: { $in: drafts.map((draft) => draft.note_id) },
       });
 
@@ -44,18 +46,18 @@ const addNoteToDraft = async (req, res) => {
   };
 
   try {
-    const note = await noteModel.findById(note_id);
+    const note = await Note.findById(note_id);
 
     if (!note) {
       return res.status(404).json({ message: 'Note not found' });
     }
     
-      const draft = await draftModel.findOne(payload);
+      const draft = await Draft.findOne(payload);
   
       if (draft) {
-        await draftModel.deleteOne(payload);
+        await Draft.deleteOne(payload);
       } else {
-        const draft = new draftModel(payload);
+        const draft = new Draft(payload);
         await draft.save();
       }
       res.status(201).json({
