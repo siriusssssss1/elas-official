@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const router = express.Router();
 
+
 const chatCompletion = async (req, res)=>{
   try {
     const { message } = req.body;
@@ -20,20 +21,15 @@ const chatCompletion = async (req, res)=>{
         apiKey: process.env.OPENAI_API_KEY,
       });
       const openai = new OpenAIApi(configuration);
-
-      console.log("Sending message to ChatGPT");
-
       const close = () => {
         res.end();
       };
-
       res.writeHead(200, {
         "Content-Type": "text/event-stream",
         "Cache-Control": "no-cache",
         Connection: "keep-alive",
         "Content-Encoding": "none",
       });
-
       const completion = await openai.createChatCompletion(
         {
           model: "gpt-3.5-turbo",
@@ -57,7 +53,6 @@ const chatCompletion = async (req, res)=>{
           if (message === "[DONE]") {
             res.end();
           }
-
           try {
             const parsed = JSON.parse(message);
             const content = parsed.choices[0].delta.content;
@@ -67,22 +62,17 @@ const chatCompletion = async (req, res)=>{
             }
             res.write(`data: ${content}`);
           } catch (error) {
-            
+            return next(error);
           }
         }
       });
-
       completion.data.on("close", close);
 
       res.on("close", close);
     } catch (error) {
-      console.error("Error in ChatGPT route:", error);
-      
       return next(error);
     }
-  } catch (error) {
-    console.error("Error in request:", error);
-    
+  } catch (error) { 
     return next(error);
   }
 };
