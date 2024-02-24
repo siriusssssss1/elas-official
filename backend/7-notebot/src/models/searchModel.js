@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-// Define the schema for latest searches
+//Schema for latest searches
 const latestSearchSchema = new Schema({
     
     user_id: {

@@ -2,12 +2,9 @@ const mongoose = require("mongoose");
 
 const {Schema} = mongoose;
 
-// Define the schema for notes
+//Schema for notes
 const noteSchema = new Schema({
 
-  // archive_from_id: {
-  //   type: String,
-  // },
   user_id: {
     type: String,
     required: true,
@@ -25,7 +22,7 @@ const noteSchema = new Schema({
     ref:'Course'
   },
   sections: [{
-    type: mongoose.Types.ObjectId, //Schema.Types.ObjectId?
+    type: mongoose.Types.ObjectId, 
     ref:'Section'
   }],
   saved_by: [{

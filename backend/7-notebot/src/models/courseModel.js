@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const {Schema} = mongoose;
 
-// Define the schema for courses
+//Schema for courses
 const courseSchema = new Schema({
   
   title: {

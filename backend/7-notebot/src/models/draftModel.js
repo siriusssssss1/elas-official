@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const {Schema} = mongoose;
 
-// Define the schema for drafts
+//Schema for drafts
 const draftSchema = new Schema({
   
   note_id: [{ 

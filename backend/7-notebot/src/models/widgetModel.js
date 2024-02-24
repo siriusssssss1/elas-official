@@ -1,8 +1,7 @@
 const mongoose = require("mongoose");
 const {Schema} = mongoose;
-const WIDGET_TYPES = require("./widgetTypes");
 
-// Define the schema for widgets
+//Schema for widgets
 const widgetSchema = new Schema({
   
   type: {

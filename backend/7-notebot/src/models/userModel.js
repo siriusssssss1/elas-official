@@ -9,7 +9,7 @@ const {Schema} = mongoose;
 
 /***************** START: DEFINE A SCHEMA *****************
  * @documentation
- * A user schema for MongoDB.
+ * Schema for user
  */
 const userSchema = new Schema({
 
