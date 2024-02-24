@@ -40,6 +40,6 @@ userRouter.get("/:userId/latestSearches", userController.getLatestSearches);
  */
 userRouter.delete("/:userId/latestSearchesDeleted", userController.deleteLatestSearches);
 
-// Export the router
+// Export router
 module.exports = userRouter;
  

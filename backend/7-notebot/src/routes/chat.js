@@ -1,12 +1,14 @@
-var express = require("express");
-var router = express.Router();
+// Importing necessary modules
 var chatbotController = require("../controllers/chatbotController");
+
+// Creating a router instance
+let chatbotRouter = require("express").Router();
 
 /**
  * @route POST /chat/chatbot
  * @description Perform chat completion using ChatGPT.
  */
-router.post("/chatbot", chatbotController.chatCompletion);
+chatbotRouter.post("/chatbot", chatbotController.chatCompletion);
 
-// Export the router
-module.exports = router;
+// Export router
+module.exports = chatbotRouter;
