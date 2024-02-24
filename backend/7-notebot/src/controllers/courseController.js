@@ -7,10 +7,9 @@ const User = db.user;
 const HttpError = db.httpError;
 
 //get all courses : test
-const getAllCourses = async (req, res, next) => {
+const getAllCourses = async ( res, next) => {
   try {
     const courses = await Course.find();
-
     res.json({
       courses: courses.map((course) => course.toObject({ getters: true })),
     });
@@ -28,23 +27,18 @@ const getCoursesByUserId = async (req, res, next) => {
   const user_id = req.params.user_id;
   try {
     const user = await User.findOne({uid: user_id}).populate("courses");
-
     if (!user) {
       return res
         .status(404)
         .json({ message: "Could not find user for the provided user id." });
     }
-
     const courses = user.courses.map((course) =>
       course.toObject({ getters: true })
     );
-
-
     res.json({
       courses,
     });
   } catch (err) {
-    console.log(err);
     const error = new HttpError(
       "An error occurred while fetching courses.",
       500
@@ -54,9 +48,8 @@ const getCoursesByUserId = async (req, res, next) => {
 };
 
 //Create a new course
-const createCourse = async (req, res, next) => {
+const createCourse = async (req, res) => {
   const { title, user_id } = req.body;
-
   try {
     let course = new Course({
       title: title,
@@ -70,17 +63,14 @@ const createCourse = async (req, res, next) => {
     res.status(201).json({ course: course });
     return;
   } catch (error) {
-    console.log(error);
     res.status(500).send({ message: `Error saving course to DB` });
     return;
-    
   }
 };
 
 //delete course and its notes
 const deleteCourseWithNotes = async (req, res, next) => {
   const { course_id } = req.params;
-  
     try {
       const course = await Course.findByIdAndDelete(course_id);
       if (!course) {
@@ -88,21 +78,15 @@ const deleteCourseWithNotes = async (req, res, next) => {
           .status(404)
           .json({ message: "Could not find course for the provided id." });
       }
-
       const noteIds = course.notes;
       for (const noteId of noteIds) {
         const note = await Note.findByIdAndDelete(noteId);
-        
-
         if (note) {
           const sectionIds = note.sections;
-
           for (const sectionId of sectionIds) {
             const section = await Section.findByIdAndDelete(sectionId);
-
             if (section) {
               const widgetIds = section.widgets;
-
               for (const widgetId of widgetIds) {
                 const widget = await Widget.findByIdAndDelete(widgetId);
             }
@@ -110,7 +94,6 @@ const deleteCourseWithNotes = async (req, res, next) => {
         }
       }
     }
-    
     await User.updateMany(
       {uid: course.user_id},
       {
@@ -123,7 +106,6 @@ const deleteCourseWithNotes = async (req, res, next) => {
     );
     res.status(200).json({ message: "Course and associated notes deleted." });
     } catch (error) {
-      console.log(err);
       const httpError = new HttpError(
         `An error occurred while deleting the course: ${error.message}`,
         500
