@@ -27,17 +27,6 @@ router.post('/new', courseController.createCourse);
  */
 router.delete('/:course_id', courseController.deleteCourseWithNotes);
 
-/**
- * @route POST /courses/:course_id/favorite
- * @description Togget favorite status for a course.
- */
-router.post("/:course_id/favorite", favController.toggetFavoriteCourse);
-
-/**
- * @route GET /courses/:user_id/favorite
- * @description Get favorite courses by user ID - -  Grid view of the Favorites page.
- */
-router.get("/users/:user_id/favorite", favController.getFavCourseByUserId);
 
 // Export the router
 module.exports = router;

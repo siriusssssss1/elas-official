@@ -1,7 +1,6 @@
 var express = require("express");
 var router = express.Router();
 const noteController = require("../controllers/noteController");
-const favController = require("../controllers/favoriteController");
 
 /**
  * @route GET /notes/all
@@ -75,17 +74,7 @@ router.patch("/push_sections", noteController.pushSectionsToNote);
  */
 router.get("/note/:note_id", noteController.getNoteByNoteId);
 
-/**
- * @route POST /notes/:note_id/favorite
- * @description Togget favorite status for a note.
- */
-router.post("/:note_id/favorite", favController.toggetFavoriteNote);
 
-/**
- * @route GET /notes/users/:user_id/favorite
- * @description Get favorite notes for a specific user -  Grid view of the Favorites page.
- */
-router.get("/users/:user_id/favorite", favController.getFavNoteByUserId);
 
 /**
  * @route POST /notes/update_rating

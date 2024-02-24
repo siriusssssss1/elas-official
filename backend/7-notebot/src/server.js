@@ -62,18 +62,18 @@ const coursesRoutes = require("./routes/courses");
 const noteRoutes = require("./routes/notes");
 const sectionRoutes = require("./routes/sections");
 const widgetRoutes = require("./routes/widgets");
-//var chatRouter = require("./routes/chat");
 const chatbotRouter = require("./routes/chat");
 const draftRouter = require("./routes/drafts");
+const favoriteRouter = require("./routes/favorites");
 
 app.use(apiURL + '/users', userRoutes);
 app.use(apiURL + '/courses', coursesRoutes);
 app.use(apiURL + '/notes', noteRoutes);
 app.use(apiURL + '/sections', sectionRoutes);
 app.use(apiURL + '/widgets', widgetRoutes);
-app.use(apiURL + "/chat", chatbotRouter); // Mount the chatbotController as a middleware
-// app.use("/chat", chatRouter);
+app.use(apiURL + '/chat', chatbotRouter); // Mount the chatbotController as a middleware
 app.use(apiURL + '/drafts', draftRouter);
+app.use(apiURL + '/favorites', favoriteRouter);
 
 /***************** END: IMPORT ROUTES *****************/
 
