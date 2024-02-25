@@ -37,7 +37,7 @@ const getUserById = async (req, res) => {
     
   } catch (err) {
     console.log(err);
-    const error = new HttpError("Error saving user to your MongoDB database", 500);
+    const error = new HttpError("An error occurred while saving user to your MongoDB database", 500);
     return next(error);
   }
 };
@@ -59,7 +59,7 @@ const createNewUser = async (req, res) => {
 
   } catch (err) {
     console.log(err);
-    const error = new HttpError('Error saving user to DB', 500);
+    const error = new HttpError('An error occurred while creating a new user.', 500);
     return next(error);
   } 
 };
@@ -83,7 +83,7 @@ const updateUser = async (req, res) => {
 
   } catch (err) {
     console.log(err);
-    const error = new HttpError('Error saving user to DB', 500);
+    const error = new HttpError('An error occurred while updating a user.', 500);
     return next(error);
   }
 };
@@ -125,7 +125,7 @@ const getLatestSearches = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
-    const error = new HttpError('Error getting latest searches', 500);
+    const error = new HttpError('An error occurred while getting latest searches', 500);
     return next(error);
   } 
 };

@@ -5,7 +5,7 @@ const Note = db.note;
 const Widget = db.widget;
 const HttpError = db.httpError;
 
-//Test route to get all sections
+// Test route to get all sections
 const getSections = async (req, res, next) => {
   try {
     const sections = await Section.find();
@@ -14,12 +14,12 @@ const getSections = async (req, res, next) => {
 
   } catch (err) {
     console.log(err);
-    const error = new HttpError("An error occurred while fetching notes. ", 500);
+    const error = new HttpError("An error occurred while fetching sections. ", 500);
     return next(error);
   }
 };
 
-//Get all sections for a specific note
+// Get all sections for a specific note
 const getSectionsByNoteId = async (req, res, next) => {
     const { note_id } = req.params;
 
@@ -39,7 +39,7 @@ const getSectionsByNoteId = async (req, res, next) => {
     }
 };
 
-//Create a new section
+// Create a new section
 const createSection = async (req, res, next) => {
     const { note_id } = req.body;
   
@@ -61,7 +61,7 @@ const createSection = async (req, res, next) => {
     }
   };
 
-//Add widgets to a section
+// Add widgets to a section
 const pushWidgetsToSection = async (req, res, next) => {
   const { section_id, widget_ids } = req.body;
   
@@ -116,7 +116,7 @@ const updateSection = async (req, res, next) => {
   }
 };
 
-//Add a section to a specific note
+// Add a section to a specific note
 const addSectionToNote = async (req, res, next) => {
   const { note_id } = req.params;
 const { layout_field } = req.body; 
@@ -141,12 +141,13 @@ try {
 
   res.json({ message: "Section added to the note." });
 } catch (err) {
-  console.error(err);
-  res.status(500).json({ message: "Failed to add section to the note." });
+  console.log(err);
+  const error = new HttpError('An error occurred while adding a section to a note.', 500);
+  return next(error);
 }
 };
 
-//Update widgets for a specific section
+// Update widgets for a specific section
 const updateSectionWidgets = async (req, res, next) => {
   const { section_id } = req.params;
   const { widgets } = req.body;
@@ -170,13 +171,13 @@ const updateSectionWidgets = async (req, res, next) => {
 
   } catch (err) {
     console.log(err);
-    const error = new HttpError('An error occurred while updating a section.', 500);
+    const error = new HttpError('An error occurred while updating widgets for a section.', 500);
     return next(error);
   }
 };
 
 
-//Delete a specific section and its widgets
+// Delete a specific section and its widgets
 const deleteSection = async (req, res, next) => {
   const { section_id } = req.params;
 

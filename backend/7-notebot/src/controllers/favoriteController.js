@@ -5,6 +5,7 @@ const Note = db.note;
 const Course = db.course;
 const HttpError = db.httpError;
 
+// 
 const toggetFavoriteNote = async (req, res, next) => {
 
   const user_id = req.body.user_id;
@@ -25,8 +26,7 @@ const toggetFavoriteNote = async (req, res, next) => {
     });
   } catch (err) {
     console.log(err);
-    const error = new HttpError(" Please try again later.", 500);
-
+    const error = new HttpError("An error occured while adding a note to favorites.", 500);
     return next(error);
   }
 };
@@ -55,10 +55,7 @@ const getFavNoteByUserId = async (req, res, next) => {
     });
   } catch (err) {
     console.log(err);
-    const error = new HttpError(
-      "An error occurred while fetching notes. ",
-      500
-    );
+    const error = new HttpError("An error occurred while fetching favorite notes.", 500);
     return next(error);
   }
 };
@@ -83,7 +80,7 @@ const toggetFavoriteCourse = async (req, res, next) => {
     });
   } catch (err) {
     console.log(err);
-    const error = new HttpError(" Please try again later.", 500);
+    const error = new HttpError("An error occured while adding a course to favorites.", 500);
 
     return next(error);
   }
@@ -112,10 +109,7 @@ const getFavCourseByUserId = async (req, res, next) => {
     });
   } catch (err) {
     console.log(err);
-    const error = new HttpError(
-      "An error occurred while fetching notes. ",
-      500
-    );
+    const error = new HttpError("An error occurred while fetching favorite courses.", 500);
     return next(error);
   }
 };

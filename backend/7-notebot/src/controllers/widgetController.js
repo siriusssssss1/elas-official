@@ -4,7 +4,7 @@ const Widget = db.widget;
 const Section = db.section;
 const HttpError = db.httpError;
 
-//Test route to get a widget
+// Test route to get a widget
 const getWidget = async (req, res, next) => {
 
   try {
@@ -13,7 +13,7 @@ const getWidget = async (req, res, next) => {
 
   } catch (err) {
     console.log(err);
-    const error = new HttpError("An error occurred while fetching notes. ", 500);
+    const error = new HttpError("An error occurred while fetching widgets.", 500);
     return next(error);
   }
 };
@@ -41,7 +41,7 @@ const getWidgetsBySectionId = async (req, res, next) => {
     }
 };
 
-//Add a widget to a specific section
+// Add a widget to a specific section
 const addWidgetToSection = async (req, res, next) => {
     const section_id = req.params;
     const { type, data, layout_index } = req.body; 
@@ -73,7 +73,7 @@ const addWidgetToSection = async (req, res, next) => {
     }
 };
 
-//Update a specific widget
+// Update a specific widget
 const updateWidget = async (req, res, next) => {
   const { widget_id } = req.params;
   const { layout_index, data } = req.body;
@@ -103,7 +103,7 @@ const updateWidget = async (req, res, next) => {
   }
 };
 
-//Delete a specific widget from a specific section
+// Delete a specific widget from a specific section
 const deleteWidget = async (req, res, next) => {
   const { section_id, widget_id } = req.params;
 
@@ -133,12 +133,12 @@ const deleteWidget = async (req, res, next) => {
     res.status(200).json({ message: "Widget deleted successfully." });
   } catch (error) {
     console.log(err);
-    const httpError = new HttpError('An error occurred while deleting the widget.', 500);
+    const httpError = new HttpError('An error occurred while deleting a widget.', 500);
     return next(httpError);
   }
 };
 
-//Create a new widget
+// Create a new widget
 const createWidget = async (req, res, next) => {
   const { type, data, layout_index, section_id } = req.body;
 
@@ -156,7 +156,7 @@ const createWidget = async (req, res, next) => {
     res.status(201).json({ message: "Widget created!", widget: createdWidget });
   } catch (err) {
     console.log(err);
-    const error = new HttpError("An error occurred while creating the widget.", 500);
+    const error = new HttpError("An error occurred while creating a widget.", 500);
     return next(error);
   }
 };
