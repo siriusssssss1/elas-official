@@ -1,20 +1,16 @@
 import { LayoutSelector } from "./chooseLayout";
 import Grid from "@mui/material/Unstable_Grid2";
-import { WidgetSelector } from "../../../components/Layouts/WidgetSelector";
-import { Widget } from "../../../components/Layouts/Widget";
 import { Box, IconButton } from "@mui/material";
 import React, { useState } from "react";
-import { TextField, Typography, Button, Stack, Divider } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import ClearIcon from "@mui/icons-material/Clear";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-
 import { useAuth } from "../../../contexts/AuthProvider";
 import { deleteSection } from "./api";
-export function Section({
+
+const Section = ({
   section,
   onChange,
-
   onWidgetSelect,
   onWidgetUpdate,
   widgets,
@@ -22,8 +18,7 @@ export function Section({
   onAddAfter,
   onDuplicate,
   onDelete,
-}) 
-{}
+}) => {
   const hasLayout = section.layout_field && section.layout_field.length > 0;
   const [refresh, setRefresh] = useState(false);
   const { token, user, saveUser, logout, isAuthorized } = useAuth();
@@ -36,7 +31,8 @@ export function Section({
     } catch (error) {
       console.error(error);
     }
-  };
+  }
+};
 
   if (!hasLayout && !viewMode) {
     return (
@@ -83,7 +79,6 @@ export function Section({
             <IconButton onClick={() => onDuplicate(section)}>
               <ContentCopyIcon style={{ color: "#ED7D31", width: "20px" }} />
             </IconButton>
-
             <IconButton onClick={() => onDelete(section)}>
               <ClearIcon style={{ color: "#ED7D31", width: "20px" }} />
             </IconButton>
