@@ -19,19 +19,16 @@ import Checkbox from "@mui/material/Checkbox";
 import CloseIcon from "@mui/icons-material/Close";
 import IconButton from "@mui/material/IconButton";
 import ChooseLayout from "./Notes/chooseLayout.jsx";
-//import { LayoutSelector } from "./Notes/chooseLayout.jsx";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import EditNote from "./Notes/editNote.jsx";
-
-//import { createCourse } from "../../../../../../backend/7-notebot/src/controllers/courseController.js";
 import { useNavigate } from "react-router-dom";
 import { getCourses } from "../utils/api.js";
 import { addNoteToDrafts } from "../utils/api.js";
-import { createNotes } from "../utils/api.js";
 
 function AddNote() {
+  // Retrieve existing courses from the backend
   useEffect(() => {
-    getCourses().then((courses) => {
+    getCourses().then((courses) => {            
       // Key "message" indicates faulty course fetch
       if (courses && "message" in courses) {
         // Error in api call
@@ -47,45 +44,20 @@ function AddNote() {
   const [dropDownOptions, setDropDownOptions] = useState([]);
 
   const [newSection, setNewSection] = useState(false);
-  //const [showLayoutOptions, setShowLayoutOptions] = useState(false);
   const [selectedLayout, setSelectedLayout] = useState(null);
-  //const [showTextField, setShowTextField] = useState(false);
   const [showEditNote, setShowEditNote] = useState(false);
-  const [dynamicNoteData, setDynamicNoteData] = useState({
-    title: "Sozialpsychologie Draft",
-    user_id: "a19d4fd7-2052-42e4-8ab2-56db09944363",
-    sections: [],
-    widgets: [],
-  });
-
-  // const handleAddSectionClick = () => {
-  //   setNewSection((prevState) => !prevState);
-  //   setShowLayoutOptions(false); // Hide layout options when adding a new section
-  // };
-  // const handleLayoutOptionsClick = () => {
-  //   setShowLayoutOptions(true);
-  // };
-  // const handleHideClick = () => {
-  //   setShowLayoutOptions(false);
-  //   setNewSection(false);
-  // };
-  // const handleHideAndReset = () => {
-  //   //hiermit kann man wieder zwischen den modi switchen ()
-  //   setShowLayoutOptions(false); // Versteckt die Layout-Optionen
-  //   setNewSection(false); // Setzt newSection zurück auf false
-  // };
 
   const navigate = useNavigate();
 
   const handleLayoutSelect = (layout) => {
-    console.log("Ausgewähltes Layout:", layout);
+    console.log("Ausgewähltes Layout:", layout);    // "Ausgewähltes Layout: layout1"
     setSelectedLayout(layout);
-    setNewSection(false); // Versteckt die Layout-Optionen
-    setShowEditNote(true); // Zeigt das neue Interface an
+    setNewSection(false); // Hides Layout Options
+    setShowEditNote(true); // Shows new Interface
   };
 
-  const [noteTitle, setNoteTitle] = useState(""); // Zustandsvariable für den Titel der Notiz
-  const [titleError, setTitleError] = useState(""); // Zustandsvariable für die Fehlermeldung
+  const [noteTitle, setNoteTitle] = useState(""); // State variable for the title of the note
+  const [titleError, setTitleError] = useState(""); // Status variable for the error message
   const [openDialog, setOpenDialog] = useState(false);
   const handleClickOpen = () => {
     setOpenDialog(true);
@@ -95,93 +67,41 @@ function AddNote() {
     setOpenDialog(false);
   };
 
-  // Zustände für die Checkboxen
+  // States for the checkboxes
   const [addToDrafts, setAddToDrafts] = useState(false);
   const [createNewCourse, setCreateNewCourse] = useState(false);
 
   const handleAddToDraftsChange = (event) => {
     setAddToDrafts(event.target.checked);
     if (event.target.checked) {
-      // Logik für das Hinzufügen zu Entwürfen
-      // Zum Beispiel: handleClose oder eine andere Aktion
+      // Logic for adding to drafts
+      {/*...*/}
     }
   };
   const handleCreateNewCourseChange = (event) => {
     setCreateNewCourse(event.target.checked);
-    // Weitere Logik für "Create New Course"
+    // More logic for "Create New Course"
+    {/*...*/}
   };
-
-  // const handleSaveButtonClick = async () => {
-  //   try {
-  //     // Call createNotes function
-  //     const createdNote = await createNotes(dynamicNoteData);
-
-  //     // Handle success, e.g., show a success message
-  //     console.log('Note created successfully:', createdNote);
-  //   } catch (error) {
-  //     // Handle errors, e.g., show an error message
-  //     console.error('Error creating note:', error);
-  //   }
-  // };
-  const handleSaveButtonClick = () => {
-    // Titelvalidierung
-    if (!noteTitle.trim()) {
-      setTitleError("You forgot to add a title to your note!");
-      return; // Beenden, wenn kein Titel vorhanden ist
-    }
-
-    // Zurücksetzen der Fehlermeldung und Öffnen des Dialogs, wenn der Titel vorhanden ist
-    setTitleError("");
-    handleClickOpen();
-  };
-
-  // const handleSaveNote = async () => {
-  //   if (addToDrafts) {
-  //     try {
-  //       const response = await fetch('api/notebot/drafts/users/notes/save', {
-  //         method: 'POST',
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //           // Fügen Sie hier weitere Header hinzu, wie z.B. Authorization für Authentifizierung, falls benötigt
-  //         },
-  //         body: JSON.stringify(noteData),
-  //       });
-
-  //       if (!response.ok) {
-  //         throw new Error(`Failed to save the note to drafts: ${response.statusText}`);
-  //       }
-
-  //       const responseData = await response.json();
-  //       console.log('Note saved to drafts:', responseData);
-  //       // Weiterer Code nach erfolgreichem Speichern, z.B. Benutzerfeedback oder Navigation
-  //     } catch (error) {
-  //       console.error('Error saving note to drafts:', error);
-  //       // Fehlerbehandlung, z.B. Anzeigen einer Fehlermeldung
-  //     }
-
-  //     navigate('../Drafts'); //right path
-  // }
-  //};
 
   const handleSaveNote = async () => {
+    // Title validation
     if (!noteTitle.trim()) {
-      // Setzen der Fehlermeldung, wenn kein Titel vorhanden ist
       setTitleError("You forgot to add a title to your note!");
-      return; // Beenden der Funktion, um das Speichern zu verhindern
+      return; 
     }
-
-    // Zurücksetzen der Fehlermeldung, wenn der Titel vorhanden ist
+    // Reset the error message and open the dialogue if the title exists
     setTitleError("");
+    handleClickOpen();
 
     if (addToDrafts) {
       try {
-        const result = await addNoteToDrafts(); // Assuming noteData is available
+        const result = await addNoteToDrafts(); 
         console.log("Note saved to drafts:", result);
 
-        navigate("/Drafts"); //get right path
+        navigate("/Drafts");   
       } catch (error) {
         console.error("Error saving note to drafts:", error);
-        // Fehlerbehandlung, z.B. Anzeigen einer Fehlermeldung
       }
     }
   };
@@ -203,8 +123,8 @@ function AddNote() {
           placeholder="Add Note Title"
           value={noteTitle}
           onChange={(e) => setNoteTitle(e.target.value)}
-          error={!!titleError} // Zeigt einen Fehlerstatus an, wenn titleError einen Wert hat
-          helperText={titleError} // Zeigt die Fehlermeldung als Hilfetext an
+          error={!!titleError} 
+          helperText={titleError} 
           sx={{
             width: "224px",
             height: "60px",
@@ -236,23 +156,11 @@ function AddNote() {
             },
           }}
           startIcon={<SaveIcon />}
-          //onClick={handleSaveButtonClick}
-          //onClick={handleClickOpen}
-          onClick={handleSaveButtonClick}
+          onClick={handleSaveNote}
         >
           Save
         </Button>
       </Box>
-
-      {/* Button zum Umschalten der Layout-Optionen */}
-      {/* <Button onClick={() => setNewSection(prevState => !prevState)}>
-        {newSection ? "Layout ausblenden" : "Layout wählen"}
-      </Button>
-
-      {newSection && (
-        <ChooseLayout onLayoutSelect={handleLayoutSelect} />
-      )} */}
-
       <Dialog onClose={handleClose} open={openDialog} sx={{ height: "800px" }}>
         <DialogTitle sx={{ m: 0, p: 2 }}>
           Add note to course
@@ -284,17 +192,17 @@ function AddNote() {
           <Box
             sx={{
               display: "flex",
-              justifyContent: "space-between", // Platz zwischen Checkboxen und Button
-              width: "100%", // Volle Breite des Dialogs nutzen
-              paddingTop: 2, // Optionaler Abstand nach oben
+              justifyContent: "space-between", 
+              width: "100%", 
+              paddingTop: 2, 
             }}
           >
             <Box
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                alignItems: "flex-start", // optional, für linksbündige Checkboxen
-                marginRight: 2, // optional, Abstand zum "Assign and Save" Button
+                alignItems: "flex-start", 
+                marginRight: 2, 
               }}
             >
               <FormControlLabel
@@ -306,7 +214,7 @@ function AddNote() {
                     color="primary"
                   />
                 }
-                label="Or add to drafts"
+                label= "Or add to drafts"
               />
               <FormControlLabel
                 control={
@@ -317,22 +225,20 @@ function AddNote() {
                     color="primary"
                   />
                 }
-                label="Or create new course"
+                label= "Or create new course"
               />
             </Box>
             <Button
-              //onClick={createCourse}
               onClick={handleSaveNote}
               variant="contained"
               sx={{
-                bgcolor: "#ED7D31", // Farbe des Buttons
-                color: "white", // Textfarbe
+                bgcolor: "#ED7D31", 
+                color: "white", 
                 "&:hover": {
-                  bgcolor: "darken(#ED7D31, 0.2)", // Dunklere Farbe beim Hover
+                  bgcolor: "darken(#ED7D31, 0.2)", // Darker color while hovering
                 },
-                alignSelf: "flex-end", // Button nach unten ausrichten
-                textTransform: "none", // Standardmäßige Großbuchstaben entfernen
-                // Optional können Sie hier die Schriftart, Größe usw. anpassen
+                alignSelf: "flex-end", 
+                textTransform: "none", 
               }}
               endIcon={<CheckIcon />}
             >
@@ -343,7 +249,7 @@ function AddNote() {
       </Dialog>
 
       {newSection && (
-        // Anstatt eines "Hide"-Buttons, zeigen Sie die ChooseLayout-Komponente
+        // Show ChooseLayout component
         <ChooseLayout onLayoutSelect={handleLayoutSelect} />
       )}
 
@@ -398,9 +304,6 @@ function AddNote() {
                 },
               }}
               onClick={() => setNewSection((prevState) => !prevState)}
-              //onClick={handleLayoutOptionsClick}
-              //onClick= {() => navigate ("Projects/NoteBot/Notes/Sectiom")}
-              //onClick={handleLayoutOptionsClick}
             />
             <span
               style={{
@@ -418,11 +321,6 @@ function AddNote() {
           </div>
         </Paper>
       )}
-      {/* {showLayoutOptions && (
-        <LayoutSelector onLayoutSelect={handleLayoutSelect} />
-      )}
-      {/* {showLayoutOptions && <LayoutSelector />}{" "}
-      Zeige Layout-Optionen, wenn showLayoutOptions wahr ist */}
     </Container>
   );
 }
