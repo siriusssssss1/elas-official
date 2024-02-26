@@ -8,8 +8,8 @@ import {
   Typography,
 } from "@mui/material";
 
-// Layout12 Komponente
-const Layout12 = () => (
+// Layout1 Komponente
+const Layout1 = () => (
   <Box
     sx={{
       display: "flex",
@@ -20,8 +20,8 @@ const Layout12 = () => (
   />
 );
 
-// Layout66 Komponente
-const Layout66 = () => (
+// Layout2 Komponente
+const Layout2 = () => (
   <Box sx={{ display: "flex", width: "100%", height: "100px" }}>
     <Box
       sx={{
@@ -34,8 +34,8 @@ const Layout66 = () => (
   </Box>
 );
 
-// Layout444 Komponente
-const Layout444 = () => (
+// Layout3 Komponente
+const Layout3 = () => (
   <Box sx={{ display: "flex", width: "100%", height: "100px" }}>
     <Box
       sx={{
@@ -57,8 +57,8 @@ const Layout444 = () => (
 );
 
 const ChooseLayout = ({ onLayoutSelect }) => {
-  const handleLayoutClick = (layout) => {
-    console.log("Layout gewählt:", layout);
+  const handleLayoutSelection = (layout) => {
+    console.log("Layout gewählt:", layout);     // "Layout gewählt: Layout1"
     onLayoutSelect(layout);
   };
 
@@ -86,12 +86,9 @@ const ChooseLayout = ({ onLayoutSelect }) => {
         </Typography>
 
         <Grid container spacing={1} justifyContent="center">
-          {/* Erster Grid-Container als Grid-Item */}
-
-          {/* Zweiter Grid-Container als Grid-Item */}
           <Grid item container spacing={1.5} justifyContent="center">
             <Grid item xs={1.6}>
-              <CardActionArea onClick={() => handleLayoutClick("layout1")}>
+              <CardActionArea onClick={() => handleLayoutSelection("layout1")}>
                 <Card
                   sx={{
                     backgroundColor: "#e0e0e0",
@@ -101,12 +98,13 @@ const ChooseLayout = ({ onLayoutSelect }) => {
                     height: "100px",
                   }}
                 >
-                  <Layout12 />
+                  <Layout1 />
                 </Card>
               </CardActionArea>
             </Grid>
+
             <Grid item xs={1.6}>
-              <CardActionArea onClick={() => handleLayoutClick("layout2")}>
+              <CardActionArea onClick={() => handleLayoutSelection("layout2")}>
                 <Card
                   sx={{
                     backgroundColor: "#e0e0e0",
@@ -116,12 +114,13 @@ const ChooseLayout = ({ onLayoutSelect }) => {
                     height: "100px",
                   }}
                 >
-                  <Layout66 />
+                  <Layout2 />
                 </Card>
               </CardActionArea>
             </Grid>
+            
             <Grid item xs={1.6}>
-              <CardActionArea onClick={() => handleLayoutClick("layout3")}>
+              <CardActionArea onClick={() => handleLayoutSelection("layout3")}>
                 <Card
                   sx={{
                     backgroundColor: "#e0e0e0",
@@ -131,7 +130,7 @@ const ChooseLayout = ({ onLayoutSelect }) => {
                     height: "100px",
                   }}
                 >
-                  <Layout444 />
+                  <Layout3 />
                 </Card>
               </CardActionArea>
             </Grid>
