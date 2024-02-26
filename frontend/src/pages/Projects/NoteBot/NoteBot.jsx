@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Grid, Typography } from "@mui/material";
 import { getUserInfo } from "./utils/api.js";
 import Button from "@mui/material/Button";
-//import Home from "./components/home";
-//import SavedNotesList from "./components/saved-list";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
@@ -11,12 +9,8 @@ import MyNotes from "./components/MyNotes.jsx";
 import MyFavorites from "./components/MyFavorites.jsx";
 import Drafts from "./components/Drafts.jsx";
 import AddNote from "./components/AddNote.jsx";
-//import CreateNote from "./utils/notes/CreateNote.jsx";
 import SearchComponent from './components/search.jsx';
-
-
 import noteBotLogo from "../../../assets/images/noteBot-logo.png";
-
 import {
   Routes,
   Route,
@@ -25,7 +19,7 @@ import {
   useLocation,
 } from "react-router-dom";
 
-function CustomTabPanel(props) {
+function CustomTabPanel(props) {        // Simple TabPanel component for use with Material UI tabs
   const { children, value, index, ...other } = props;
 
   return (
@@ -45,13 +39,7 @@ function CustomTabPanel(props) {
   );
 }
 
-// CustomTabPanel.propTypes = {
-//   children: PropTypes.node,
-//   index: PropTypes.number.isRequired,
-//   value: PropTypes.number.isRequired,
-// };
-
-function a11yProps(index) {
+function a11yProps(index) {       // For accessibility
   return {
     id: `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
@@ -60,7 +48,7 @@ function a11yProps(index) {
 
 export default function NoteBot() {
   const navigate = useNavigate();
-  const [user, setUser] = useState({
+  const [user, setUser] = useState({    // State variables for user information and the active tab value
     message: "Server not connected",
     user: {
       uid: "",
@@ -76,9 +64,11 @@ export default function NoteBot() {
   };
 
   useEffect(() => {
+    // getUserInfoFunction retrieves user information based on user ID
     let elasUser = JSON.parse(sessionStorage.getItem("elas-user"));
-    async function getUserInfoFunction(userId) {
+    async function getUserInfoFunction(userId) {      
       let reponse = await getUserInfo(userId);
+      // Update the user state based on the server response
       if (reponse.user !== undefined) {
         setUser((prevState) => ({
           ...prevState,
@@ -97,7 +87,7 @@ export default function NoteBot() {
       }
     }
     getUserInfoFunction(elasUser.id);
-  }, []);
+  }, []);   // Only once
 
   return (
     <Grid container justifyContent="center" sx={{ py: 4, px: 2 }}>
@@ -116,7 +106,7 @@ export default function NoteBot() {
              }}
             />
               <div className="App">
-                {/* Your other components */}
+                {/* Other components */}
                 <SearchComponent />
               </div>
           </Grid>
@@ -131,7 +121,7 @@ export default function NoteBot() {
                     justifyContent: "space-around",
                     
                   }}
-                >
+                > 
                   <Tabs
                     value={value}
                     onChange={handleChange}
@@ -160,18 +150,11 @@ export default function NoteBot() {
                         borderColor: "#ED7D31", 
                         marginRight: 6,
                       }}
-                      onClick={() => navigate("/projects/notebot/notes/create")} //adding Note
+                      onClick={() => navigate("/projects/notebot/notes/create")} // Button for adding Notes
                     >
                       {" "}
                       + ADD NOTE{" "}
                     </Button>
-
-                    {/* label: "Add Note",
-            startIcon: <AddIcon />,
-            onClick: () => navigate("/notes/create"),
-            color: "primary", */}
-
-                
                   </Tabs>
                 </Box>
                 <CustomTabPanel value={value} index={0}>
@@ -187,13 +170,8 @@ export default function NoteBot() {
                   <AddNote />
                 </CustomTabPanel>
               </Box>
-              {/* <CustomTabPanel value={value} index={4}>
-                <CreateNote />
-              </CustomTabPanel> */}
             </Grid>
           </Grid>
-          {/* <Home />
-          <SavedNotesList /> */}
         </Grid>
       </Grid>
     </Grid>
