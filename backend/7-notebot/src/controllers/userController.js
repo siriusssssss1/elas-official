@@ -43,7 +43,7 @@ const getUserById = async (req, res) => {
 };
 /***************** END: GET USER INFO USING A CONTROLLER ******************/
 
-//Create a new user
+// Create a new user
 const createNewUser = async (req, res) => {
 
   try {
@@ -64,7 +64,7 @@ const createNewUser = async (req, res) => {
   } 
 };
 
-//Update user information
+// Update user information
 const updateUser = async (req, res) => {
 
   try {
@@ -88,7 +88,7 @@ const updateUser = async (req, res) => {
   }
 };
 
-//Get the latest searches for a user.
+// Get the latest searches for a user.
 const getLatestSearches = async (req, res) => {
   try {
     const user_id = req.params.userId;
@@ -120,9 +120,8 @@ const getLatestSearches = async (req, res) => {
     // Keep only the latest 6 entries
     const latestSearchesToKeep = latestSearchQueue.slice(-6);
 
-    res.json({
-      latestSearches: latestSearchesToKeep.map((latestSearch) => latestSearch.search_query),
-    });
+    res.json({latestSearches: latestSearchesToKeep.map((latestSearch) => latestSearch.search_query)});
+
   } catch (err) {
     console.log(err);
     const error = new HttpError('An error occurred while getting latest searches', 500);
@@ -130,25 +129,26 @@ const getLatestSearches = async (req, res) => {
   } 
 };
 
-//Delete the latest searches for a user.
+// Delete the latest searches for a user.
 const deleteLatestSearches =  async (req, res, next) => {
   const user_id = req.params.userId;
 
-    try {
-      const latestSearch = await Search.deleteMany({ user_id });
+  try {
+    const latestSearch = await Search.deleteMany({ user_id });
 
-      if (latestSearch.deletedCount === 0) {
-        return res
-          .status(404)
-          .json({ message: "Could not find latest searches for the provided id." });
-      }
+    if (latestSearch.deletedCount === 0) {
+      return res
+        .status(404)
+        .json({ message: "Could not find latest searches for the provided id." });
+    }
 
-      res.status(200).json({ message: "Latest searches deleted." });
-    } catch (err) {
-      console.log(err);
-      const error = new HttpError(`An error occurred while deleting latest searches: ${error.message}`, 500);
-      return next(error);
-    } 
+    res.status(200).json({ message: "Latest searches deleted." });
+
+  } catch (err) {
+    console.log(err);
+    const error = new HttpError(`An error occurred while deleting latest searches: ${error.message}`, 500);
+    return next(error);
+  } 
 };
 
 exports.getUserById = getUserById;

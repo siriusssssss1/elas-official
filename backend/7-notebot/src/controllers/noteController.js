@@ -1,5 +1,6 @@
 const db = require("../models");
 const mongoose = require("mongoose");
+const { countDocuments } = require("../models/favoriteCourseModel");
 const Note = db.note;
 const User = db.user;
 const Section = db.section;
@@ -61,6 +62,7 @@ const getNoteWidgets = async (req, res, next) => {
     res.json({ note, sections, widgets });
 
   } catch (err) {
+    console.log(err);
     const error = new HttpError("An error occurred while getting widgets for a note. ", 500);
     return next(error);
   }
@@ -380,6 +382,7 @@ const getNotesByUserIdAndCourseId = async (req, res, next) => {
     });
 
   } catch (err) {
+    console.log(err);
     const error = new HttpError("An error occurred while fetching notes. ", 500);
     return next(error);
   }
@@ -553,6 +556,7 @@ const getNoteByNoteId = async (req, res, next) => {
     res.json({ notes: groupedNotesArray });
 
   } catch (err) {
+    console.log(err);
     const error = new HttpError("An error occurred while fetching notes.", 500);
     return next(error);
   }
@@ -598,6 +602,7 @@ const updateRating = async (req, res, next) => {
     });
 
   } catch (err) {
+    console.log(err);
     const error = new HttpError("An error occured while updating the rating of a note.", 500);
     return next(error);
   }
@@ -627,7 +632,9 @@ const addNoteToCourse = async (req, res, next) => {
     await note.save();
 
     res.json({ message: "Note added to the course." });
+    
   } catch (err) {
+    console.log(err);
     const error = new HttpError("An error occured while adding a note to a course.", 500);
     return next(error);
   }

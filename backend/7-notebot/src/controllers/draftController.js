@@ -25,6 +25,7 @@ const getDraftByUserId = async (req, res, next) => {
     });
 
   } catch (err) {
+    console.log(err);
     const error = new HttpError("An error occurred while fetching drafts.", 500);
     return next(error);
   }
@@ -57,6 +58,7 @@ const addNoteToDraft = async (req, res) => {
     });
 
   } catch (err) {
+    console.log(err);
     const error = new HttpError("An error occurred while adding a note to drafts.", 500);
     return next(error);
   }

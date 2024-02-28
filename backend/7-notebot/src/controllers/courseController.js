@@ -17,6 +17,7 @@ const getAllCourses = async ( res, next) => {
     });
 
   } catch (err) {
+    console.log(err);
     const error = new HttpError("An error occures while fetching courses.", 500);
     return next(error);
   }
@@ -43,6 +44,7 @@ const getCoursesByUserId = async (req, res, next) => {
     });
 
   } catch (err) {
+    console.log(err);
     const error = new HttpError("An error occurred while fetching courses.", 500);
     return next(error);
   }
@@ -67,6 +69,7 @@ const createCourse = async (req, res) => {
     return;
 
   } catch (err) {
+    console.log(err);
     const error = new HttpError("An error occurred while creating a course.", 500);
     return next(error);
   }
@@ -115,6 +118,7 @@ const deleteCourseWithNotes = async (req, res, next) => {
     res.status(200).json({ message: "Course and associated notes deleted." });
 
     } catch (error) {
+      console.log(err);
       const httpError = new HttpError('An error occurred while deleting a course', 500);
       return next(httpError);
     } 

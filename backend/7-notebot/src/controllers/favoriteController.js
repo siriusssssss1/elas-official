@@ -21,9 +21,7 @@ const toggetFavoriteNote = async (req, res, next) => {
       const newFavorite = new FavoriteNote(payload);
       await newFavorite.save();
    
-    res.status(201).json({
-      message: "Updated successfully !",
-    });
+    res.status(201).json({ message: "Updated successfully !"});
 
   } catch (err) {
     console.log(err);
@@ -77,10 +75,7 @@ const toggetFavoriteCourse = async (req, res, next) => {
       const newFavorite = new FavoriteCourse(payload);
       await newFavorite.save();
 
-
-    res.status(201).json({
-      message: "Updated successfully !",
-    });
+    res.status(201).json({message: "Updated successfully !"});
 
   } catch (err) {
     console.log(err);

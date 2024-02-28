@@ -9,6 +9,7 @@ const getWidget = async (req, res, next) => {
 
   try {
     const widgets = await Widget.find();
+
     res.json({ widgets: widgets.map((widget) => widget.toObject({ getters: true })) });
 
   } catch (err) {
@@ -20,57 +21,59 @@ const getWidget = async (req, res, next) => {
 
 // Get widgets for a specific section
 const getWidgetsBySectionId = async (req, res, next) => {
-    const { section_id } = req.params;
+  const { section_id } = req.params;
 
-    try {
-        const section = await Section.findById(section_id).populate("widgets");
+  try {
+    const section = await Section.findById(section_id).populate("widgets");
 
-        if(!section) {
-          return res.status(404).json({message: "Section not found."});
-        }
-    
-        if (!section.widgets || section.widgets.length === 0) {
-            return res.status(404).json({ message: "Section has no widgets." });
-        }
-
-        res.json({ widgets: section.widgets.map((widget) => widget.toObject({ getters: true })) });
-    } catch (err) {
-      console.log(err);
-      const error = new HttpError("An error occurred while fetching widgets.", 500);
-      return next(error);
+    if(!section) {
+      return res.status(404).json({message: "Section not found."});
     }
+    
+    if (!section.widgets || section.widgets.length === 0) {
+      return res.status(404).json({ message: "Section has no widgets." });
+    }
+
+    res.json({ widgets: section.widgets.map((widget) => widget.toObject({ getters: true })) });
+    
+  } catch (err) {
+    console.log(err);
+    const error = new HttpError("An error occurred while fetching widgets.", 500);
+    return next(error);
+  }
 };
 
 // Add a widget to a specific section
 const addWidgetToSection = async (req, res, next) => {
-    const section_id = req.params;
-    const { type, data, layout_index } = req.body; 
+  const section_id = req.params;
+  const { type, data, layout_index } = req.body; 
   
-    try {
-      const section = await Section.findById(section_id);
+  try {
+    const section = await Section.findById(section_id);
   
-      if (!section) {
-        return res.status(404).json({ message: "Section not found." });
-      }
-  
-      const widget = new Widget({
-        type,
-        data,
-        layout_index,
-        section_id: section._id,
-      });
-  
-      await widget.save();
-  
-      section.widgets.push(widget._id);
-      await section.save();
-  
-      res.json({ message: "Widget added to the section." });
-    } catch (err) {
-      console.log(err);
-      const error = new HttpError("An error occurred while adding the widget to the section.", 500);
-      return next(error);
+    if (!section) {
+      return res.status(404).json({ message: "Section not found." });
     }
+  
+    const widget = new Widget({
+      type,
+      data,
+      layout_index,
+      section_id: section._id,
+    });
+  
+    await widget.save();
+  
+    section.widgets.push(widget._id);
+    await section.save();
+
+    res.json({ message: "Widget added to the section." });
+
+  } catch (err) {
+    console.log(err);
+    const error = new HttpError("An error occurred while adding the widget to the section.", 500);
+    return next(error);
+  }
 };
 
 // Update a specific widget
@@ -79,22 +82,22 @@ const updateWidget = async (req, res, next) => {
   const { layout_index, data } = req.body;
 
   try {
-      if (!layout_index || !data ) {
-          return res.status(400).json({ message: "Invalid widget data." });
-      }
+    if (!layout_index || !data ) {
+      return res.status(400).json({ message: "Invalid widget data." });
+    }
 
-      const widget = await Widget.findById(widget_id);
+    const widget = await Widget.findById(widget_id);
 
-      if (!widget) {
-          return res.status(404).json({ message: "Could not find widget for the provided id." });
-      }
+    if (!widget) {
+      return res.status(404).json({ message: "Could not find widget for the provided id." });
+    }
 
-      widget.layout_index = layout_index;
-      widget.data = data;
+    widget.layout_index = layout_index;
+    widget.data = data;
       
-      await widget.save();
+    await widget.save();
 
-      res.status(200).json({ message: "Widget updated!", widget: widget.toObject({ getters: true }) });
+    res.status(200).json({ message: "Widget updated!", widget: widget.toObject({ getters: true }) });
 
   } catch (err) {
     console.log(err);
@@ -108,7 +111,6 @@ const deleteWidget = async (req, res, next) => {
   const { section_id, widget_id } = req.params;
 
   try {
-
     const widget = await Widget.findById(widget_id);
 
     if (!widget) {
@@ -131,6 +133,7 @@ const deleteWidget = async (req, res, next) => {
     );
 
     res.status(200).json({ message: "Widget deleted successfully." });
+
   } catch (error) {
     console.log(err);
     const httpError = new HttpError('An error occurred while deleting a widget.', 500);
@@ -143,7 +146,6 @@ const createWidget = async (req, res, next) => {
   const { type, data, layout_index, section_id } = req.body;
 
   try {
-
     const createdWidget = new Widget({
       type,
       data,
@@ -154,6 +156,7 @@ const createWidget = async (req, res, next) => {
     await createdWidget.save();
 
     res.status(201).json({ message: "Widget created!", widget: createdWidget });
+
   } catch (err) {
     console.log(err);
     const error = new HttpError("An error occurred while creating a widget.", 500);

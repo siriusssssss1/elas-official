@@ -21,45 +21,44 @@ const getSections = async (req, res, next) => {
 
 // Get all sections for a specific note
 const getSectionsByNoteId = async (req, res, next) => {
-    const { note_id } = req.params;
+  const { note_id } = req.params;
 
-    try {
-       const note = await Note.findById(note_id).populate('sections');
+  try {
+    const note = await Note.findById(note_id).populate('sections');
 
-         if (!note.sections || note.sections.length === 0) {
-            return res.status(404).json({ message: "Could not find sections for the provided note id." });
-        }
-
-        res.json({ sections: note.sections.map(section => section.toObject({ getters: true })) });
-
-    } catch (err) {
-      console.log(err); 
-      const error = new HttpError('An error occurred while fetching sections.', 500);
-      return next(error);
+    if (!note.sections || note.sections.length === 0) {
+      return res.status(404).json({ message: "Could not find sections for the provided note id." });
     }
+
+    res.json({ sections: note.sections.map(section => section.toObject({ getters: true })) });
+
+  } catch (err) {
+    console.log(err); 
+    const error = new HttpError('An error occurred while fetching sections.', 500);
+    return next(error);
+  }
 };
 
 // Create a new section
 const createSection = async (req, res, next) => {
-    const { note_id } = req.body;
+  const { note_id } = req.body;
   
-    try {
+  try {
+    const createdSection = new Section({
+      note_id,
+      widgets: [],
+    });
+  
+    await createdSection.save();
+  
+    res.status(201).json({ message: "Section created!", section: createdSection });
 
-      const createdSection = new Section({
-        note_id,
-        widgets: [],
-      });
-  
-      await createdSection.save();
-  
-      res.status(201).json({ message: "Section created!", section: createdSection });
-
-    } catch (err) {
-      console.log(err);
-      const error = new HttpError('An error occurred while creating a section.', 500);
-      return next(error);
-    }
-  };
+  } catch (err) {
+    console.log(err);
+    const error = new HttpError('An error occurred while creating a section.', 500);
+    return next(error);
+  }
+};
 
 // Add widgets to a section
 const pushWidgetsToSection = async (req, res, next) => {
@@ -81,6 +80,7 @@ const pushWidgetsToSection = async (req, res, next) => {
     res.status(200).json({ message: "Widgets added to section.", section });
 
   } catch (err) {
+    console.log(err);
     const error = new HttpError('An error occurred while adding widgets to a section.', 500);
     return next(error);
   }
@@ -119,32 +119,33 @@ const updateSection = async (req, res, next) => {
 // Add a section to a specific note
 const addSectionToNote = async (req, res, next) => {
   const { note_id } = req.params;
-const { layout_field } = req.body; 
+  const { layout_field } = req.body; 
 
-try {
-  const note = await Note.findById(note_id);
+  try {
+    const note = await Note.findById(note_id);
 
-  if (!note) {
-    return res.status(404).json({ message: "Note not found." });
+    if (!note) {
+      return res.status(404).json({ message: "Note not found." });
+    }
+
+    const section = new Section({
+      layout_field,
+      note_id: note._id,
+      widgets: [],
+    });
+
+    await section.save();
+
+    note.sections.push(section._id);
+    await note.save();
+
+    res.json({ message: "Section added to the note." });
+    
+  } catch (err) {
+    console.log(err);
+    const error = new HttpError('An error occurred while adding a section to a note.', 500);
+    return next(error);
   }
-
-  const section = new Section({
-    layout_field,
-    note_id: note._id,
-    widgets: [],
-  });
-
-  await section.save();
-
-  note.sections.push(section._id);
-  await note.save();
-
-  res.json({ message: "Section added to the note." });
-} catch (err) {
-  console.log(err);
-  const error = new HttpError('An error occurred while adding a section to a note.', 500);
-  return next(error);
-}
 };
 
 // Update widgets for a specific section
