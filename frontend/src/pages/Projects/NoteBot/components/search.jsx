@@ -35,10 +35,10 @@ const SearchComponent = () => {
           {
           state: { searchResults: result.cards, keyword: searchValue },
         });
-        // Handle the result as needed
+        
       } catch (error) {
         console.error('Error fetching notes:', error);
-        // Handle the error
+        
       }
     } else {
       console.error('Search value is undefined or empty.');
@@ -51,7 +51,6 @@ const SearchComponent = () => {
     }
   };
 
-  // <Divider style={{ backgroundColor: '#ED7D31', marginTop: '-26px', marginLeft: '80px', width: '60%' }} />
 
 
   return (
