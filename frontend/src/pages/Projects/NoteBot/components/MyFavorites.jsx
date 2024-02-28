@@ -41,20 +41,6 @@ export default function MyFavorites() {
     }
   };
 
-  // if (cardsInfo.cards !== undefined) {
-  //   const favorites = cardsInfo.cards.filter((card) => card.isFavorite);
-  //   setFavoriteCards({ cards: favorites });
-  //   console.log(favorites);
-  // } else {
-  //   setFavoriteCards((prevState) => ({
-  //     ...prevState,
-  //     message: cardsInfo.message,
-  //   }));
-  // }
-  //   }
-  //   getFavoriteCards();
-  // }, []);
-
   const handleDeleteNote = (id) => {
     const confirmDelete = window.confirm(
       "Möchten Sie diese Notiz wirklich löschen?"
@@ -113,14 +99,7 @@ export default function MyFavorites() {
             },
           }}
         >
-          {/* <Grid item>
-            {Array(2)
-              .fill(favoriteCards.cards)
-              .flat()
-              .map((card) => (
-                <NoteCard key={card.id} card={card} />
-              ))}
-          </Grid> */}
+           
         </Grid>
 
         {/* Right side grid */}
