@@ -5,7 +5,7 @@ const noteController = require("../controllers/noteController");
 let noteRouter = require("express").Router();
 
 /**
- * @route GET /notes/all
+ * @route GET /notes/test
  * @description Test route to get all notes.
  */
 noteRouter.get('/test', noteController.getNotes);

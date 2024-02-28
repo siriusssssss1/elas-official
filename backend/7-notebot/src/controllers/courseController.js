@@ -7,7 +7,7 @@ const User = db.user;
 const HttpError = db.httpError;
 
 // Test route to get all courses.
-const getAllCourses = async ( res, next) => {
+const getAllCourses = async (res, next) => {
 
   try {
     const courses = await Course.find();

@@ -5,7 +5,7 @@ const courseController = require("../controllers/courseController");
 let courseRouter = require("express").Router();
 
 /**
- * @route GET /courses/all
+ * @route GET /courses/test
  * @description Test route to get all courses.
  */
 courseRouter.get('/test', courseController.getAllCourses);

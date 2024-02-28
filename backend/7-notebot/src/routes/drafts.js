@@ -8,7 +8,7 @@ let draftRouter = require("express").Router();
  * @route GET /drafts/users/:user_id
  * @description Get drafts by user ID - Drafts page (Grid view): when clicking on Drafts on the Dashboard page.
  */
-draftRouter.get("/users/:user_id/", draftController.getDraftByUserId);
+draftRouter.get("/users/:user_id", draftController.getDraftByUserId);
 
 /**
  * @route PATCH /drafts/users/notes/save
