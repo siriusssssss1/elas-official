@@ -14,6 +14,7 @@ export default function MyNotes() {
     cards: [],
   });
 
+  // Sends API request to retrieve a list of notes/cards.
   useEffect(() => {
     async function getCardInfo() {
       const cardsInfo = await getCards();
@@ -30,19 +31,6 @@ export default function MyNotes() {
     }
     getCardInfo();
   }, []);
-  // const handleDeleteNote = (id) => {
-  //   const updatedCards = cards.cards.filter((card) => card.id !== id);
-  //   setCards({ message: cards.message, cards: updatedCards });
-  // };
-  // const handleDeleteNote = (id) => {
-  //  const confirmDelete = window.confirm(
-  //    "Möchten Sie diese Notiz wirklich löschen?"
-  //  );
-  //  if (confirmDelete) {  
-  //    console.log(`Notiz mit der ID ${id} wurde gelöscht.`);
-  //  }
-  // };
-
 
   // const handleToggleFavorite = (id) => {
   //   setCards((prevCards) => {
@@ -52,10 +40,11 @@ export default function MyNotes() {
   //     return { message: prevCards.message, cards: updatedCards };
   //   });
   // };
+
   const handleToggleFavorite = async (id) => {
     try {
       await toggleFavNote(id);
-      // Aktualisieren Sie hier den lokalen Zustand, um die Änderung sofort anzuzeigen
+      // Update the local state here to show the change immediately
       setFavoriteCards(prevCards => {
         const updatedCards = prevCards.cards.map(card => {
           if (card.id === id) {
@@ -81,7 +70,6 @@ export default function MyNotes() {
         cards: updatedData,
       }));
     } catch (error) {
-      // Handle any errors that occur during the server operation
       console.error("Error deleting note:", error);
     }
   };
