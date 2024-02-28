@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import { Grid, Typography, Divider, Box } from "@mui/material";
 import NoteCard from "./NoteCard";
 import noteBotLogo from "../../../../assets/images/noteBot-logo.png";
-import SearchComponent from "./search.jsx";
+import Search from "./search.jsx";
 
 const SearchResultsPage = () => {
   const location = useLocation();
@@ -28,7 +28,7 @@ const SearchResultsPage = () => {
           />
         </Grid>
         <Grid item >
-  <SearchComponent />
+  <Search />
 </Grid>
       </Grid>
       <Divider />
@@ -48,15 +48,13 @@ const SearchResultsPage = () => {
           <Typography variant="h4" mt={2} mb={2} align="left">
             Search Results for: {keyword}
           </Typography>
-          
+
           <Grid container spacing={2}>
             {searchResults.map((card) => (
               <NoteCard
                 key={card.id}
                 card={card}
                 style={{ marginBottom: "20px" }}
-                //   handleDeleteNote={handleDeleteNote}
-                //   handleToggleFavorite={handleToggleFavorite}
               />
             ))}
           </Grid>

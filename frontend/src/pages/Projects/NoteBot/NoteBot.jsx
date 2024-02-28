@@ -9,7 +9,7 @@ import MyNotes from "./components/MyNotes.jsx";
 import MyFavorites from "./components/MyFavorites.jsx";
 import Drafts from "./components/Drafts.jsx";
 import AddNote from "./components/AddNote.jsx";
-import SearchComponent from './components/search.jsx';
+import Search from './components/search.jsx';
 import noteBotLogo from "../../../assets/images/noteBot-logo.png";
 import {
   Routes,
@@ -107,7 +107,7 @@ export default function NoteBot() {
             />
               <div className="App">
                 {/* Other components */}
-                <SearchComponent />
+                <Search />
               </div>
           </Grid>
           <Grid container justifyContent="center" spacing={100}>
