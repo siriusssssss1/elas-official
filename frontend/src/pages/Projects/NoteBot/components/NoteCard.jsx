@@ -16,10 +16,8 @@ import {
   DialogContent,
   DialogContentText,
 } from "@mui/material";
-//import handleDeleteNote2 from "./MyNotes";
 //import handleToggleFavorite from "./MyNotes";
 
-// prop represents the note data that the card will display: id, title, content
 export default function NoteCard({
   card,
   handleDeleteNote,
@@ -28,29 +26,28 @@ export default function NoteCard({
 }) {
   const [open, setOpen] = React.useState(false);
 
-  // open a dialog
+  // open/close dialog
   const handleClickOpen = () => {
     setOpen(true);
   };
-  // closes dialog
+
   const handleClose = () => {
     setOpen(false);
   };
 
   const handleDeleteConfirm = () => {
-    handleClose(); // closes dialog
-    handleDeleteNote(card.id); // Ruft die Löschfunktion mit der ID der Notiz auf, function passed down from the parent component
+    handleClose(); 
+    handleDeleteNote(card.id); 
   };
 
   const handleFavoriteClick = () => {
     console.log(`Favorite clicked for note id: ${card.id}`);
     // Assuming handleToggleFavorite requires the id of the note to toggle its favorite status
-    handleToggleFavorite(card.id); //fuction passed down from the parent
+    handleToggleFavorite(card.id); 
   };
 
   // const handleRatingNote = () {
 
-  // }; hier weiter machen!!!
 
   return (
     <Card
@@ -61,7 +58,7 @@ export default function NoteCard({
         backgroundColor: "#d9d9d9",
         margin: "8px",
       }}
-      key={card.id} // to efficiently update the list of cards
+      key={card.id} // efficiently update the list of cards
     >
       <CardContent
         style={{
@@ -72,7 +69,7 @@ export default function NoteCard({
           height: "100%",
         }}
       >
-        <Typography //displays note title
+        <Typography 
           color="textSecondary"
           variant="h6"
           gutterBottom
@@ -88,8 +85,10 @@ export default function NoteCard({
           justifyContent="flex-start"
           style={{ position: "absolute", bottom: "8px", left: "8px" }}
         >
+
           <Rating name="half-rating" defaultValue={0} precision={0.5} />
         </Stack>
+        
       </CardContent>
       <CardContent style={{ position: "absolute", top: 0, right: 0 }}>
         {card.isFavorite ? (
@@ -98,6 +97,7 @@ export default function NoteCard({
           <FavoriteBorderIcon color="error" onClick={handleFavoriteClick} />
         )}
       </CardContent>
+
       <CardContent
         style={{
           position: "absolute",
