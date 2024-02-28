@@ -10,7 +10,7 @@ export default function MyFavorites() {
     cards: [],
   });
 
-  // Zustandsvariable für das Tracking von Änderungen
+  // State variable for tracking changes
   const [favoritesChanged, setFavoritesChanged] = useState(false);
 
   useEffect(() => {
@@ -27,17 +27,16 @@ export default function MyFavorites() {
       }
     }
     getFavoriteCards();
-  }, [favoritesChanged]); // Abhängigkeit hinzugefügt
+  }, [favoritesChanged]); // Added dependency
 
   const handleToggleFavorite = async (id) => {
     try {
-      // Der API-Aufruf zum Umschalten des Favoritenstatus, der die Notiz-ID erwartet
+      // API request to toggle favorite status that expects the note ID
       await toggleFavNote(id);
 
-      // Aktualisieren Sie favoritesChanged, um den useEffect-Hook zu triggern
+      /// Update favoritesChanged to trigger the useEffect hook
       setFavoritesChanged(!favoritesChanged);
     } catch (error) {
-      // Fehlerbehandlung, falls der API-Aufruf fehlschlägt
       console.error("Error toggling favorite status:", error);
     }
   };
@@ -62,7 +61,6 @@ export default function MyFavorites() {
     );
 
     if (confirmDelete) {
-      // Führen Sie hier den tatsächlichen Löschvorgang durch
       console.log(`Notiz mit der ID ${id} wurde gelöscht.`);
     }
   };
@@ -74,7 +72,7 @@ export default function MyFavorites() {
       {/* Header */}
       <Grid
         display={"flex"}
-        marginX={4} // Einrückung Linie unter Überschriften
+        marginX={4} 
         sx={{
           borderBottom: 1,
         }}
