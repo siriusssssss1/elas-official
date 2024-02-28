@@ -1,5 +1,6 @@
 const db = require("../models");
 const mongoose = require("mongoose");
+const { countDocuments } = require("../models/favoriteCourseModel");
 const Note = db.note;
 const User = db.user;
 const Section = db.section;
@@ -9,7 +10,7 @@ const Search = db.search;
 const FavoriteNote = db.favoriteNote;
 const HttpError = db.httpError;
 
-//Test route to get all notes.
+// Test route to get all notes.
 const getNotes = async (req, res, next) => {
   try {
     const notes = await Note.find({ isPublic: true });
@@ -27,7 +28,7 @@ const getNotes = async (req, res, next) => {
   }
 };
 
-//Get widgets for a specific note - Grid view SavedNotes page.
+// Get widgets for a specific note - Grid view SavedNotes page.
 const getNoteWidgets = async (req, res, next) => {
 
   try {
@@ -61,12 +62,13 @@ const getNoteWidgets = async (req, res, next) => {
     res.json({ note, sections, widgets });
 
   } catch (err) {
-    const error = new HttpError("An error occurred while fetching notes. ", 500);
+    console.log(err);
+    const error = new HttpError("An error occurred while getting widgets for a note. ", 500);
     return next(error);
   }
 };
 
-//Get notes for a specific user - Grid view of the Dashboard page.
+// Get notes for a specific user - Grid view of the Dashboard page.
 const getNoteByUserId = async (req, res, next) => {
   const user_id = req.params.user_id;
   
@@ -133,12 +135,12 @@ const getNoteByUserId = async (req, res, next) => {
     res.json({ notes: groupedNotesArray });
   } catch (err) {
     console.log(err);
-    const error = new HttpError("An error occurred while fetching notes. ", 500);
+    const error = new HttpError("An error occurred while fetching notes.", 500);
     return next(error);
   }
 };
 
-//Create a new note - AddNote button in the Dashboard page.
+// Create a new note - AddNote button in the Dashboard page.
 const createNote = async (req, res, next) => {
   const user_id = req.body.user_id;
   const { title, isPublic, sections, widgets } = req.body;
@@ -207,7 +209,7 @@ const createNote = async (req, res, next) => {
   
   } catch (err) {
     console.log(err);
-    const error = new HttpError("Adding Note , Sections , Widgets failed! please try again later.", 500);
+    const error = new HttpError("An error occured while creating a note.", 500);
     return next(error);
   }
 };
@@ -287,12 +289,12 @@ const updateNote = async (req, res, next) => {
 
   } catch (err) {
     console.log(err);
-    const error = new HttpError("An error occurred while fetching notes. ", 500);
+    const error = new HttpError("An error occurred while updating a note.", 500);
     return next(error);
   }
 };
 
-//Delete a specific note - Clicking on the delete button in the NoteDetails page.
+// Delete a specific note - Clicking on the delete button in the NoteDetails page.
 const deleteNote = async (req, res, next) => {
   const note_id = req.params.note_id;
 
@@ -354,13 +356,13 @@ const deleteNote = async (req, res, next) => {
 
   } catch (err) {
     console.log(err);
-    const error = new HttpError("Deleting note failed, please try again later.", 500);
+    const error = new HttpError("An error occured while deleting a note.", 500);
     return next(error);
   }
 };
 
 
-//Get notes by user ID and course ID - Show more link in the Dashboard page.
+// Get notes by user ID and course ID - Show more link in the Dashboard page.
 const getNotesByUserIdAndCourseId = async (req, res, next) => {
   const { user_id, course_id } = req.params;
 
@@ -380,12 +382,13 @@ const getNotesByUserIdAndCourseId = async (req, res, next) => {
     });
 
   } catch (err) {
+    console.log(err);
     const error = new HttpError("An error occurred while fetching notes. ", 500);
     return next(error);
   }
 };
 
-//Get notes by course and note title - Search bar in the Dashboard page.
+// Get notes by course and note title - Search bar in the Dashboard page.
 const getNotesByCourseAndNoteTitle = async (req, res, next) => {
   const searchKeyword = req.params.keyword;
   function escapeRegExp(string) {
@@ -438,7 +441,7 @@ const getNotesByCourseAndNoteTitle = async (req, res, next) => {
   }
 };
 
-//Get saved notes for a specific user - Grid view SavedNotes page.
+// Get saved notes for a specific user - Grid view SavedNotes page.
 const getSavedNotesByUserId = async (req, res, next) => {
   const user_id = req.params.user_id;
 
@@ -453,12 +456,12 @@ const getSavedNotesByUserId = async (req, res, next) => {
 
   } catch (err) {
     console.log(err);
-    const error = new HttpError("An error occurred while fetching notes.", 500);
+    const error = new HttpError("An error occurred while fetching saved notes.", 500);
     return next(error);
   }
 };
 
-//Save a note for a user - Clicking on the save button in the Search page.
+// Save a note for a user - Clicking on the save button in the Search page.
 const saveNote = async (req, res, next) => {
   const { user_id, note_id } = req.params;
 
@@ -500,12 +503,12 @@ const saveNote = async (req, res, next) => {
 
   } catch (err) {
     console.log(err);
-    const error = new HttpError("An error occurred while saving the note.", 500);
+    const error = new HttpError("An error occurred while saving a note.", 500);
     return next(error);
   }
 };
 
-//Push sections to a note - Add sections to a note.
+// Push sections to a note - Add sections to a note.
 const pushSectionsToNote = async (req, res, next) => {
   const { note_id, section_ids } = req.body;
 
@@ -523,12 +526,12 @@ const pushSectionsToNote = async (req, res, next) => {
 
   } catch (err) {
     console.log(err);
-    const error = new HttpError("Adding sections to note failed, please try again later.", 500);
+    const error = new HttpError("An error occured while adding sections to a note.", 500);
     return next(error);
   }
 };
 
-//Get a note by its ID - Get details of a specific note.
+// Get a note by its ID - Get details of a specific note.
 const getNoteByNoteId = async (req, res, next) => {
   const { user_id, note_id } = req.params;
 
@@ -553,12 +556,13 @@ const getNoteByNoteId = async (req, res, next) => {
     res.json({ notes: groupedNotesArray });
 
   } catch (err) {
+    console.log(err);
     const error = new HttpError("An error occurred while fetching notes.", 500);
     return next(error);
   }
 };
 
-//Update the rating of a specific note.
+// Update the rating of a specific note.
 const updateRating = async (req, res, next) => {
   const userId = req.body.user_id; 
   const { noteId, rating } = req.body;
@@ -598,12 +602,13 @@ const updateRating = async (req, res, next) => {
     });
 
   } catch (err) {
-    const error = new HttpError("Updating note rating failed, please try again later.", 500);
+    console.log(err);
+    const error = new HttpError("An error occured while updating the rating of a note.", 500);
     return next(error);
   }
 };
 
-//Add a note to a specific course.
+// Add a note to a specific course.
 const addNoteToCourse = async (req, res, next) => {
   const { course_id } = req.params;
 
@@ -627,8 +632,10 @@ const addNoteToCourse = async (req, res, next) => {
     await note.save();
 
     res.json({ message: "Note added to the course." });
+    
   } catch (err) {
-    const error = new HttpError("Failed to add note to the course.", 500);
+    console.log(err);
+    const error = new HttpError("An error occured while adding a note to a course.", 500);
     return next(error);
   }
 };

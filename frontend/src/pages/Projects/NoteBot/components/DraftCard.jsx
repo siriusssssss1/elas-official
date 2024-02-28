@@ -1,11 +1,9 @@
 import React from "react";
-
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Stack from "@mui/material/Stack";
 import { Typography } from "@mui/material";
-//import handleDeleteNote from "./Drafts";
 import { 
   Button, 
   Dialog, 
@@ -14,8 +12,7 @@ import {
   DialogContent, 
   DialogContentText } from "@mui/material";
 
-
-
+  
 export default function DraftCard({ card, handleDeleteNote}) { 
 
   const [open, setOpen] = React.useState(false);
@@ -29,8 +26,8 @@ export default function DraftCard({ card, handleDeleteNote}) {
   };
 
   const handleDeleteConfirm = () => {
-    handleClose(); // Schließt den Dialog
-    handleDeleteNote(card.id); // Ruft die Löschfunktion mit der ID der Notiz auf
+    handleClose(); 
+    handleDeleteNote(card.id); // Calls up the delete function with the ID of the note
   };
   return (
     <Card
@@ -90,10 +87,10 @@ export default function DraftCard({ card, handleDeleteNote}) {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title"></DialogTitle>
+          <DialogTitle id="alert-dialog-title"></DialogTitle>   
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              Do you really want to delete this note?
+              Do you really want to delete this note?       
             </DialogContentText>
             <DialogActions>
               <Button

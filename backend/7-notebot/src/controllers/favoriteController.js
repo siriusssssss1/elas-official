@@ -5,6 +5,7 @@ const Note = db.note;
 const Course = db.course;
 const HttpError = db.httpError;
 
+// Togget favorite status for a note.
 const toggetFavoriteNote = async (req, res, next) => {
 
   const user_id = req.body.user_id;
@@ -13,25 +14,23 @@ const toggetFavoriteNote = async (req, res, next) => {
     note_id: note_id,
     user_id: user_id,
   };
+
   try {
     const favorite = await FavoriteNote.findOne(payload);
 
       const newFavorite = new FavoriteNote(payload);
       await newFavorite.save();
    
+    res.status(201).json({ message: "Updated successfully !"});
 
-    res.status(201).json({
-      message: "Updated successfully !",
-    });
   } catch (err) {
     console.log(err);
-    const error = new HttpError(" Please try again later.", 500);
-
+    const error = new HttpError("An error occured while adding a note to favorites.", 500);
     return next(error);
   }
 };
 
-// Get user notes by user_id
+// Get favorite notes for a specific user -  Grid view of the Favorites page.
 const getFavNoteByUserId = async (req, res, next) => {
   const user_id = req.params.user_id;
 
@@ -46,23 +45,21 @@ const getFavNoteByUserId = async (req, res, next) => {
       _id: { $in: favorites.map((favorite) => favorite.note_id) },
     });
 
-
     res.json({
       notes: notes.map((note) => ({
         ...note._doc,
         isFavorite: true,
       })),
     });
+
   } catch (err) {
     console.log(err);
-    const error = new HttpError(
-      "An error occurred while fetching notes. ",
-      500
-    );
+    const error = new HttpError("An error occurred while fetching favorite notes.", 500);
     return next(error);
   }
 };
 
+// Togget favorite status for a course.
 const toggetFavoriteCourse = async (req, res, next) => {
   const user_id = req.body.user_id;
   const { course_id } = req.params;
@@ -71,30 +68,27 @@ const toggetFavoriteCourse = async (req, res, next) => {
     course_id: course_id,
     user_id: user_id,
   };
+
   try {
     const favorite = await FavoriteCourse.findOne(payload);
 
       const newFavorite = new FavoriteCourse(payload);
       await newFavorite.save();
 
+    res.status(201).json({message: "Updated successfully !"});
 
-    res.status(201).json({
-      message: "Updated successfully !",
-    });
   } catch (err) {
     console.log(err);
-    const error = new HttpError(" Please try again later.", 500);
-
+    const error = new HttpError("An error occured while adding a course to favorites.", 500);
     return next(error);
   }
 };
 
+// Get favorite courses by user ID - -  Grid view of the Favorites page.
 const getFavCourseByUserId = async (req, res, next) => {
   const user_id = req.params.user_id;
 
-
   try {
-
     let favorites = await FavoriteCourse.find({
       user_id: user_id,
     });
@@ -103,19 +97,16 @@ const getFavCourseByUserId = async (req, res, next) => {
       _id: { $in: favorites.map((favorite) => favorite.course_id) },
     });
 
-
     res.json({
       courses: courses.map((course) => ({
         ...course._doc,
         isFavorite: true,
       })),
     });
+    
   } catch (err) {
     console.log(err);
-    const error = new HttpError(
-      "An error occurred while fetching notes. ",
-      500
-    );
+    const error = new HttpError("An error occurred while fetching favorite courses.", 500);
     return next(error);
   }
 };
