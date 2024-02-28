@@ -3,7 +3,6 @@ import { Grid, Typography} from "@mui/material";
 import NoteCard from "./NoteCard";
 
 import { getCards } from "../utils/api";
-//import {handleDeleteConfirm} from "./NoteCard";
 import { deleteNoteFromServer } from '../utils/api.js';
 import { toggleFavNote } from '../utils/api.js';
 
