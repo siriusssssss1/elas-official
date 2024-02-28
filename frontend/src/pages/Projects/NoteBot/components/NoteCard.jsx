@@ -16,7 +16,6 @@ import {
   DialogContent,
   DialogContentText,
 } from "@mui/material";
-//import handleToggleFavorite from "./MyNotes";
 
 export default function NoteCard({
   card,
@@ -88,7 +87,7 @@ export default function NoteCard({
 
           <Rating name="half-rating" defaultValue={0} precision={0.5} />
         </Stack>
-        
+
       </CardContent>
       <CardContent style={{ position: "absolute", top: 0, right: 0 }}>
         {card.isFavorite ? (
