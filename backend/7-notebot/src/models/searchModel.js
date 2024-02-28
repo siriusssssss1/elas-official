@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-//Schema for latest searches
+// Schema for latest searches
 const latestSearchSchema = new Schema({
     
     user_id: {
@@ -18,6 +18,7 @@ const latestSearchSchema = new Schema({
         expires: 60 * 60 * 24 * 7
     },
 });
+
 latestSearchSchema.index({ timestamp: 1 }, { expireAfterSeconds: 0 });
 
 const Search = mongoose.model('Search', latestSearchSchema);

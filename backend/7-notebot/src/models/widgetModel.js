@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const {Schema} = mongoose;
 
-//Schema for widgets
+// Schema for widgets
 const widgetSchema = new Schema({
   
   type: {
