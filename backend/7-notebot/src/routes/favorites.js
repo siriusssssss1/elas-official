@@ -23,7 +23,7 @@ favoriteRouter.get("/users/:user_id", favController.getFavNoteByUserId);
 favoriteRouter.post("/:course_id", favController.toggetFavoriteCourse);
 
 /**
- * @route GET /favorites/:user_id
+ * @route GET /favorites/users/:user_id
  * @description Get favorite courses by user ID - -  Grid view of the Favorites page.
  */
 favoriteRouter.get("/users/:user_id", favController.getFavCourseByUserId);
