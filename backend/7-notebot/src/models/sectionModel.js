@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const {Schema} = mongoose;
 
-//Schema for sections
+// Schema for sections
 const sectionSchema = new Schema({
 
   layout_field: {

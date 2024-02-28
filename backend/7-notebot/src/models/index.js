@@ -1,5 +1,3 @@
-const mongoose = require("mongoose");
-
 const db = {};
 
 /***************** START: EXPORT SCHEMA AS MODULE *****************

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const {Schema} = mongoose;
 
-//Schema for favorite courses
+// Schema for favorite courses
 const favCoursesSchema = new Schema({
 
   course_id: [{ 

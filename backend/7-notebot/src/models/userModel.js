@@ -7,10 +7,7 @@
 const mongoose = require("mongoose");
 const {Schema} = mongoose;
 
-/***************** START: DEFINE A SCHEMA *****************
- * @documentation
- * Schema for user
- */
+// Schema for user
 const userSchema = new Schema({
 
   uid: {
@@ -34,7 +31,6 @@ const userSchema = new Schema({
       ref: 'Course'
   }],
 });
-/***************** END: DEFINE A SCHEMA *****************/
 
 const User = mongoose.model('User', userSchema);
 
