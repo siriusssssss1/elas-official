@@ -33,7 +33,7 @@ export default function MyFavorites() {
     try {
       // Der API-Aufruf zum Umschalten des Favoritenstatus, der die Notiz-ID erwartet
       await toggleFavNote(id);
-  
+
       // Aktualisieren Sie favoritesChanged, um den useEffect-Hook zu triggern
       setFavoritesChanged(!favoritesChanged);
     } catch (error) {
@@ -42,16 +42,16 @@ export default function MyFavorites() {
     }
   };
 
-      // if (cardsInfo.cards !== undefined) {
-      //   const favorites = cardsInfo.cards.filter((card) => card.isFavorite);
-      //   setFavoriteCards({ cards: favorites });
-      //   console.log(favorites);
-      // } else {
-      //   setFavoriteCards((prevState) => ({
-      //     ...prevState,
-      //     message: cardsInfo.message,
-      //   }));
-      // }
+  // if (cardsInfo.cards !== undefined) {
+  //   const favorites = cardsInfo.cards.filter((card) => card.isFavorite);
+  //   setFavoriteCards({ cards: favorites });
+  //   console.log(favorites);
+  // } else {
+  //   setFavoriteCards((prevState) => ({
+  //     ...prevState,
+  //     message: cardsInfo.message,
+  //   }));
+  // }
   //   }
   //   getFavoriteCards();
   // }, []);
@@ -67,8 +67,10 @@ export default function MyFavorites() {
     }
   };
 
+  // table with two columns that represents favorite notes & favorite courses
   return (
     <Grid display={"flex"} flexDirection={"column"}>
+
       {/* Header */}
       <Grid
         display={"flex"}
@@ -97,10 +99,12 @@ export default function MyFavorites() {
           </Typography>
         </Grid>
       </Grid>
+
       {/* Cards */}
+
       <Grid container sx={{ maxWidth: 1500, width: "100%" }}>
         {/* Left side grid */}
-        <Grid 
+        <Grid
           width={0.5}
           paddingTop={4}
           paddingRight={4}
@@ -133,8 +137,12 @@ export default function MyFavorites() {
               .fill(favoriteCards.cards)
               .flat()
               .map((card) => (
-                <NoteCard key={card.id} card={card} handleDeleteNote={handleDeleteNote}
-                handleToggleFavorite={handleToggleFavorite} />
+                <NoteCard
+                  key={card.id}
+                  card={card}
+                  handleDeleteNote={handleDeleteNote}
+                  handleToggleFavorite={handleToggleFavorite}
+                />
               ))}
           </Grid>
         </Grid>
