@@ -1,17 +1,15 @@
 require("dotenv").config();
 const express = require("express");
-const router = express.Router();
 
 
+//Middleware for handling chat message completions using the OpenAI API.
 const chatCompletion = async (req, res)=>{
   try {
     const { message } = req.body;
-    // Make a request to the ChatGPT API
-
-    // Create an array to hold both user and ChatGPT messages
+    
     const messages = [
-      { role: "user", content: message }, // User message
-      { role: "assistant", content: "" }, // ChatGPT message (initially empty)
+      { role: "user", content: message }, 
+      { role: "assistant", content: "" }, 
     ];
 
     try {
@@ -33,7 +31,7 @@ const chatCompletion = async (req, res)=>{
       const completion = await openai.createChatCompletion(
         {
           model: "gpt-3.5-turbo",
-          messages: messages, // Pass the messages array
+          messages: messages, 
           temperature: 0.2,
           stream: true,
         },
