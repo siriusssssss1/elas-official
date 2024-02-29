@@ -152,13 +152,14 @@ const createNote = async (req, res, next) => {
     }
     const user = await User.findOne({ uid: user_id });
 
-    if (!user.notes) {
-      user.notes = [];
-    }
     if (!user) {
       return res
         .status(404)
         .json({ message: "Could not find user for the provided id." });
+    }
+
+    if (!user.notes) {
+      user.notes = [];
     }
 
     const createdNote = new Note({
@@ -230,6 +231,12 @@ const updateNote = async (req, res, next) => {
         .json({ message: "Could not find note for the provided id." });
     }
 
+    if (!course && course_id) {
+      return res
+        .status(404)
+        .json({ message: "Could not find course for the provided id." });
+    }
+
     note.title = title;
     note.sections = [];
 
@@ -282,8 +289,10 @@ const updateNote = async (req, res, next) => {
 
     await note.save();
     
-    course.notes.push(note._id);
-    await course.save();
+    if (course) {
+      course.notes.push(note._id);
+      await course.save();
+    }
 
     res.json({ note, sections, widgets });
 
@@ -367,7 +376,7 @@ const getNotesByUserIdAndCourseId = async (req, res, next) => {
   const { user_id, course_id } = req.params;
 
   try {
-    const user = await User.findOne({uid:user_id}).populate("notes");
+    const user = await User.findOne({uid:user_id}).populate('notes');
 
     if (!user.notes || user.notes.length === 0) {
       return res
@@ -377,7 +386,7 @@ const getNotesByUserIdAndCourseId = async (req, res, next) => {
 
     res.json({
       notes: user.notes
-        .filter((note) => note.course_id.toString() === course_id)
+        .filter((note) => note.course_id && note.course_id.toString() === course_id)
         .map((note) => note.toObject({ getters: true })),
     });
 
