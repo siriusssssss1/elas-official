@@ -533,7 +533,7 @@ const pushSectionsToNote = async (req, res, next) => {
 
 // Get a note by its ID - Get details of a specific note.
 const getNoteByNoteId = async (req, res, next) => {
-  const { user_id, note_id } = req.params;
+  const { note_id } = req.params;
 
   try {
     const note = await Note.findById(note_id);
@@ -541,23 +541,13 @@ const getNoteByNoteId = async (req, res, next) => {
     if (!note) {
       return res
         .status(404)
-        .json({ message: "Could not find notes for the provided user id." });
+        .json({ message: "Could not find note for the provided ID." });
     }
 
-    for (const section_id of note.sections) {
-      const section = await Section.findById(section_id);
-
-      if (section) {
-        for (let widget_ids of section) {
-          const widget = await Widget.findById(widget_ids);
-        }
-      }
-    }
-    res.json({ notes: groupedNotesArray });
+    res.json({ note: note.toObject({ getters: true })});
 
   } catch (err) {
-    console.log(err);
-    const error = new HttpError("An error occurred while fetching notes.", 500);
+    const error = new HttpError("An error occurred while fetching the note.",500);
     return next(error);
   }
 };
@@ -665,29 +655,6 @@ const addNoteToCourse = async (req, res, next) => {
 //   }
 // };
 
-// const getNoteByNoteID = async (req, res, next) => {
-//   const { note_id } = req.params;
-
-//   try {
-//     const note = await Note.findById(note_id);
-
-//     if (!note) {
-//       return res
-//         .status(404)
-//         .json({ message: "Could not find note for the provided ID." });
-//     }
-
-//     res.json({ note: note.toObject({ getters: true }) });
-//   } catch (err) {
-//     const error = new HttpError(
-//       "An error occurred while fetching the note.",
-//       500
-//     );
-//     return next(error);
-//   }
-// };
-
-
 exports.getNotes = getNotes;
 exports.getNoteWidgets = getNoteWidgets;
 exports.getNoteByUserId = getNoteByUserId;
@@ -703,4 +670,3 @@ exports.getNoteByNoteId = getNoteByNoteId;
 exports.updateRating = updateRating;
 exports.addNoteToCourse = addNoteToCourse;
 //exports.createNoteWithEmptySections = createNote;
-//exports.getNoteByNoteID = getNoteByNoteID;
