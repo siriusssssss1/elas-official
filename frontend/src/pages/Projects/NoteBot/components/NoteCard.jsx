@@ -18,6 +18,7 @@ import {
 
 export default function noteCard({
   card,
+  isFavorite,
   handleDeleteNote,
   handleToggleFavorite,
   handleRatingNote,
@@ -34,18 +35,19 @@ export default function noteCard({
   };
 
   const handleDeleteConfirm = () => {
-    handleClose(); 
-    handleDeleteNote(card.id); 
+    handleClose();
+    handleDeleteNote(card.id);
   };
 
   const handleFavoriteClick = () => {
     console.log(`Favorite clicked for note id: ${card.id}`);
     // Assuming handleToggleFavorite requires the id of the note to toggle its favorite status
-    handleToggleFavorite(card.id); 
+    handleToggleFavorite(card.id);
   };
 
-  // const handleRatingNote = () {
-
+  const handleRatingChange = (event, rating) => {
+    handleRatingNote(card.id, rating);
+  };
 
   return (
     <Card
@@ -67,7 +69,7 @@ export default function noteCard({
           height: "100%",
         }}
       >
-        <Typography 
+        <Typography
           color="textSecondary"
           variant="h6"
           gutterBottom
@@ -83,19 +85,27 @@ export default function noteCard({
           justifyContent="flex-start"
           style={{ position: "absolute", bottom: "8px", left: "8px" }}
         >
-
-          <Rating name="half-rating" defaultValue={0} precision={0.5} />
+          <Rating
+            name="half-rating"
+            defaultValue={
+              card.ratings.find(
+                (rating) =>
+                  // Change to variable userId
+                  rating.userId === "a19d4fd7-2052-42e4-8ab2-56db09944363"
+              )?.rating ?? 0
+            }
+            precision={0.5}
+            onChange={handleRatingChange}
+          />
         </Stack>
-
       </CardContent>
       <CardContent style={{ position: "absolute", top: 0, right: 0 }}>
-        {card.isFavorite ? (
+        {isFavorite ? (
           <FavoriteIcon color="error" onClick={handleFavoriteClick} />
         ) : (
           <FavoriteBorderIcon color="error" onClick={handleFavoriteClick} />
         )}
       </CardContent>
-
       <CardContent
         style={{
           position: "absolute",

@@ -81,7 +81,7 @@ export const getFavNotes = async () => {
 
 export const toggleFavNote = async (noteId) => {
   try {
-    const response = await Backend.post(`/notebot/notes/${noteId}/favorite`);
+    const response = await Backend.post(`/notebot/favorites/notes/${noteId}`);
     console.log(response.data); // Message from the server
     return response.data;
   } catch (err) {
@@ -96,6 +96,23 @@ export const deleteNoteFromServer = async (noteId) => {
   try {
     // Assuming Backend is an Axios instance
     const response = await Backend.delete(`/notebot/notes/${noteId}`);
+    console.log(response.data); // Message from the server
+    return response.data;
+  } catch (err) {
+    console.log(err);
+    return { message: 'Server not connected' };
+  }
+};
+
+
+export const setRatingOnServer = async (userId, noteId, rating) => {
+  try {
+    // Assuming Backend is an Axios instance
+    const response = await Backend.post('/notebot/notes/update_rating', {
+      user_id: userId,
+      noteId,
+      rating
+    });
     console.log(response.data); // Message from the server
     return response.data;
   } catch (err) {
