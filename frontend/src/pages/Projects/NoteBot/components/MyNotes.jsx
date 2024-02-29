@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Typography} from "@mui/material";
-import NoteCard from "./NoteCard";
-
-import { getCards } from "../utils/api";
+import NoteCard from "./noteCard.jsx";
+import { getCards } from "../utils/api.js";
 import { deleteNoteFromServer } from '../utils/api.js';
 import { toggleFavNote } from '../utils/api.js';
 
 
-export default function MyNotes() {
+export default function myNotes() {
   const [cards, setCards] = useState({
     message: "",
     cards: [],
@@ -73,7 +72,6 @@ export default function MyNotes() {
     }
   };
   
-
  
   return (
     <Grid container spacing={2} sx={{ maxWidth: 1500, width: "100%" }} > 

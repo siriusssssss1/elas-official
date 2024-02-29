@@ -2,11 +2,11 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { Grid, Typography, Divider, Box } from "@mui/material";
-import NoteCard from "./NoteCard";
+import NoteCard from "./noteCard.jsx";
 import noteBotLogo from "../../../../assets/images/noteBot-logo.png";
 import Search from "./search.jsx";
 
-const SearchResultsPage = () => {
+const searchResultsPage = () => {
   const location = useLocation();
   const searchResults = location.state.searchResults || [];
   const keyword = location.state.keyword || "";
@@ -28,8 +28,8 @@ const SearchResultsPage = () => {
           />
         </Grid>
         <Grid item >
-  <Search />
-</Grid>
+      <Search />
+      </Grid>
       </Grid>
       <Divider />
 
@@ -64,4 +64,4 @@ const SearchResultsPage = () => {
   );
 };
 
-export default SearchResultsPage;
+export default searchResultsPage;

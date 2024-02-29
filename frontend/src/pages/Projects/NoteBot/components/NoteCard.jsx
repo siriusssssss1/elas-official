@@ -1,5 +1,4 @@
 import React from "react";
-
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -17,7 +16,7 @@ import {
   DialogContentText,
 } from "@mui/material";
 
-export default function NoteCard({
+export default function noteCard({
   card,
   handleDeleteNote,
   handleToggleFavorite,

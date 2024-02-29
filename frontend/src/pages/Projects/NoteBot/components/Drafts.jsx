@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Typography } from "@mui/material";
-import DraftCard from "./DraftCard";
-
-import { getDrafts } from "../utils/api";
+import DraftCard from "./draftCard.jsx";
+import { getDrafts } from "../utils/api.js";
 import { deleteNoteFromServer } from "../utils/api.js";
 
 // The Drafts component is responsible for displaying the list of draft notes
-export default function Drafts() {
+export default function drafts() {
   // State to store the draft cards and any messages (e.g., errors)
   const [cards, setCards] = useState({
     message: "",

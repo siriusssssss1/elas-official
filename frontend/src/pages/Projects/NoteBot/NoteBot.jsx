@@ -5,10 +5,10 @@ import Button from "@mui/material/Button";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import MyNotes from "./components/MyNotes.jsx";
-import MyFavorites from "./components/MyFavorites.jsx";
-import Drafts from "./components/Drafts.jsx";
-import AddNote from "./components/AddNote.jsx";
+import MyNotes from "./components/myNotes.jsx";
+import MyFavorites from "./components/myFavorites.jsx";
+import Drafts from "./components/drafts.jsx";
+import AddNote from "./components/addNote.jsx";
 import Search from './components/search.jsx';
 import noteBotLogo from "../../../assets/images/noteBot-logo.png";
 import {

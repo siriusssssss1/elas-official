@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Typography } from "@mui/material";
 import { getFavNotes } from "../utils/api";
-import NoteCard from "./NoteCard";
+import NoteCard from "./noteCard";
 import { toggleFavNote } from "../utils/api";
 
-export default function MyFavorites() {
+export default function myFavorites() {
   const [favoriteCards, setFavoriteCards] = useState({
     message: "",
     cards: [],

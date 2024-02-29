@@ -61,8 +61,8 @@ import Intogen from "./pages/Projects/Intogen/Intogen";
 import NoteBot from "./pages/Projects/NoteBot/NoteBot";
 import CourseDetail from "./pages/Projects/StudyCompassCopy/components/CoueseDetail";
 import StudyCompassNew from "./pages/Projects/StudyCompassCopy/StudyCompassNew";
-import AddNote from "./pages/Projects/NoteBot/components/AddNote.jsx";
-import SearchResultsPage from "./pages/Projects/NoteBot/components/SearchPage";
+import AddNote from "./pages/Projects/NoteBot/components/addNote.jsx";
+import SearchResultsPage from "./pages/Projects/NoteBot/components/searchResultsPage";
 
 export default function AppRoutes() {
   const isAuthenticated = !!sessionStorage.getItem("elas-token");
