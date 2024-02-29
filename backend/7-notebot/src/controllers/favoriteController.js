@@ -16,10 +16,14 @@ const toggetFavoriteNote = async (req, res, next) => {
   };
 
   try {
-    const favorite = await FavoriteNote.findOne(payload);
+    const note = await Note.findById(note_id);
 
-      const newFavorite = new FavoriteNote(payload);
-      await newFavorite.save();
+    if (!note) {
+      return res.status(404).json({ message: "Note not found."});
+    }
+
+    const newFavorite = new FavoriteNote(payload);
+    await newFavorite.save();
    
     res.status(201).json({ message: "Updated successfully !"});
 
@@ -68,12 +72,16 @@ const toggetFavoriteCourse = async (req, res, next) => {
     course_id: course_id,
     user_id: user_id,
   };
-
+  
   try {
-    //const favorite = await FavoriteCourse.findOne(payload);
+    const course = await Course.findById(course_id);
 
-      const newFavorite = new FavoriteCourse(payload);
-      await newFavorite.save();
+    if (!course) {
+      return res.status(404).json({ message: "Course not found."});
+    }
+
+    const newFavorite = new FavoriteCourse(payload);
+    await newFavorite.save();
 
     res.status(201).json({message: "Updated successfully !"});
 
@@ -89,9 +97,7 @@ const getFavCourseByUserId = async (req, res, next) => {
   const user_id = req.params.user_id;
 
   try {
-    let favorites = await FavoriteCourse.find({
-      user_id: user_id,
-    });
+    let favorites = await FavoriteCourse.find({user_id: user_id});
 
     const courses = await Course.find({
       _id: { $in: favorites.map((favorite) => favorite.course_id) },
