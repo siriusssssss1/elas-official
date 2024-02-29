@@ -30,7 +30,7 @@ const toggetFavoriteNote = async (req, res, next) => {
   }
 };
 
-// Get favorite notes for a specific user -  Grid view of the Favorites page.
+// Get favorite notes for a specific user - Grid view of the Favorites page.
 const getFavNoteByUserId = async (req, res, next) => {
   const user_id = req.params.user_id;
 
@@ -70,7 +70,7 @@ const toggetFavoriteCourse = async (req, res, next) => {
   };
 
   try {
-    const favorite = await FavoriteCourse.findOne(payload);
+    //const favorite = await FavoriteCourse.findOne(payload);
 
       const newFavorite = new FavoriteCourse(payload);
       await newFavorite.save();
@@ -84,7 +84,7 @@ const toggetFavoriteCourse = async (req, res, next) => {
   }
 };
 
-// Get favorite courses by user ID - -  Grid view of the Favorites page.
+// Get favorite courses for a specific user - Grid view of the Favorites page.
 const getFavCourseByUserId = async (req, res, next) => {
   const user_id = req.params.user_id;
 

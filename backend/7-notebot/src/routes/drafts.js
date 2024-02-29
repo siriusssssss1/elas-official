@@ -14,7 +14,7 @@ draftRouter.get("/users/:user_id", draftController.getDraftByUserId);
  * @route PATCH /drafts/users/notes/save
  * @description Add a note to the Drafts folder.
  */
-draftRouter.patch('/users/notes/save', draftController.addNoteToDraft);
+draftRouter.patch("/users/notes/save", draftController.addNoteToDraft);
 
 // Export router
 module.exports = draftRouter;
