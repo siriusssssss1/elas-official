@@ -6,9 +6,9 @@ let favoriteRouter = require("express").Router();
 
 /**
  * @route POST /favorites/:note_id
- * @description Togget favorite status for a note.
+ * @description Toggel favorite status for a note.
  */
-favoriteRouter.post("/notes/:note_id", favController.toggetFavoriteNote);
+favoriteRouter.post("/notes/:note_id", favController.toggelFavoriteNote);
 
 /**
  * @route GET /favorites/users/:user_id
@@ -18,9 +18,9 @@ favoriteRouter.get("/notes/users/:user_id", favController.getFavNoteByUserId);
 
 /**
  * @route POST /favorites/:course_id
- * @description Togget favorite status for a course.
+ * @description Toggel favorite status for a course.
  */
-favoriteRouter.post("/courses/:course_id", favController.toggetFavoriteCourse);
+favoriteRouter.post("/courses/:course_id", favController.toggelFavoriteCourse);
 
 /**
  * @route GET /favorites/users/:user_id
