@@ -5,8 +5,8 @@ const Note = db.note;
 const Course = db.course;
 const HttpError = db.httpError;
 
-// Toggel favorite status for a note.
-const toggelFavoriteNote = async (req, res, next) => {
+// Toggle favorite status for a note.
+const toggleFavoriteNote = async (req, res, next) => {
 
   const user_id = req.body.user_id;
   const { note_id } = req.params;
@@ -63,8 +63,8 @@ const getFavNoteByUserId = async (req, res, next) => {
   }
 };
 
-// Toggel favorite status for a course.
-const toggelFavoriteCourse = async (req, res, next) => {
+// Toggle favorite status for a course.
+const toggleFavoriteCourse = async (req, res, next) => {
   const user_id = req.body.user_id;
   const { course_id } = req.params;
 
@@ -118,7 +118,7 @@ const getFavCourseByUserId = async (req, res, next) => {
 };
 
 
-exports.toggelFavoriteNote = toggelFavoriteNote;
+exports.toggleFavoriteNote = toggleFavoriteNote;
 exports.getFavNoteByUserId = getFavNoteByUserId;
-exports.toggelFavoriteCourse = toggelFavoriteCourse;
+exports.toggleFavoriteCourse = toggleFavoriteCourse;
 exports.getFavCourseByUserId = getFavCourseByUserId;

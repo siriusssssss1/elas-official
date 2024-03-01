@@ -45,7 +45,7 @@ const getWidgetsBySectionId = async (req, res, next) => {
 
 // Add a widget to a specific section
 const addWidgetToSection = async (req, res, next) => {
-  const section_id = req.params;
+  const section_id = req.params.section_id;
   const { type, data, layout_index } = req.body; 
   
   try {
