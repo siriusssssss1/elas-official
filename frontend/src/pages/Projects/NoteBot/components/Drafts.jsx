@@ -15,7 +15,7 @@ export default function drafts() {
   // useEffect hook to fetch the draft cards from the server when the component mounts
   useEffect(() => {
     async function getCardInfo() {
-      const cardsInfo = await getDrafts(); // Fetching draft cards from the server
+      const cardsInfo = await getDrafts(JSON.parse(sessionStorage.getItem("elas-user")).id); // Fetching draft cards from the server
 
         // Updating the state with the fetched cards or an error message
       if (cardsInfo.cards !== undefined) {

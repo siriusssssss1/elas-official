@@ -34,7 +34,8 @@ export default function myNotes() {
     }
 
     async function getCardInfo() {
-      const cardsInfo = await getCards();
+
+      const cardsInfo = await getCards(JSON.parse(sessionStorage.getItem("elas-user")).id);
 
       if (cardsInfo.cards !== undefined) {
         setCards(cardsInfo);

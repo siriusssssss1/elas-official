@@ -21,13 +21,13 @@ export const getUserInfo = async (userId) => {
   }
 };
 
-export const getCards = async () => {
+export const getCards = async (userId) => {
   try {
 
-   const responseNr2 = await Backend.get(`/notebot/notes/test`);
+   const responseNr2 = await Backend.get(`/notebot/notes/users/${userId}`);
    console.log(responseNr2.data)
    
-  return {cards: responseNr2.data.notes}; 
+  return {cards: responseNr2.data.notes[0].notes}; 
     const { //relevante Daten (message und cards) werden destrukturiert und in den Variablen message und cards gespeichert
       data: { message, courses },
     } = responseNr2;
@@ -42,10 +42,10 @@ export const getCards = async () => {
   }
 };
 
-export const getDrafts = async () => {
+export const getDrafts = async (userId) => {
   try {
 
-   const responseNr2 = await Backend.get(`/notebot/drafts/users/a19d4fd7-2052-42e4-8ab2-56db09944363/`); // wenn man hier ${userId} eingibt, funktioniert es noch nicht
+   const responseNr2 = await Backend.get(`/notebot/drafts/users/${userId}/`); 
    console.log(responseNr2.data)
    
   return {cards: responseNr2.data.notes}; 
@@ -66,7 +66,7 @@ export const getDrafts = async () => {
 export const getFavNotes = async () => {
   try {
 
-   const responseNr2 = await Backend.get(`/notebot/notes/users/a19d4fd7-2052-42e4-8ab2-56db09944363/favorite`); // wenn man hier ${userId} eingibt, funktioniert es noch nicht
+   const responseNr2 = await Backend.get(`/notebot/notes/users/9107bb63-2494-4720-80de-db464cf03255/favorite`); // wenn man hier ${userId} eingibt, funktioniert es noch nicht
    console.log(responseNr2.data)
    
   return {cards: responseNr2.data.notes}; 
@@ -122,11 +122,11 @@ export const setRatingOnServer = async (userId, noteId, rating) => {
 };
 
 
-export const getNotesByCourseAndNoteTitle = async (keyword) => {
+export const getNotesByCourseAndNoteTitle = async (keyword, userId) => {
   try {
     const response = await Backend.get(`notebot/notes/search/${keyword}/`, {
       headers: {
-        'user_id': "a19d4fd7-2052-42e4-8ab2-56db09944363",
+        'user_id': userId,
       },
     });
     console.log(response.data); // Message from the server
@@ -178,7 +178,7 @@ export const getCourses = async () => {
 export const createNotes = async (noteData) => {
   try {
 
-   const response = await Backend.post(`notebot/notebot/notes/new`, noteData); 
+   const response = await Backend.post(`notebot/notes/new`, noteData); 
    console.log(response.data)
    
   return response.data; 
@@ -193,10 +193,15 @@ export const createNotes = async (noteData) => {
 
 
 //function does not work, does not get the data
-export const addNoteToDrafts = async () => {
+export const addNoteToDrafts = async (userId, noteId) => {
   try {
+    console.log(noteId);
+    console.log(userId);
 
-   const response = await Backend.patch(`notebot/drafts/users/notes/save`); 
+   const response = await Backend.patch(`notebot/drafts/users/notes/save`, {
+    "user_id": userId,
+    "note_id": noteId
+   }); 
    console.log(response.data)
    
   return {cards: response.data.notes}; 

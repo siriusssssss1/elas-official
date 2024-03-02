@@ -88,10 +88,10 @@ export default function noteCard({
           <Rating
             name="half-rating"
             defaultValue={
-              card.ratings.find(
+              card.ratings?.find(
                 (rating) =>
                   // Change to variable userId
-                  rating.userId === "a19d4fd7-2052-42e4-8ab2-56db09944363"
+                  rating.userId === JSON.parse(sessionStorage.getItem("elas-user")).id
               )?.rating ?? 0
             }
             precision={0.5}

@@ -23,7 +23,8 @@ const Search = () => {
     // Make sure searchValue is defined before making the API call
     if (searchValue) {
       try {
-        const result = await getNotesByCourseAndNoteTitle(searchValue);
+        let elasUser = JSON.parse(sessionStorage.getItem("elas-user"));
+        const result = await getNotesByCourseAndNoteTitle(searchValue, elasUser.id);
         console.log(result);
         navigate("/projects/notebot/search", {
           state: { searchResults: result.cards, keyword: searchValue },

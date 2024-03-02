@@ -22,7 +22,7 @@ import ChooseLayout from "./Notes/chooseLayout.jsx";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import EditNote from "./Notes/editNote.jsx";
 import { useNavigate } from "react-router-dom";
-import { getCourses } from "../utils/api.js";
+import { getCourses, createNotes } from "../utils/api.js";
 import { addNoteToDrafts } from "../utils/api.js";
 
 function AddNote() {
@@ -92,14 +92,20 @@ function AddNote() {
     }
     // Reset the error message and open the dialogue if the title exists
     setTitleError("");
-    handleClickOpen();
+
+    var response =  await createNotes({
+
+      "title": noteTitle,
+      "user_id": JSON.parse(sessionStorage.getItem("elas-user")).id,
+      "sections": [],
+      "widgets": []
+  });
 
     if (addToDrafts) {
+      console.log(response);
       try {
-        const result = await addNoteToDrafts(); 
+        const result = await addNoteToDrafts(JSON.parse(sessionStorage.getItem("elas-user")).id, response.note._id); 
         console.log("Note saved to drafts:", result);
-
-        navigate("/Drafts");   
       } catch (error) {
         console.error("Error saving note to drafts:", error);
       }
@@ -156,7 +162,7 @@ function AddNote() {
             },
           }}
           startIcon={<SaveIcon />}
-          onClick={handleSaveNote}
+          onClick={handleClickOpen}
         >
           Save
         </Button>
