@@ -63,10 +63,10 @@ export default function myNotes() {
 
   const handleDeleteNote = async (noteId) => {
     try {
-      await deleteNoteFromServer(noteId);
+      await deleteNoteFromServer(noteId, JSON.parse(sessionStorage.getItem("elas-user")).id);
 
       // If the deletion on the server is successful, update the state
-      const updatedData = cards.cards.filter((card) => card.id !== noteId);
+      const updatedData = cards.cards.filter((card) => card._id !== noteId);
       setCards((prevState) => ({
         ...prevState,
         cards: updatedData,
@@ -80,15 +80,16 @@ export default function myNotes() {
     try {
       const ratedNoteData = await setRatingOnServer(
         // Change to variable userId
-        "a19d4fd7-2052-42e4-8ab2-56db09944363",
+        JSON.parse(sessionStorage.getItem("elas-user")).id,
         noteId,
         rating
       );
+      console.log(ratedNoteData)
       const updatedNote = ratedNoteData.note;
 
       // If rating on the server is successful, update the state
       const updatedData = cards.cards.map((card) => {
-        if (card.id === updatedNote.id) {
+        if (card._id === updatedNote._id) {
           return { ...card, ratings: updatedNote.ratings };
         }
         return card;
@@ -123,9 +124,9 @@ export default function myNotes() {
                 : false
             }
             style={{ marginBottom: "20px" }}
-            handleDeleteNote={handleDeleteNote}
+            handleDeleteNote={() => {handleDeleteNote(card._id)}}
             handleToggleFavorite={handleToggleFavorite}
-            handleRatingNote={handleRatingNote}
+            handleRatingNote={(rating) => handleRatingNote(card._id, rating)}
           />
         ))}
       </Grid>

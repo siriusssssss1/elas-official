@@ -399,6 +399,7 @@ const getNotesByUserIdAndCourseId = async (req, res, next) => {
 
 // Get notes by course and note title - Search bar in the Dashboard page.
 const getNotesByCourseAndNoteTitle = async (req, res, next) => {
+  
   const searchKeyword = req.params.keyword;
   function escapeRegExp(string) {
     return string.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); 
@@ -412,7 +413,8 @@ const getNotesByCourseAndNoteTitle = async (req, res, next) => {
     const courseIds = courses.map((course) => course._id);
 
     const notes = await Note
-      .find({$or: [{course_id: { $in: courseIds }},{title: { $regex: escapeKeyword, $options: "i" }, isPublic: true }]})
+      
+      .find({$or: [{course_id: { $in: courseIds }},{title: { $regex: escapeKeyword, $options: "i" } }]})
       .populate("course_id", "title")
       .populate("user_id", "user_name")
       .select("note_id title");
