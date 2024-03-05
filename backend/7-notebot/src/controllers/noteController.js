@@ -225,7 +225,6 @@ const createNote = async (req, res, next) => {
 const updateNote = async (req, res, next) => {
 
   try {
-    const user_id = req.body.user_id;
     const { title, sections, widgets, course_id } = req.body;
 
     const note = await Note.findById(req.params.note_id);
