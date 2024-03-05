@@ -5,7 +5,6 @@ import {
   Button,
   Box,
   Paper,
-  Typography,
   Dialog,
   DialogTitle,
   DialogActions,
@@ -18,17 +17,16 @@ import SaveIcon from "@mui/icons-material/Save";
 import Checkbox from "@mui/material/Checkbox";
 import CloseIcon from "@mui/icons-material/Close";
 import IconButton from "@mui/material/IconButton";
-import chooseLayout from "./Notes/chooseLayout.jsx";
+import ChooseLayout from "./Notes/chooseLayout.jsx";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import editNote from "./Notes/editNote.jsx";
-import { useNavigate } from "react-router-dom";
-import { getCourses } from "../utils/api.js";
+import EditNote from "./Notes/editNote.jsx";
+import { getCourses, createNotes } from "../utils/api.js";
 import { addNoteToDrafts } from "../utils/api.js";
 
-function addNote() {
+function AddNote() {
   // Retrieve existing courses from the backend
   useEffect(() => {
-    getCourses().then((courses) => {            
+    getCourses().then((courses) => {
       // Key "message" indicates faulty course fetch
       if (courses && "message" in courses) {
         // Error in api call
@@ -44,16 +42,12 @@ function addNote() {
   const [dropDownOptions, setDropDownOptions] = useState([]);
 
   const [newSection, setNewSection] = useState(false);
-  const [selectedLayout, setSelectedLayout] = useState(null);
-  const [showeditNote, setShoweditNote] = useState(false);
-
-  const navigate = useNavigate();
+  const [showEditNote, setShowEditNote] = useState(false);
 
   const handleLayoutSelect = (layout) => {
-    console.log("Ausgewähltes Layout:", layout);    // "Ausgewähltes Layout: layout1"
-    setSelectedLayout(layout);
+    console.log("Ausgewähltes Layout:", layout); // "Ausgewähltes Layout: layout1"
     setNewSection(false); // Hides Layout Options
-    setShoweditNote(true); // Shows new Interface
+    setShowEditNote(true); // Shows new Interface
   };
 
   const [noteTitle, setNoteTitle] = useState(""); // State variable for the title of the note
@@ -63,7 +57,7 @@ function addNote() {
     setOpenDialog(true);
   };
 
-  const handleClose = (value) => {
+  const handleClose = () => {
     setOpenDialog(false);
   };
 
@@ -75,31 +69,44 @@ function addNote() {
     setAddToDrafts(event.target.checked);
     if (event.target.checked) {
       // Logic for adding to drafts
-      {/*...*/}
+      {
+        /*...*/
+      }
     }
   };
   const handleCreateNewCourseChange = (event) => {
     setCreateNewCourse(event.target.checked);
     // More logic for "Create New Course"
-    {/*...*/}
+    {
+      /*...*/
+    }
   };
 
   const handleSaveNote = async () => {
     // Title validation
+    console.log
     if (!noteTitle.trim()) {
       setTitleError("You forgot to add a title to your note!");
-      return; 
+      return;
     }
     // Reset the error message and open the dialogue if the title exists
     setTitleError("");
-    handleClickOpen();
+
+    var response = await createNotes({
+      title: noteTitle,
+      user_id: JSON.parse(sessionStorage.getItem("elas-user")).id,
+      sections: [],
+      widgets: [],
+    });
 
     if (addToDrafts) {
+      console.log(response);
       try {
-        const result = await addNoteToDrafts(); 
+        const result = await addNoteToDrafts(
+          JSON.parse(sessionStorage.getItem("elas-user")).id,
+          response.note._id
+        );
         console.log("Note saved to drafts:", result);
-
-        navigate("/Drafts");   
       } catch (error) {
         console.error("Error saving note to drafts:", error);
       }
@@ -123,8 +130,8 @@ function addNote() {
           placeholder="Add Note Title"
           value={noteTitle}
           onChange={(e) => setNoteTitle(e.target.value)}
-          error={!!titleError} 
-          helperText={titleError} 
+          error={!!titleError}
+          helperText={titleError}
           sx={{
             width: "224px",
             height: "60px",
@@ -156,7 +163,7 @@ function addNote() {
             },
           }}
           startIcon={<SaveIcon />}
-          onClick={handleSaveNote}
+          onClick={handleClickOpen}
         >
           Save
         </Button>
@@ -192,17 +199,17 @@ function addNote() {
           <Box
             sx={{
               display: "flex",
-              justifyContent: "space-between", 
-              width: "100%", 
-              paddingTop: 2, 
+              justifyContent: "space-between",
+              width: "100%",
+              paddingTop: 2,
             }}
           >
             <Box
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                alignItems: "flex-start", 
-                marginRight: 2, 
+                alignItems: "flex-start",
+                marginRight: 2,
               }}
             >
               <FormControlLabel
@@ -214,7 +221,7 @@ function addNote() {
                     color="primary"
                   />
                 }
-                label= "Or add to drafts"
+                label="Or add to drafts"
               />
               <FormControlLabel
                 control={
@@ -225,20 +232,20 @@ function addNote() {
                     color="primary"
                   />
                 }
-                label= "Or create new course"
+                label="Or create new course"
               />
             </Box>
             <Button
               onClick={handleSaveNote}
               variant="contained"
               sx={{
-                bgcolor: "#ED7D31", 
-                color: "white", 
+                bgcolor: "#ED7D31",
+                color: "white",
                 "&:hover": {
                   bgcolor: "darken(#ED7D31, 0.2)", // Darker color while hovering
                 },
-                alignSelf: "flex-end", 
-                textTransform: "none", 
+                alignSelf: "flex-end",
+                textTransform: "none",
               }}
               endIcon={<CheckIcon />}
             >
@@ -250,10 +257,10 @@ function addNote() {
 
       {newSection && (
         // Show ChooseLayout component
-        <chooseLayout onLayoutSelect={handleLayoutSelect} />
+        <ChooseLayout onLayoutSelect={handleLayoutSelect} />
       )}
 
-      {showeditNote && <editNote />}
+      {showEditNote && <EditNote />}
 
       {!newSection && (
         <Paper
@@ -325,4 +332,4 @@ function addNote() {
   );
 }
 
-export default addNote;
+export default AddNote;

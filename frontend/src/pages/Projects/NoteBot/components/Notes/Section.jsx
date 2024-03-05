@@ -1,4 +1,4 @@
-import { LayoutSelector } from "./ChooseLayout";
+import { LayoutSelector } from "./chooseLayout";
 import Grid from "@mui/material/Unstable_Grid2";
 import { Box, IconButton } from "@mui/material";
 import React, { useState } from "react";
@@ -8,7 +8,7 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { useAuth } from "../../../contexts/AuthProvider";
 import { deleteSection } from "./api";
 
-const section = ({
+const Section = ({
   section,
   onChange,
   onWidgetSelect,
