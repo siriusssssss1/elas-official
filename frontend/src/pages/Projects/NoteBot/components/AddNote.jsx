@@ -46,7 +46,6 @@ function AddNote() {
 
   const handleLayoutSelect = (layout) => {
     console.log("Ausgewähltes Layout:", layout); // "Ausgewähltes Layout: layout1"
-    setSelectedLayout(layout);
     setNewSection(false); // Hides Layout Options
     setShowEditNote(true); // Shows new Interface
   };
@@ -85,6 +84,7 @@ function AddNote() {
 
   const handleSaveNote = async () => {
     // Title validation
+    console.log
     if (!noteTitle.trim()) {
       setTitleError("You forgot to add a title to your note!");
       return;

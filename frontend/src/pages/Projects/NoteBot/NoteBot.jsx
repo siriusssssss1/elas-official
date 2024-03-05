@@ -50,32 +50,6 @@ export default function NoteBot() {
     setValue(newValue);
   };
 
-  useEffect(() => {
-    // getUserInfoFunction retrieves user information based on user ID
-    let elasUser = JSON.parse(sessionStorage.getItem("elas-user"));
-    async function getUserInfoFunction(userId) {
-      let reponse = await getUserInfo(userId);
-      // Update the user state based on the server response
-      if (reponse.user !== undefined) {
-        setUser((prevState) => ({
-          ...prevState,
-          message: reponse.message,
-          user: {
-            uid: reponse.user.uid,
-            name: reponse.user.name,
-            username: reponse.user.username,
-          },
-        }));
-      } else {
-        setUser((prevState) => ({
-          ...prevState,
-          message: reponse.message,
-        }));
-      }
-    }
-    getUserInfoFunction(elasUser.id);
-  }, []); // Only once
-
   return (
     <Grid container justifyContent="center" sx={{ py: 4, px: 2 }}>
       <Grid container sx={{ maxWidth: 1500, width: "100%" }} spacing={2}>
