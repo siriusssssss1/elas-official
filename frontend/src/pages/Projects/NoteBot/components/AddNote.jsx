@@ -85,7 +85,10 @@ function AddNote() {
   const handleSaveNote = async () => {
     // Title validation
     console.log
-    if (!noteTitle.trim()) {
+    if (noteTitle.trim()) {
+      handleClickOpen();
+    }
+    else {
       setTitleError("You forgot to add a title to your note!");
       return;
     }
@@ -163,7 +166,7 @@ function AddNote() {
             },
           }}
           startIcon={<SaveIcon />}
-          onClick={handleClickOpen}
+          onClick={handleSaveNote}
         >
           Save
         </Button>
@@ -236,7 +239,6 @@ function AddNote() {
               />
             </Box>
             <Button
-              onClick={handleSaveNote}
               variant="contained"
               sx={{
                 bgcolor: "#ED7D31",
