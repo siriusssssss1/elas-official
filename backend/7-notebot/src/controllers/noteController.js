@@ -217,7 +217,7 @@ const createNote = async (req, res, next) => {
   }
 };
 
-//Update a note along with its sections and widgets - Clicking on a note in the My Notes page.
+// Update a note along with its sections and widgets. - Clicking on a note in the My Notes page.
 const updateNote = async (req, res, next) => {
 
   try {
@@ -565,7 +565,7 @@ const getNoteByNoteId = async (req, res, next) => {
   }
 };
 
-// Update the rating of a specific note. - Clicking on the stars of a note
+// Update the rating of a specific note. - Clicking on the stars of a note.
 const updateRating = async (req, res, next) => {
   const userId = req.body.user_id; 
   const { noteId, rating } = req.body;
@@ -611,7 +611,7 @@ const updateRating = async (req, res, next) => {
   }
 };
 
-// Add a note to a course identified by its ID.
+// Add a note to a course identified by its ID. - Clicking on a course from the courses list in the Add note to course pop-up window.
 const addNoteToCourse = async (req, res, next) => {
   const { course_id } = req.params;
 

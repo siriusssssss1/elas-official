@@ -12,7 +12,7 @@
 
 <br><br>
 
-
+### Postman Collection: [See the collection]()
 ### Demo: [Watch the video](https://youtu.be/-F1HHKHjcWk)
 ### Advertisement Video: [Watch the video](https://www.youtube.com/watch?v=euwTyM4kpoE)
 

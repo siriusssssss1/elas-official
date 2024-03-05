@@ -12,19 +12,19 @@ courseRouter.get('/test', courseController.getAllCourses);
 
 /**
  * @route GET /courses/users/:user_id
- * @description Get courses by user ID - Courses page (Grid view): when clicking on Courses in the Dashboard page.
+ * @description Retrieve courses associated with a user by their user ID. - Grid view of My Courses page, when clicking on Courses in the My Notes page.
  */
 courseRouter.get('/users/:user_id', courseController.getCoursesByUserId);
 
 /**
  * @route POST /courses/new
- * @description Create course - AddCourse button in the Dashboard page.
+ * @description Create a new course associated with a user. - Clicking on "Or create new course" on the Add note to course pop-up window.
  */
 courseRouter.post('/new', courseController.createCourse);
 
 /**
  * @route DELETE /courses/:course_id
- * @description Delete course with notes - Clicking on the delete icon in the Courses page.
+ * @description Delete a course along with its associated notes and sections. - Clicking on the trash can on the right side next to the course name.
  */
 courseRouter.delete('/:course_id', courseController.deleteCourseWithNotes);
 

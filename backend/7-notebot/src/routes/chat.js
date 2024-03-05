@@ -6,7 +6,7 @@ let chatbotRouter = require("express").Router();
 
 /**
  * @route POST /chat/chatbot
- * @description Perform chat completion using ChatGPT.
+ * @description Handle chat message completions using the OpenAI API.
  */
 chatbotRouter.post("/chatbot", chatbotController.chatCompletion);
 

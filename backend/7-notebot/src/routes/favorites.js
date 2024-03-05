@@ -6,25 +6,25 @@ let favoriteRouter = require("express").Router();
 
 /**
  * @route POST /favorites/:note_id
- * @description Toggle favorite status for a note.
+ * @description Toggle favorite status for a note by a user. - Clicking on the heart on a note.
  */
 favoriteRouter.post("/notes/:note_id", favController.toggleFavoriteNote);
 
 /**
  * @route GET /favorites/users/:user_id
- * @description Get favorite notes for a specific user - Grid view of the Favorites page.
+ * @description Retrieve favorite notes belonging to a user by their user ID. - Grid view of the My Favorites page.
  */
 favoriteRouter.get("/notes/users/:user_id", favController.getFavNoteByUserId);
 
 /**
  * @route POST /favorites/:course_id
- * @description Toggle favorite status for a course.
+ * @description Toggle favorite status for a course by a user. - Clicking on the heart on the side of the course name.
  */
 favoriteRouter.post("/courses/:course_id", favController.toggleFavoriteCourse);
 
 /**
  * @route GET /favorites/users/:user_id
- * @description Get favorite courses for a specific user - Grid view of the Favorites page.
+ * @description Retrieve favorite courses belonging to a user by their user ID. - Grid view of the My Favorites page.
  */
 favoriteRouter.get("/courses/users/:user_id", favController.getFavCourseByUserId);
 

@@ -106,7 +106,7 @@ const updateWidget = async (req, res, next) => {
   }
 };
 
-// Delete a  widget from a section. - Clicking on the "x" Button in the corner of a widget.
+// Delete a widget from a section. - Clicking on the "x" Button in the corner of a widget.
 const deleteWidget = async (req, res, next) => {
   const { section_id, widget_id } = req.params;
 

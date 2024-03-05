@@ -12,7 +12,7 @@ userRouter.use(function (req, res, next) {
 
 /**
  * @route GET /users/:userId
- * @description Get user by Id.
+ * @description Retrieve user information by user ID.
  */
 userRouter.get("/:userId", userController.getUserById);
 
@@ -30,13 +30,13 @@ userRouter.put("/:userId/update", userController.updateUser);
 
 /**
  * @route GET /users/:userId/latestSearches
- * @description Get the latest searches for a user.
+ * @description Retrieve the latest searches made by a user. - Clicking on the searchbar and getting a list with the latest searches underneath.
  */
 userRouter.get("/:userId/latestSearches", userController.getLatestSearches);
 
 /**
  * @route DELETE /users/:userId/latestSearchesDeleted
- * @description Delete the latest searches for a user.
+ * @description Delete the latest searches made by a user. - Clicking on a "x" Button next to the most recent searches.
  */
 userRouter.delete("/:userId/latestSearchesDeleted", userController.deleteLatestSearches);
 

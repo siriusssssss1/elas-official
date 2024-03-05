@@ -12,25 +12,25 @@ widgetRouter.get('/test', widgetController.getWidget);
 
 /**
  * @route GET /widgets/section/:section_id
- * @description Get widgets for a specific section.
+ * @description Retrieve widgets belonging to a section.
  */
 widgetRouter.get('/section/:section_id', widgetController.getWidgetsBySectionId);
 
 /**
  * @route PATCH /widgets/section/:section_id
- * @description Add a widget to a specific section.
+ * @description Add a widget to a section. - Clicking on one of the three Icons to add a widget while creating a note.
  */
 widgetRouter.patch('/section/:section_id', widgetController.addWidgetToSection);
 
 /**
  * @route PATCH /widgets/:widget_id
- * @description Update a specific widget.
+ * @description Update a widget.
  */
 widgetRouter.patch('/:widget_id', widgetController.updateWidget);
 
 /**
  * @route DELETE /widgets/:section_id/:widget_id
- * @description Delete a specific widget from a section.
+ * @description Delete a widget from a section. - Clicking on the "x" Button in the corner of a widget.
  */
 widgetRouter.delete('/:section_id/:widget_id', widgetController.deleteWidget);
 

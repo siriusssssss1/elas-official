@@ -50,7 +50,7 @@ const getCoursesByUserId = async (req, res, next) => {
   }
 };
 
-// Create a new course associated with a user.  - Clicking on "Or create new course" on the Add note to course Pop-up window.
+// Create a new course associated with a user. - Clicking on "Or create new course" on the Add note to course pop-up window.
 const createCourse = async (req, res) => {
   const { title, user_id } = req.body;
 

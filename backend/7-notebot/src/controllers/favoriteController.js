@@ -34,7 +34,7 @@ const toggleFavoriteNote = async (req, res, next) => {
   }
 };
 
-// Retrieve favorite notes belonging to a user by their user ID. - Grid view of the Favorites page.
+// Retrieve favorite notes belonging to a user by their user ID. - Grid view of the My Favorites page.
 const getFavNoteByUserId = async (req, res, next) => {
   const user_id = req.params.user_id;
 
@@ -92,7 +92,7 @@ const toggleFavoriteCourse = async (req, res, next) => {
   }
 };
 
-// Retrieve favorite courses belonging to a user by their user ID. - Grid view of the Favorites page.
+// Retrieve favorite courses belonging to a user by their user ID. - Grid view of the My Favorites page.
 const getFavCourseByUserId = async (req, res, next) => {
   const user_id = req.params.user_id;
 
