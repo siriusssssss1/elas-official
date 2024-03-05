@@ -6,10 +6,13 @@ import noteBotLogo from "../../../../assets/images/noteBot-logo.png";
 import Search from "./Search.jsx";
 
 const searchResultsPage = () => {
+  // Accessing the current location object 
   const location = useLocation();
   const searchResults = location.state.searchResults || [];
+   // Extracting search results and keyword from the location state
   const keyword = location.state.keyword || "";
-  console.log("Search Results:", searchResults);
+  console.log("Search Results:", searchResults);  
+  // Search Results: [ { _id: "1", title: "Sample Note 1", content: "My notes for IDEA programming...", ... }]
 
   return (
     <Box textAlign="center" p={3}>
