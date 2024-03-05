@@ -54,11 +54,10 @@ export default function myFavorites() {
   // table with two columns that represents favorite notes & favorite courses
   return (
     <Grid display={"flex"} flexDirection={"column"}>
-
       {/* Header */}
       <Grid
         display={"flex"}
-        marginX={4} 
+        marginX={4}
         sx={{
           borderBottom: 1,
         }}
@@ -98,9 +97,7 @@ export default function myFavorites() {
               display: "grid",
             },
           }}
-        >
-           
-        </Grid>
+        ></Grid>
 
         {/* Right side grid */}
         <Grid width={0.5} paddingTop={4} paddingLeft={4}>
@@ -115,7 +112,7 @@ export default function myFavorites() {
               .flat()
               .map((card) => (
                 <NoteCard
-                  key={card.id}
+                  key={card._id}
                   card={card}
                   handleDeleteNote={handleDeleteNote}
                   handleToggleFavorite={handleToggleFavorite}

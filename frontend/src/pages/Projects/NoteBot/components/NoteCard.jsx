@@ -36,17 +36,17 @@ export default function noteCard({
 
   const handleDeleteConfirm = () => {
     handleClose();
-    handleDeleteNote(card.id);
+    handleDeleteNote(card._id);
   };
 
   const handleFavoriteClick = () => {
-    console.log(`Favorite clicked for note id: ${card.id}`);
+    console.log(`Favorite clicked for note id: ${card._id}`);
     // Assuming handleToggleFavorite requires the id of the note to toggle its favorite status
-    handleToggleFavorite(card.id);
+    handleToggleFavorite(card._id);
   };
 
   const handleRatingChange = (event, rating) => {
-    handleRatingNote(card.id, rating);
+    handleRatingNote(card._id, rating);
   };
 
   return (
@@ -58,7 +58,7 @@ export default function noteCard({
         backgroundColor: "#d9d9d9",
         margin: "8px",
       }}
-      key={card.id} // efficiently update the list of cards
+      key={card._id} // efficiently update the list of cards
     >
       <CardContent
         style={{
@@ -91,7 +91,8 @@ export default function noteCard({
               card.ratings?.find(
                 (rating) =>
                   // Change to variable userId
-                  rating.userId === JSON.parse(sessionStorage.getItem("elas-user")).id
+                  rating.userId ===
+                  JSON.parse(sessionStorage.getItem("elas-user")).id
               )?.rating ?? 0
             }
             precision={0.5}

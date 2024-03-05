@@ -24,12 +24,17 @@ const searchResultsPage = () => {
           <img
             src={noteBotLogo}
             alt="NoteBot Logo"
-            style={{ width: "100%", maxWidth: "200px", paddingBottom: 20, paddingTop: 6 }} 
+            style={{
+              width: "100%",
+              maxWidth: "200px",
+              paddingBottom: 20,
+              paddingTop: 6,
+            }}
           />
         </Grid>
-        <Grid item >
-      <Search />
-      </Grid>
+        <Grid item>
+          <Search />
+        </Grid>
       </Grid>
       <Divider />
 
@@ -52,7 +57,7 @@ const searchResultsPage = () => {
           <Grid container spacing={2}>
             {searchResults.map((card) => (
               <NoteCard
-                key={card.id}
+                key={card._id}
                 card={card}
                 style={{ marginBottom: "20px" }}
               />

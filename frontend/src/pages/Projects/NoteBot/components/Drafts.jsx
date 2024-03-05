@@ -15,9 +15,11 @@ export default function drafts() {
   // useEffect hook to fetch the draft cards from the server when the component mounts
   useEffect(() => {
     async function getCardInfo() {
-      const cardsInfo = await getDrafts(JSON.parse(sessionStorage.getItem("elas-user")).id); // Fetching draft cards from the server
+      const cardsInfo = await getDrafts(
+        JSON.parse(sessionStorage.getItem("elas-user")).id
+      ); // Fetching draft cards from the server
 
-        // Updating the state with the fetched cards or an error message
+      // Updating the state with the fetched cards or an error message
       if (cardsInfo.cards !== undefined) {
         setCards(cardsInfo);
         console.log(cardsInfo);
@@ -36,12 +38,11 @@ export default function drafts() {
     try {
       await deleteNoteFromServer(noteId);
       // If the deletion on the server is successful, update the state
-      const updatedData = cards.cards.filter((card) => card.id !== noteId);
+      const updatedData = cards.cards.filter((card) => card._id !== noteId);
       setCards((prevState) => ({
         ...prevState,
         cards: updatedData,
       }));
-      
     } catch (error) {
       console.error("Error deleting note:", error);
     }
@@ -61,7 +62,7 @@ export default function drafts() {
       <Grid item container spacing={2}>
         {cards.cards.map((card) => (
           <DraftCard
-            key={card.id}
+            key={card._id}
             card={card}
             style={{ marginBottom: "20px" }}
             handleDeleteNote={handleDeleteNote} // Passing the delete handler function to each DraftCard

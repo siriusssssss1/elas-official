@@ -34,8 +34,9 @@ export default function myNotes() {
     }
 
     async function getCardInfo() {
-
-      const cardsInfo = await getCards(JSON.parse(sessionStorage.getItem("elas-user")).id);
+      const cardsInfo = await getCards(
+        JSON.parse(sessionStorage.getItem("elas-user")).id
+      );
 
       if (cardsInfo.cards !== undefined) {
         setCards(cardsInfo);
@@ -63,7 +64,10 @@ export default function myNotes() {
 
   const handleDeleteNote = async (noteId) => {
     try {
-      await deleteNoteFromServer(noteId, JSON.parse(sessionStorage.getItem("elas-user")).id);
+      await deleteNoteFromServer(
+        noteId,
+        JSON.parse(sessionStorage.getItem("elas-user")).id
+      );
 
       // If the deletion on the server is successful, update the state
       const updatedData = cards.cards.filter((card) => card._id !== noteId);
@@ -77,6 +81,8 @@ export default function myNotes() {
   };
 
   const handleRatingNote = async (noteId, rating) => {
+    console.log(noteId);
+    console.log(rating);
     try {
       const ratedNoteData = await setRatingOnServer(
         // Change to variable userId
@@ -84,7 +90,7 @@ export default function myNotes() {
         noteId,
         rating
       );
-      console.log(ratedNoteData)
+      console.log(ratedNoteData);
       const updatedNote = ratedNoteData.note;
 
       // If rating on the server is successful, update the state
@@ -116,17 +122,17 @@ export default function myNotes() {
       <Grid item container spacing={2}>
         {cards.cards.map((card) => (
           <NoteCard
-            key={card.id}
+            key={card._id}
             card={card}
             isFavorite={
-              favoriteCards.cards.find((fav) => fav.id === card.id)
+              favoriteCards.cards.find((fav) => fav.id === card._id)
                 ? true
                 : false
             }
             style={{ marginBottom: "20px" }}
-            handleDeleteNote={() => {handleDeleteNote(card._id)}}
+            handleDeleteNote={handleDeleteNote}
             handleToggleFavorite={handleToggleFavorite}
-            handleRatingNote={(rating) => handleRatingNote(card._id, rating)}
+            handleRatingNote={handleRatingNote}
           />
         ))}
       </Grid>
