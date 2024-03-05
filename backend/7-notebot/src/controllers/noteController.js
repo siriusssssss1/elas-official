@@ -32,6 +32,11 @@ const getNoteWidgets = async (req, res, next) => {
 
   try {
     const note = await Note.findById(req.params.note_id);
+
+    if (!note) {
+      return res.status(404).json({ message: "Note not found" });
+    }
+
     const sections = await Section.find({ _id: { $in: note.sections } });
 
     //Create an index dictionary to map section IDs to their indices in the note.sections array
