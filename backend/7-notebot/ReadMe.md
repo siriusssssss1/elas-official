@@ -12,7 +12,7 @@
 
 <br><br>
 
-### Postman Collection: [See the collection]()
+### Postman Collection: [See the collection](https://restless-comet-367522.postman.co/workspace/New-Team-Workspace~9bcfde19-f2e7-4bcf-92e5-25ae9ff70f07/collection/31552973-b8fe2d81-2250-408d-925b-d4f7c6da056f?action=share&creator=31552973)
 ### Demo: [Watch the video](https://youtu.be/-F1HHKHjcWk)
 ### Advertisement Video: [Watch the video](https://www.youtube.com/watch?v=euwTyM4kpoE)
 
