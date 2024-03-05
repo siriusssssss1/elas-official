@@ -73,8 +73,11 @@ const getNoteByUserId = async (req, res, next) => {
   const user_id = req.params.user_id;
   
   try {
-    const user = await User.findOne({uid: user_id}).populate('notes');
-    const notes = await Note.find({ uid: user_id, isPublic: true }); 
+    const user = await User.findOne({ uid: user_id })
+    .populate({
+        path: 'notes',
+        match: { isPublic: true }
+    });    
 
     if (!user) {
       return res
@@ -83,9 +86,9 @@ const getNoteByUserId = async (req, res, next) => {
     }
     
     if (!user.notes || user.notes.length === 0) {
-        res.json({ notes: [] });
-        return;
-    }
+      res.json({ notes: [] });
+      return;
+  }
 
     const groupedNotes = {};
 
@@ -103,7 +106,7 @@ const getNoteByUserId = async (req, res, next) => {
     
     for (let note of user.notes) {
       const courseId = note.course_id; //._id; //.toString();
-    
+     
       let course;
       if (courseId) {
         course = await Course.findOne({ _id: courseId });
