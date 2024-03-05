@@ -23,16 +23,10 @@ export const getUserInfo = async (userId) => {
 
 export const getCards = async (userId) => {
   try {
-
-   const responseNr2 = await Backend.get(`/notebot/notes/users/${userId}`);
-   console.log(responseNr2.data)
+    const responseNr2 = await Backend.get(`/notebot/notes/users/${userId}`);
+    console.log(responseNr2.data)
    
-  return {cards: responseNr2.data.notes[0].notes}; 
-    const { //relevante Daten (message und cards) werden destrukturiert und in den Variablen message und cards gespeichert
-      data: { message, courses },
-    } = responseNr2;
-
-    return { message, courses };
+    return {cards: responseNr2.data.notes[0].notes}; 
   } catch (err) {
     console.log(err);
     return {
@@ -44,16 +38,10 @@ export const getCards = async (userId) => {
 
 export const getDrafts = async (userId) => {
   try {
+    const responseNr2 = await Backend.get(`/notebot/drafts/users/${userId}/`); 
+    console.log(responseNr2.data)
 
-   const responseNr2 = await Backend.get(`/notebot/drafts/users/${userId}/`); 
-   console.log(responseNr2.data)
-   
-  return {cards: responseNr2.data.notes}; 
-    const { //relevante Daten (message und cards) werden destrukturiert und in den Variablen message und cards gespeichert
-      data: { message, courses },
-    } = responseNr2;
-
-    return { message, courses };
+    return {cards: responseNr2.data.notes}; 
   } catch (err) {
     console.log(err);
     return {
@@ -65,11 +53,10 @@ export const getDrafts = async (userId) => {
 
 export const getFavNotes = async () => {
   try {
-
-   const responseNr2 = await Backend.get(`/notebot/notes/users/9107bb63-2494-4720-80de-db464cf03255/favorite`); // wenn man hier ${userId} eingibt, funktioniert es noch nicht
-   console.log(responseNr2.data)
+    const responseNr2 = await Backend.get(`/notebot/notes/users/9107bb63-2494-4720-80de-db464cf03255/favorite`); // wenn man hier ${userId} eingibt, funktioniert es noch nicht
+    console.log(responseNr2.data)
    
-  return {cards: responseNr2.data.notes}; 
+    return {cards: responseNr2.data.notes}; 
   } catch (err) {
     console.log(err);
     return {

@@ -1,25 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Grid, Typography } from "@mui/material";
 import { getUserInfo } from "./utils/api.js";
 import Button from "@mui/material/Button";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import MyNotes from "./components/myNotes.jsx";
-import MyFavorites from "./components/myFavorites.jsx";
-import Drafts from "./components/drafts.jsx";
+import MyNotes from "./components/MyNotes.jsx";
+import MyFavorites from "./components/MyFavorites.jsx";
+import Drafts from "./components/Drafts.jsx";
 import AddNote from "./components/addNote.jsx";
-import Search from './components/search.jsx';
+import Search from "./components/search.jsx";
 import noteBotLogo from "../../../assets/images/noteBot-logo.png";
-import {
-  Routes,
-  Route,
-  Navigate,
-  useNavigate,
-  useLocation,
-} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-function CustomTabPanel(props) {        // Simple TabPanel component for use with Material UI tabs
+function CustomTabPanel(props) {
+  // Simple TabPanel component for use with Material UI tabs
   const { children, value, index, ...other } = props;
 
   return (
@@ -39,7 +34,8 @@ function CustomTabPanel(props) {        // Simple TabPanel component for use wit
   );
 }
 
-function a11yProps(index) {       // For accessibility
+function a11yProps(index) {
+  // For accessibility
   return {
     id: `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
@@ -48,25 +44,16 @@ function a11yProps(index) {       // For accessibility
 
 export default function NoteBot() {
   const navigate = useNavigate();
-  const [user, setUser] = useState({    // State variables for user information and the active tab value
-    message: "Server not connected",
-    user: {
-      uid: "",
-      name: "",
-      username: "",
-    },
-  });
-
   const [value, setValue] = React.useState(0);
 
-  const handleChange = (event, newValue) => {
+  const handleChange = (_, newValue) => {
     setValue(newValue);
   };
 
   useEffect(() => {
     // getUserInfoFunction retrieves user information based on user ID
     let elasUser = JSON.parse(sessionStorage.getItem("elas-user"));
-    async function getUserInfoFunction(userId) {      
+    async function getUserInfoFunction(userId) {
       let reponse = await getUserInfo(userId);
       // Update the user state based on the server response
       if (reponse.user !== undefined) {
@@ -87,7 +74,7 @@ export default function NoteBot() {
       }
     }
     getUserInfoFunction(elasUser.id);
-  }, []);   // Only once
+  }, []); // Only once
 
   return (
     <Grid container justifyContent="center" sx={{ py: 4, px: 2 }}>
@@ -102,13 +89,12 @@ export default function NoteBot() {
               xs={6}
               sm={3}
               md={2}
-              sx={{ width: "100%", pb: 5
-             }}
+              sx={{ width: "100%", pb: 5 }}
             />
-              <div className="App">
-                {/* Other components */}
-                <Search />
-              </div>
+            <div className="App">
+              {/* Other components */}
+              <Search />
+            </div>
           </Grid>
           <Grid container justifyContent="center" spacing={100}>
             <Grid item xs={12}>
@@ -119,27 +105,40 @@ export default function NoteBot() {
                     borderColor: "divider",
                     display: "flex",
                     justifyContent: "space-around",
-                    
                   }}
-                > 
+                >
                   <Tabs
                     value={value}
                     onChange={handleChange}
                     aria-label="basic tabs example"
                     variant="fullWidth"
-                    
                   >
                     <Tab
                       label="My Notes"
-                      {...a11yProps(0)} sx={{ color: "#ED7D31", fontWeight: "bold", marginRight: 6 }}
+                      {...a11yProps(0)}
+                      sx={{
+                        color: "#ED7D31",
+                        fontWeight: "bold",
+                        marginRight: 6,
+                      }}
                     />
                     <Tab
                       label="My Favorites"
-                      {...a11yProps(0)} sx={{ color: "#ED7D31", fontWeight: "bold", marginRight: 6 }}
+                      {...a11yProps(0)}
+                      sx={{
+                        color: "#ED7D31",
+                        fontWeight: "bold",
+                        marginRight: 6,
+                      }}
                     />
                     <Tab
                       label="My Drafts"
-                      {...a11yProps(0)} sx={{ color: "#ED7D31", fontWeight: "bold", marginRight: 6 }}
+                      {...a11yProps(0)}
+                      sx={{
+                        color: "#ED7D31",
+                        fontWeight: "bold",
+                        marginRight: 6,
+                      }}
                     />
                     <Button
                       variant="outlined"
@@ -147,7 +146,7 @@ export default function NoteBot() {
                       sx={{
                         color: "#ED7D31",
                         fontWeight: "bold",
-                        borderColor: "#ED7D31", 
+                        borderColor: "#ED7D31",
                         marginRight: 6,
                       }}
                       onClick={() => navigate("/projects/notebot/notes/create")} // Button for adding Notes

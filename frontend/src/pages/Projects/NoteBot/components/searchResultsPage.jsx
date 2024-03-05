@@ -1,4 +1,3 @@
-// SearchResultsPage.js
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { Grid, Typography, Divider, Box } from "@mui/material";

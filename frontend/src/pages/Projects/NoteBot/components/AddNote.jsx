@@ -5,7 +5,6 @@ import {
   Button,
   Box,
   Paper,
-  Typography,
   Dialog,
   DialogTitle,
   DialogActions,
@@ -21,14 +20,13 @@ import IconButton from "@mui/material/IconButton";
 import ChooseLayout from "./Notes/chooseLayout.jsx";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import EditNote from "./Notes/editNote.jsx";
-import { useNavigate } from "react-router-dom";
 import { getCourses, createNotes } from "../utils/api.js";
 import { addNoteToDrafts } from "../utils/api.js";
 
 function AddNote() {
   // Retrieve existing courses from the backend
   useEffect(() => {
-    getCourses().then((courses) => {            
+    getCourses().then((courses) => {
       // Key "message" indicates faulty course fetch
       if (courses && "message" in courses) {
         // Error in api call
@@ -44,13 +42,10 @@ function AddNote() {
   const [dropDownOptions, setDropDownOptions] = useState([]);
 
   const [newSection, setNewSection] = useState(false);
-  const [selectedLayout, setSelectedLayout] = useState(null);
   const [showEditNote, setShowEditNote] = useState(false);
 
-  const navigate = useNavigate();
-
   const handleLayoutSelect = (layout) => {
-    console.log("Ausgewähltes Layout:", layout);    // "Ausgewähltes Layout: layout1"
+    console.log("Ausgewähltes Layout:", layout); // "Ausgewähltes Layout: layout1"
     setSelectedLayout(layout);
     setNewSection(false); // Hides Layout Options
     setShowEditNote(true); // Shows new Interface
@@ -63,7 +58,7 @@ function AddNote() {
     setOpenDialog(true);
   };
 
-  const handleClose = (value) => {
+  const handleClose = () => {
     setOpenDialog(false);
   };
 
@@ -75,36 +70,42 @@ function AddNote() {
     setAddToDrafts(event.target.checked);
     if (event.target.checked) {
       // Logic for adding to drafts
-      {/*...*/}
+      {
+        /*...*/
+      }
     }
   };
   const handleCreateNewCourseChange = (event) => {
     setCreateNewCourse(event.target.checked);
     // More logic for "Create New Course"
-    {/*...*/}
+    {
+      /*...*/
+    }
   };
 
   const handleSaveNote = async () => {
     // Title validation
     if (!noteTitle.trim()) {
       setTitleError("You forgot to add a title to your note!");
-      return; 
+      return;
     }
     // Reset the error message and open the dialogue if the title exists
     setTitleError("");
 
-    var response =  await createNotes({
-
-      "title": noteTitle,
-      "user_id": JSON.parse(sessionStorage.getItem("elas-user")).id,
-      "sections": [],
-      "widgets": []
-  });
+    var response = await createNotes({
+      title: noteTitle,
+      user_id: JSON.parse(sessionStorage.getItem("elas-user")).id,
+      sections: [],
+      widgets: [],
+    });
 
     if (addToDrafts) {
       console.log(response);
       try {
-        const result = await addNoteToDrafts(JSON.parse(sessionStorage.getItem("elas-user")).id, response.note._id); 
+        const result = await addNoteToDrafts(
+          JSON.parse(sessionStorage.getItem("elas-user")).id,
+          response.note._id
+        );
         console.log("Note saved to drafts:", result);
       } catch (error) {
         console.error("Error saving note to drafts:", error);
@@ -129,8 +130,8 @@ function AddNote() {
           placeholder="Add Note Title"
           value={noteTitle}
           onChange={(e) => setNoteTitle(e.target.value)}
-          error={!!titleError} 
-          helperText={titleError} 
+          error={!!titleError}
+          helperText={titleError}
           sx={{
             width: "224px",
             height: "60px",
@@ -198,17 +199,17 @@ function AddNote() {
           <Box
             sx={{
               display: "flex",
-              justifyContent: "space-between", 
-              width: "100%", 
-              paddingTop: 2, 
+              justifyContent: "space-between",
+              width: "100%",
+              paddingTop: 2,
             }}
           >
             <Box
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                alignItems: "flex-start", 
-                marginRight: 2, 
+                alignItems: "flex-start",
+                marginRight: 2,
               }}
             >
               <FormControlLabel
@@ -220,7 +221,7 @@ function AddNote() {
                     color="primary"
                   />
                 }
-                label= "Or add to drafts"
+                label="Or add to drafts"
               />
               <FormControlLabel
                 control={
@@ -231,20 +232,20 @@ function AddNote() {
                     color="primary"
                   />
                 }
-                label= "Or create new course"
+                label="Or create new course"
               />
             </Box>
             <Button
               onClick={handleSaveNote}
               variant="contained"
               sx={{
-                bgcolor: "#ED7D31", 
-                color: "white", 
+                bgcolor: "#ED7D31",
+                color: "white",
                 "&:hover": {
                   bgcolor: "darken(#ED7D31, 0.2)", // Darker color while hovering
                 },
-                alignSelf: "flex-end", 
-                textTransform: "none", 
+                alignSelf: "flex-end",
+                textTransform: "none",
               }}
               endIcon={<CheckIcon />}
             >

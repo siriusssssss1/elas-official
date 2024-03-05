@@ -3,13 +3,7 @@ import Toolbar from "@mui/material/Toolbar";
 import SearchIcon from "@mui/icons-material/Search";
 import TextField from "@mui/material/TextField";
 import { getNotesByCourseAndNoteTitle } from "../utils/api";
-import {
-  Routes,
-  Route,
-  Navigate,
-  useNavigate,
-  useLocation,
-} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const search = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -24,7 +18,10 @@ const search = () => {
     if (searchValue) {
       try {
         let elasUser = JSON.parse(sessionStorage.getItem("elas-user"));
-        const result = await getNotesByCourseAndNoteTitle(searchValue, elasUser.id);
+        const result = await getNotesByCourseAndNoteTitle(
+          searchValue,
+          elasUser.id
+        );
         console.log(result);
         navigate("/projects/notebot/search", {
           state: { searchResults: result.cards, keyword: searchValue },

@@ -45,7 +45,7 @@ export default function noteCard({
     handleToggleFavorite(card._id);
   };
 
-  const handleRatingChange = (event, rating) => {
+  const handleRatingChange = (_, rating) => {
     handleRatingNote(card._id, rating);
   };
 
