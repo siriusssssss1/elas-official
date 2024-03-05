@@ -9,7 +9,7 @@ import MyNotes from "./components/MyNotes.jsx";
 import MyFavorites from "./components/MyFavorites.jsx";
 import Drafts from "./components/Drafts.jsx";
 import AddNote from "./components/addNote.jsx";
-import Search from "./components/search.jsx";
+import Search from "./components/Search.jsx";
 import noteBotLogo from "../../../assets/images/noteBot-logo.png";
 import { useNavigate } from "react-router-dom";
 
