@@ -34,6 +34,7 @@ const getNoteWidgets = async (req, res, next) => {
     const note = await Note.findById(req.params.note_id);
     const sections = await Section.find({ _id: { $in: note.sections } });
 
+    //Create an index dictionary to map section IDs to their indices in the note.sections array
     const indexDictionary = note.sections.reduce(
       (acc, id, index) => ({
         ...acc,
@@ -42,6 +43,7 @@ const getNoteWidgets = async (req, res, next) => {
       {}
     );
 
+    //Sort the sections array based on their indices in the note.sections array
     sections.sort((a, b) => {
       const aIndex = indexDictionary[a._id];
       const bIndex = indexDictionary[b._id];
@@ -173,6 +175,7 @@ const createNote = async (req, res, next) => {
 
     await createdNote.save();
 
+    // Iterate through sections array and create a new section object
     for (const section of sections) {
       const sectionObject = new Section({
         layout_field: section.layout_field,
@@ -183,6 +186,7 @@ const createNote = async (req, res, next) => {
 
       createdNote.sections.push(sectionObject._id);
 
+      // If widgets exist for the current section, iterate through widgets of the current section
       if (widgets[section.id]) {
         for (let widgetIndex in widgets[section.id]) {
           const widget = widgets[section.id][widgetIndex];
@@ -249,16 +253,18 @@ const updateNote = async (req, res, next) => {
       if (!sectionObject) {
         sectionObject = new Section();
       }
-
+      
       sectionObject.layout_field = section.layout_field || undefined;
       sectionObject.note_id = note._id;
 
       await sectionObject.save();
 
+      // Add section ID to note's sections array if not already present
       if (!note.sections.find((_id) => _id === sectionObject._id)) {
         note.sections.push(sectionObject._id);
       }
 
+      // Retrieve widgets for the current section
       const sectionWidgets = widgets[section._id || section.id];
       if (sectionWidgets) {
         for (let widgetIndex in sectionWidgets) {
@@ -270,6 +276,7 @@ const updateNote = async (req, res, next) => {
             widgetObject = new Widget();
           }
 
+          // Update widget object's properties
           widgetObject.type = widget.type;
           widgetObject.data = widget.data;
           widgetObject.layout_index = parseInt(widgetIndex);
@@ -282,11 +289,13 @@ const updateNote = async (req, res, next) => {
         await sectionObject.save();
       }
     }
+   
     if (!course_id) {
       note.isDraft = true;
       note.isPublic = false;
     } else {
-      //
+      note.isDraft = false;
+      note.isPublic = true;
     }
 
     await note.save();
@@ -327,6 +336,7 @@ const deleteNote = async (req, res, next) => {
     const user = await User.findOne({uid:note.user_id}); 
     const course = await Course.findOne({_id:note.course_id});
 
+    // Remove the note ID from the user's notes array
     await User.updateMany(
       {uid: note.user_id},
       {
@@ -336,7 +346,8 @@ const deleteNote = async (req, res, next) => {
       },
       { new: true }
     );
-  
+
+    // If a course is associated with the note, remove the note ID from the course's notes array
     if (course) {
       const courseId2 = new mongoose.Types.ObjectId(note.course_id);
       await Course.updateMany(
@@ -371,7 +382,6 @@ const deleteNote = async (req, res, next) => {
     return next(error);
   }
 };
-
 
 // Retrieve notes belonging to a user for a specific course.
 const getNotesByUserIdAndCourseId = async (req, res, next) => {
@@ -414,8 +424,8 @@ const getNotesByCourseAndNoteTitle = async (req, res, next) => {
     });
     const courseIds = courses.map((course) => course._id);
 
+    // Find notes either belonging to courses found or having titles matching the search keyword
     const notes = await Note
-      
       .find({$or: [{course_id: { $in: courseIds }},{title: { $regex: escapeKeyword, $options: "i" } }]})
       .populate("course_id", "title")
       .populate("user_id", "user_name")

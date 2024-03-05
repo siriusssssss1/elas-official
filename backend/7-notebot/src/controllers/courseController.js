@@ -87,6 +87,7 @@ const deleteCourseWithNotes = async (req, res, next) => {
         .json({ message: "Could not find course for the provided id." });
     }
 
+    // Iterate through note IDs and delete associated notes, sections, and widgets
     const noteIds = course.notes;
     for (const noteId of noteIds) {
       const note = await Note.findByIdAndDelete(noteId);

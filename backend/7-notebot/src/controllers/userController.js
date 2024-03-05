@@ -73,7 +73,6 @@ const getLatestSearches = async (req, res) => {
   try {
     const user_id = req.params.userId;
 
-    // Create and save the latest search record
     const latestSearches = await Search.find({
       user_id: user_id,
     });
@@ -86,10 +85,8 @@ const getLatestSearches = async (req, res) => {
       const index = latestSearchQueue.findIndex((item) => item.search_query === searchQuery);
 
       if (index !== -1) {
-        // If the search query is already in the queue, update it with the latest timestamp
         latestSearchQueue[index] = latestSearch;
       } else {
-        // If the search query is not in the queue, add it to the end
         latestSearchQueue.push(latestSearch);
       }
     });
@@ -97,7 +94,6 @@ const getLatestSearches = async (req, res) => {
     // Sort the searches by timestamp in ascending order
     latestSearchQueue.sort((a, b) => a.timestamp - b.timestamp);
 
-    // Keep only the latest 6 entries
     const latestSearchesToKeep = latestSearchQueue.slice(-6);
 
     res.json({latestSearches: latestSearchesToKeep.map((latestSearch) => latestSearch.search_query)});

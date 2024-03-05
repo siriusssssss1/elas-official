@@ -10,6 +10,7 @@ const toggleFavoriteNote = async (req, res, next) => {
 
   const user_id = req.body.user_id;
   const { note_id } = req.params;
+
   const payload = {
     note_id: note_id,
     user_id: user_id,
@@ -39,8 +40,7 @@ const getFavNoteByUserId = async (req, res, next) => {
   const user_id = req.params.user_id;
 
   try {
-    const groupedNotes = [];
-
+    
     let favorites = await FavoriteNote.find({
       user_id: user_id,
     });
