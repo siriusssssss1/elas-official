@@ -11,7 +11,7 @@ import {
   useLocation,
 } from "react-router-dom";
 
-const Search = () => {
+const search = () => {
   const [searchValue, setSearchValue] = useState("");
   const navigate = useNavigate();
 
@@ -91,4 +91,4 @@ const Search = () => {
   );
 };
 
-export default Search;
+export default search;
