@@ -3,7 +3,7 @@ const Note = db.note;
 const Draft = db.draft;
 const HttpError = db.httpError;
 
-// Get drafts by user ID - Drafts page (Grid view): when clicking on Drafts on the Dashboard page.
+// Retrieve draft notes belonging to a user by their user ID. - Grid view of the My Drafts Page.
 const getDraftByUserId = async (req, res, next) => {
   const user_id = req.params.user_id;
 
@@ -31,7 +31,7 @@ const getDraftByUserId = async (req, res, next) => {
   }
 };
 
-// Add a note to the Drafts folder.
+// Add a note to drafts for a user. - Clicking on "Or add to drafts" on the Add note to course Pop-up window.
 const addNoteToDraft = async (req, res) => {
   const { note_id, user_id } = req.body;
   const payload = {
@@ -64,5 +64,5 @@ const addNoteToDraft = async (req, res) => {
   }
 }; 
 
-  exports.getDraftByUserId = getDraftByUserId;
-  exports.addNoteToDraft = addNoteToDraft;
+exports.getDraftByUserId = getDraftByUserId;
+exports.addNoteToDraft = addNoteToDraft;

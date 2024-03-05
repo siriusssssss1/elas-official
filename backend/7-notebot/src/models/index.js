@@ -2,8 +2,7 @@ const db = {};
 
 /***************** START: EXPORT SCHEMA AS MODULE *****************
  * @documentation
- * Export the schema as a module. This will allow you to import the
- * schema in other files.
+ * Export the schema as a module. 
  */
 db.user = require("./userModel");
 db.course = require("./courseModel");

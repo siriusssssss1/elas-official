@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 
-// Middleware for handling chat message completions using the OpenAI API.
+// Handle chat message completions using the OpenAI API.
 const chatCompletion = async (req, res)=>{
   try {
     const { message } = req.body;

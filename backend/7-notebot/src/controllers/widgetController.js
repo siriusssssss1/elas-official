@@ -4,7 +4,7 @@ const Widget = db.widget;
 const Section = db.section;
 const HttpError = db.httpError;
 
-// Test route to get a widget
+// Test route to get all widgets.
 const getWidget = async (req, res, next) => {
 
   try {
@@ -19,7 +19,7 @@ const getWidget = async (req, res, next) => {
   }
 };
 
-// Get widgets for a specific section
+// Retrieve widgets belonging to a section.
 const getWidgetsBySectionId = async (req, res, next) => {
   const { section_id } = req.params;
 
@@ -43,7 +43,7 @@ const getWidgetsBySectionId = async (req, res, next) => {
   }
 };
 
-// Add a widget to a specific section
+// Add a widget to a section. - Clicking on one of the three Icons to add a widget while creating a note.
 const addWidgetToSection = async (req, res, next) => {
   const section_id = req.params.section_id;
   const { type, data, layout_index } = req.body; 
@@ -76,7 +76,7 @@ const addWidgetToSection = async (req, res, next) => {
   }
 };
 
-// Update a specific widget
+// Update a widget. 
 const updateWidget = async (req, res, next) => {
   const { widget_id } = req.params;
   const { layout_index, data } = req.body;
@@ -106,7 +106,7 @@ const updateWidget = async (req, res, next) => {
   }
 };
 
-// Delete a specific widget from a specific section
+// Delete a  widget from a section. - Clicking on the "x" Button in the corner of a widget.
 const deleteWidget = async (req, res, next) => {
   const { section_id, widget_id } = req.params;
 
@@ -141,7 +141,7 @@ const deleteWidget = async (req, res, next) => {
   }
 };
 
-// Create a new widget
+// Create a new widget. 
 const createWidget = async (req, res, next) => {
   const { type, data, layout_index, section_id } = req.body;
 

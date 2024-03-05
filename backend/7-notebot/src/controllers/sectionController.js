@@ -5,7 +5,7 @@ const Note = db.note;
 const Widget = db.widget;
 const HttpError = db.httpError;
 
-// Test route to get all sections
+// Test route to get all sections.
 const getSections = async (req, res, next) => {
   try {
     const sections = await Section.find();
@@ -19,7 +19,7 @@ const getSections = async (req, res, next) => {
   }
 };
 
-// Get all sections for a specific note
+// Retrieve sections belonging to a note by its ID. - See sections while creating a note.
 const getSectionsByNoteId = async (req, res, next) => {
   const { note_id } = req.params;
 
@@ -39,7 +39,7 @@ const getSectionsByNoteId = async (req, res, next) => {
   }
 };
 
-// Create a new section
+// Create a new section for a note. - Clicking on Add Section Button.
 const createSection = async (req, res, next) => {
   const { note_id } = req.body;
   
@@ -60,7 +60,7 @@ const createSection = async (req, res, next) => {
   }
 };
 
-// Add widgets to a section
+// Add widgets to a section. 
 const pushWidgetsToSection = async (req, res, next) => {
   const { section_id, widget_ids } = req.body;
   
@@ -86,8 +86,7 @@ const pushWidgetsToSection = async (req, res, next) => {
   }
 };
   
-  
-// Update a specific section
+// Update a section with new layout field data.
 const updateSection = async (req, res, next) => {
   const { section_id } = req.params;
   const { layout_field } = req.body;
@@ -116,7 +115,7 @@ const updateSection = async (req, res, next) => {
   }
 };
 
-// Add a section to a specific note
+// Add a section to a note. - Clicking on Add Section Button while creating a note.
 const addSectionToNote = async (req, res, next) => {
   const { note_id } = req.params;
   const { layout_field } = req.body; 
@@ -148,7 +147,7 @@ const addSectionToNote = async (req, res, next) => {
   }
 };
 
-// Update widgets for a specific section
+// Update widgets for a section. 
 const updateSectionWidgets = async (req, res, next) => {
   const { section_id } = req.params;
   const { widgets } = req.body;
@@ -177,8 +176,7 @@ const updateSectionWidgets = async (req, res, next) => {
   }
 };
 
-
-// Delete a specific section and its widgets
+// Delete a section and its widgets - Clicking on the "x" Button above the section.
 const deleteSection = async (req, res, next) => {
   const { section_id } = req.params;
 
@@ -215,53 +213,6 @@ const deleteSection = async (req, res, next) => {
   }
 };
 
-// Creat a new section with empty widgets
-// const createSection = async (req, res, next) => {
-//     const { note_id, layout_field } = req.body;
-
-//     try {
-//         // Input validation
-//         if (!note_id || !layout_field) {
-//             return res.status(400).json({ message: "Invalid section data." });
-//         }
-
-//         const note = await noteModel.findById(note_id);
-
-//         if (!note) {
-//             return res.status(404).json({ message: "Could not find note for the provided id." });
-//         }
-
-//         const session = await mongoose.startSession();
-//         session.startTransaction();
-
-//         try {
-//             const createdSection = new sectionModel({
-//                 layout_field,
-//                 note_id,
-//                 widgets: [], // Empty widgets array
-//             });
-
-//             await createdSection.save({ session });
-            
-//             // Add the section to the note's sections array
-//             note.sections.push(createdSection);
-//             await note.save({ session });
-
-//             await session.commitTransaction();
-
-//             res.status(201).json({ message: "Section created!", section: createdSection });
-//         } catch (error) {
-//             await session.abortTransaction();
-//             throw error;
-//         } finally
-//         {
-//             session.endSession();
-//         }
-//     } catch (err) {
-//         const error = new HttpError('An error occurred while creating a section.', 500);
-//         return next(error);
-//     }
-// };
 
 exports.getSections = getSections;
 exports.getSectionsByNoteId = getSectionsByNoteId;

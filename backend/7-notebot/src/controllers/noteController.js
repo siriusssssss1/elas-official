@@ -27,7 +27,7 @@ const getNotes = async (req, res, next) => {
   }
 };
 
-// Retrieves note widgets associated with a given note ID.
+// Retrieve note widgets associated with a given note ID.
 const getNoteWidgets = async (req, res, next) => {
 
   try {
@@ -67,7 +67,7 @@ const getNoteWidgets = async (req, res, next) => {
   }
 };
 
-// Retrieves notes belonging to a user by their user ID. - Grid view of the My Notes page.
+// Retrieve notes belonging to a user by their user ID. - Grid view of the My Notes page.
 const getNoteByUserId = async (req, res, next) => {
   const user_id = req.params.user_id;
   
@@ -104,7 +104,7 @@ const getNoteByUserId = async (req, res, next) => {
     }, {});
     
     for (let note of user.notes) {
-      const courseId = note.course_id; //._id; //.toString();
+      const courseId = note.course_id;
      
       let course;
       if (courseId) {
@@ -373,7 +373,7 @@ const deleteNote = async (req, res, next) => {
 };
 
 
-// Retrieves notes belonging to a user for a specific course.
+// Retrieve notes belonging to a user for a specific course.
 const getNotesByUserIdAndCourseId = async (req, res, next) => {
   const { user_id, course_id } = req.params;
 
@@ -454,7 +454,7 @@ const getNotesByCourseAndNoteTitle = async (req, res, next) => {
   }
 };
 
-// Retrieves saved notes belonging to a user by their user ID.
+// Retrieve saved notes belonging to a user by their user ID.
 const getSavedNotesByUserId = async (req, res, next) => {
   const user_id = req.params.user_id;
 
@@ -521,7 +521,7 @@ const saveNote = async (req, res, next) => {
   }
 };
 
-// Adds sections to a note identified by its ID.
+// Add sections to a note identified by its ID.
 const pushSectionsToNote = async (req, res, next) => {
   const { note_id, section_ids } = req.body;
 
@@ -544,7 +544,7 @@ const pushSectionsToNote = async (req, res, next) => {
   }
 };
 
-// Retrieves a note by its ID. - Get details of a specific note.
+// Retrieve a note by its ID. - Get details of a specific note.
 const getNoteByNoteId = async (req, res, next) => {
   const { note_id } = req.params;
 

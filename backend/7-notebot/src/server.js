@@ -15,12 +15,10 @@ const db = require("./models");
 
 global.__basedir = __dirname;
 
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use("/", express.static(path.join(__dirname, "public")));
-
 
 // Get port from environment and store in Express
 const port = normalizePort(process.env.PORT || "8007");
@@ -40,8 +38,6 @@ mongoose
     process.exit();
   });
 
-  
-
 // Create HTTP server
 const server = http.createServer(app);
 
@@ -50,11 +46,7 @@ let apiURL = "/api/notebot";
 
 /***************** START: IMPORT ROUTES *****************
  * @documentation
- * Import the routes from the routes folder. The routes
- * folder contains all the routes for the application.
- * Create a new variable such as 'userRoutes' and assign
- * the imported routes. Then use the routes by passing
- * the apiURL and the routes using the app.use() method.
+ * Import the routes from the routes folder.
  */
 
 const userRoutes = require("./routes/users");
@@ -71,7 +63,7 @@ app.use(apiURL + '/courses', coursesRoutes);
 app.use(apiURL + '/notes', noteRoutes);
 app.use(apiURL + '/sections', sectionRoutes);
 app.use(apiURL + '/widgets', widgetRoutes);
-app.use(apiURL + '/chat', chatbotRouter); // Mount the chatbotController as a middleware
+app.use(apiURL + '/chat', chatbotRouter);
 app.use(apiURL + '/drafts', draftRouter);
 app.use(apiURL + '/favorites', favoriteRouter);
 
@@ -95,7 +87,6 @@ const client = new Eureka({
     },
   },
   eureka: {
-    // Eureka server host / port / servicePath
     host: process.env.EUREKA_HOST_NAME,
     port: process.env.EUREKA_PORT,
     servicePath: "/eureka/apps/",
@@ -140,7 +131,6 @@ function normalizePort(val) {
 function onError(error) {
   if (error.syscall !== "listen") throw error;
   const bind = typeof port === "string" ? "Pipe " + port : "Port " + port;
-  // handle specific listen errors with friendly messages
   switch (error.code) {
     case "EACCES":
       console.error(bind + " requires elevated privileges");

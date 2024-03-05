@@ -28,6 +28,5 @@ courseRouter.post('/new', courseController.createCourse);
  */
 courseRouter.delete('/:course_id', courseController.deleteCourseWithNotes);
 
-
 // Export router
 module.exports = courseRouter;

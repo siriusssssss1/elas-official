@@ -3,26 +3,7 @@ const Search = db.search;
 const User = db.user;
 const HttpError = db.httpError;
 
-/***************** START: GET USER INFO USING A CONTROLLER *****************
- * @documentation
- *
- * @function getUserById
- * The function `getUserById` is an asynchronous function that retrieves
- * a user from a MongoDB database based on their user ID and sends a
- * response with the user information if found, or a message indicating
- * that the user was not found.
- * @param req - The `req` parameter is an object that represents the
- * HTTP request made to the server.  * It contains information such as
- * the request method, headers, URL, and parameters.
- * @param res - The `res` parameter is the response object that is used
- * to send the response back to  * the client. It contains methods and
- * properties that allow you to control the response, such as setting
- * the status code, sending data, and setting headers.
- * @returns a response object with a status code and a message. If a
- * user is found, it also includes the found user object in the response.
- */
-
-// Get user by Id
+// Retrieve user information by user ID.
 const getUserById = async (req, res) => {
   
   try {
@@ -41,9 +22,8 @@ const getUserById = async (req, res) => {
     return next(error);
   }
 };
-/***************** END: GET USER INFO USING A CONTROLLER ******************/
 
-// Create a new user
+// Create a new user.
 const createNewUser = async (req, res) => {
 
   try {
@@ -64,7 +44,7 @@ const createNewUser = async (req, res) => {
   } 
 };
 
-// Update user information
+// Update user information.
 const updateUser = async (req, res) => {
 
   try {
@@ -88,7 +68,7 @@ const updateUser = async (req, res) => {
   }
 };
 
-// Get the latest searches for a user.
+// Retrieve the latest searches made by a user. - Clicking on the searchbar and getting a list with the latest searches underneath.
 const getLatestSearches = async (req, res) => {
   try {
     const user_id = req.params.userId;
@@ -129,7 +109,7 @@ const getLatestSearches = async (req, res) => {
   } 
 };
 
-// Delete the latest searches for a user.
+// Delete the latest searches made by a user. - Clicking on "x" Button next to most recent searches.
 const deleteLatestSearches =  async (req, res, next) => {
   const user_id = req.params.userId;
 

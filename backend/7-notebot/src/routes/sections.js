@@ -52,6 +52,5 @@ sectionRouter.patch('/:section_id/widgets', sectionController.updateSectionWidge
  */
 sectionRouter.delete('/:note_id/:section_id', sectionController.deleteSection);
 
-
 // Export router
 module.exports = sectionRouter;

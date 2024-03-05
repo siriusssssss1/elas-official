@@ -50,7 +50,7 @@ const getCoursesByUserId = async (req, res, next) => {
   }
 };
 
-// Creates a new course associated with a user.  - Clicking on "Or create new course" on the Add note to course Pop-up Window.
+// Create a new course associated with a user.  - Clicking on "Or create new course" on the Add note to course Pop-up window.
 const createCourse = async (req, res) => {
   const { title, user_id } = req.body;
 
@@ -75,7 +75,7 @@ const createCourse = async (req, res) => {
   }
 };
 
-// Deletes a course along with its associated notes and sections. - Clicking on the trash can on the right side next to the course name.
+// Delete a course along with its associated notes and sections. - Clicking on the trash can on the right side next to the course name.
 const deleteCourseWithNotes = async (req, res, next) => {
   const { course_id } = req.params;
 
