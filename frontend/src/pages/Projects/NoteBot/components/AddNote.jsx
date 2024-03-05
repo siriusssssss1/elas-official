@@ -19,7 +19,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import IconButton from "@mui/material/IconButton";
 import ChooseLayout from "./Notes/chooseLayout.jsx";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import EditNote from "./Notes/editNote.jsx";
+import EditNote from "./Notes/EditNote.jsx";
 import { getCourses, createNotes } from "../utils/api.js";
 import { addNoteToDrafts } from "../utils/api.js";
 
