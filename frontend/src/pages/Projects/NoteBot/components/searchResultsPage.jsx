@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { Grid, Typography, Divider, Box } from "@mui/material";
 import NoteCard from "./noteCard.jsx";
 import noteBotLogo from "../../../../assets/images/noteBot-logo.png";
-import Search from "./search.jsx";
+import Search from "./Search.jsx";
 
 const searchResultsPage = () => {
   const location = useLocation();
