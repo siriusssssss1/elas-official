@@ -5,7 +5,7 @@ const Note = db.note;
 const Course = db.course;
 const HttpError = db.httpError;
 
-// Toggle favorite status for a note.
+// Toggle favorite status for a note by a user. - Clicking on the heart on a note.
 const toggleFavoriteNote = async (req, res, next) => {
 
   const user_id = req.body.user_id;
@@ -34,7 +34,7 @@ const toggleFavoriteNote = async (req, res, next) => {
   }
 };
 
-// Get favorite notes for a specific user - Grid view of the Favorites page.
+// Retrieves favorite notes belonging to a user by their user ID. - Grid view of the Favorites page.
 const getFavNoteByUserId = async (req, res, next) => {
   const user_id = req.params.user_id;
 
@@ -63,7 +63,7 @@ const getFavNoteByUserId = async (req, res, next) => {
   }
 };
 
-// Toggle favorite status for a course.
+// Toggle favorite status for a course by a user. - Clicking on the heart on the side of the course name.
 const toggleFavoriteCourse = async (req, res, next) => {
   const user_id = req.body.user_id;
   const { course_id } = req.params;
@@ -92,7 +92,7 @@ const toggleFavoriteCourse = async (req, res, next) => {
   }
 };
 
-// Get favorite courses for a specific user - Grid view of the Favorites page.
+// Retrieves favorite courses belonging to a user by their user ID. - Grid view of the Favorites page.
 const getFavCourseByUserId = async (req, res, next) => {
   const user_id = req.params.user_id;
 

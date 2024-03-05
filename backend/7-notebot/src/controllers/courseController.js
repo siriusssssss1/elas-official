@@ -23,7 +23,7 @@ const getAllCourses = async (req, res, next) => {
   }
 };
 
-// Get courses by user ID - Courses page (Grid view): when clicking on Courses in the Dashboard page.
+// Retrieve courses associated with a user by their user ID. - Grid view of My Courses page, when clicking on Courses in the My Notes page.
 const getCoursesByUserId = async (req, res, next) => {
   const user_id = req.params.user_id;
 
@@ -50,7 +50,7 @@ const getCoursesByUserId = async (req, res, next) => {
   }
 };
 
-// Create course - AddCourse button in the Dashboard page.
+// Creates a new course associated with a user.  - Clicking on "Or create new course" on the Add note to course Pop-up Window.
 const createCourse = async (req, res) => {
   const { title, user_id } = req.body;
 
@@ -75,7 +75,7 @@ const createCourse = async (req, res) => {
   }
 };
 
-// Delete course with notes - Clicking on the delete icon in the Courses page.
+// Deletes a course along with its associated notes and sections. - Clicking on the trash can on the right side next to the course name.
 const deleteCourseWithNotes = async (req, res, next) => {
   const { course_id } = req.params;
 

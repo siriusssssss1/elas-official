@@ -1,6 +1,5 @@
 const db = require("../models");
 const mongoose = require("mongoose");
-const { countDocuments } = require("../models/favoriteCourseModel");
 const Note = db.note;
 const User = db.user;
 const Section = db.section;
@@ -13,7 +12,7 @@ const HttpError = db.httpError;
 // Test route to get all notes.
 const getNotes = async (req, res, next) => {
   try {
-    const notes = await Note.find({ isPublic: true });
+    const notes = await Note.find();
 
     if (!notes || notes.length === 0) {
       return res.status(404).json({ message: "No public notes found" });
@@ -28,7 +27,7 @@ const getNotes = async (req, res, next) => {
   }
 };
 
-// Get widgets for a specific note - Grid view SavedNotes page.
+// Retrieves note widgets associated with a given note ID.
 const getNoteWidgets = async (req, res, next) => {
 
   try {
@@ -68,7 +67,7 @@ const getNoteWidgets = async (req, res, next) => {
   }
 };
 
-// Get notes for a specific user - Grid view of the Dashboard page.
+// Retrieves notes belonging to a user by their user ID. - Grid view of the My Notes page.
 const getNoteByUserId = async (req, res, next) => {
   const user_id = req.params.user_id;
   
@@ -143,7 +142,7 @@ const getNoteByUserId = async (req, res, next) => {
   }
 };
 
-// Create a new note - AddNote button in the Dashboard page.
+// Create a new note with associated sections and widgets for a given user ID - Clicking on the Add Note button.
 const createNote = async (req, res, next) => {
   const user_id = req.body.user_id;
   const { title, isPublic, sections, widgets } = req.body;
@@ -218,7 +217,7 @@ const createNote = async (req, res, next) => {
   }
 };
 
-//Update a specific note - Clicking on a note in the Dashboard page.
+//Update a note along with its sections and widgets - Clicking on a note in the My Notes page.
 const updateNote = async (req, res, next) => {
 
   try {
@@ -306,7 +305,7 @@ const updateNote = async (req, res, next) => {
   }
 };
 
-// Delete a specific note - Clicking on the delete button in the NoteDetails page.
+// Delete a note along with its associated sections and widgets. - Clicking on the trash can button on the note.
 const deleteNote = async (req, res, next) => {
   const note_id = req.params.note_id;
 
@@ -374,7 +373,7 @@ const deleteNote = async (req, res, next) => {
 };
 
 
-// Get notes by user ID and course ID - Show more link in the Dashboard page.
+// Retrieves notes belonging to a user for a specific course.
 const getNotesByUserIdAndCourseId = async (req, res, next) => {
   const { user_id, course_id } = req.params;
 
@@ -400,7 +399,7 @@ const getNotesByUserIdAndCourseId = async (req, res, next) => {
   }
 };
 
-// Get notes by course and note title - Search bar in the Dashboard page.
+// Search notes based on a course title or note title search keyword. - Search bar in the Dashboard page.
 const getNotesByCourseAndNoteTitle = async (req, res, next) => {
   
   const searchKeyword = req.params.keyword;
@@ -455,7 +454,7 @@ const getNotesByCourseAndNoteTitle = async (req, res, next) => {
   }
 };
 
-// Get saved notes for a specific user - Grid view SavedNotes page.
+// Retrieves saved notes belonging to a user by their user ID.
 const getSavedNotesByUserId = async (req, res, next) => {
   const user_id = req.params.user_id;
 
@@ -475,7 +474,7 @@ const getSavedNotesByUserId = async (req, res, next) => {
   }
 };
 
-// Save a note for a user - Clicking on the save button in the Search page.
+// Save a note for a user identified by their user ID.
 const saveNote = async (req, res, next) => {
   const { user_id, note_id } = req.params;
 
@@ -522,7 +521,7 @@ const saveNote = async (req, res, next) => {
   }
 };
 
-// Push sections to a note - Add sections to a note.
+// Adds sections to a note identified by its ID.
 const pushSectionsToNote = async (req, res, next) => {
   const { note_id, section_ids } = req.body;
 
@@ -545,7 +544,7 @@ const pushSectionsToNote = async (req, res, next) => {
   }
 };
 
-// Get a note by its ID - Get details of a specific note.
+// Retrieves a note by its ID. - Get details of a specific note.
 const getNoteByNoteId = async (req, res, next) => {
   const { note_id } = req.params;
 
@@ -566,7 +565,7 @@ const getNoteByNoteId = async (req, res, next) => {
   }
 };
 
-// Update the rating of a specific note.
+// Update the rating of a specific note. - Clicking on the stars of a note
 const updateRating = async (req, res, next) => {
   const userId = req.body.user_id; 
   const { noteId, rating } = req.body;
@@ -612,7 +611,7 @@ const updateRating = async (req, res, next) => {
   }
 };
 
-// Add a note to a specific course.
+// Add a note to a course identified by its ID.
 const addNoteToCourse = async (req, res, next) => {
   const { course_id } = req.params;
 
@@ -644,30 +643,6 @@ const addNoteToCourse = async (req, res, next) => {
   }
 };
 
-// const createNoteWithEmptySections = async (req, res, next) => {
-//   const { user_id, title, isPublic, course_id } = req.body;
-
-//   try {
-
-//     const createdNote = new Note({
-//       user_id,
-//       title,
-//       isPublic,
-//       course_id,
-//       sections: [],
-//     });
-
-//     await createdNote.save();
-
-//     res.status(201).json({ message: "Note created!", note: createdNote });
-//   } catch (err) {
-//     const error = new HttpError(
-//       "Creating note failed, please try again later.",
-//       500
-//     );
-//     return next(error);
-//   }
-// };
 
 exports.getNotes = getNotes;
 exports.getNoteWidgets = getNoteWidgets;
@@ -683,4 +658,3 @@ exports.pushSectionsToNote = pushSectionsToNote;
 exports.getNoteByNoteId = getNoteByNoteId;
 exports.updateRating = updateRating;
 exports.addNoteToCourse = addNoteToCourse;
-//exports.createNoteWithEmptySections = createNote;
